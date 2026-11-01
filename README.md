@@ -1,1 +1,1 @@
-# AMH
+# alpha amylase production from bacteria
