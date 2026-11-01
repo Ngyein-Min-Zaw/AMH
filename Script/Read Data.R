@@ -1,11 +1,9 @@
 url <- "https://github.com/Ngyein-Min-Zaw/AMH/raw/refs/heads/main/Data/UV%20(04.08.2006)%20-%20completed.xlsx"
 download.file(url,
-     destfile = "./Data/downloaded_file.xlsx",
+     destfile = "./Data/UV (04.08.2006) - completed.xlsx",
      mode = "wb"
 )
 
-library(readxl)
-UV <- read_excel("./Data/downloaded_file.xlsx")
 
 library(rsm)
 library(tidyverse)
@@ -14,6 +12,15 @@ library(readxl)
 library(ggtext)
 
 ## Load Data
+
+# url <- "https://github.com/Ngyein-Min-Zaw/AMH/raw/refs/heads/main/Data/(26.06.2026)%20absorbance%20data.xlsx"
+# download.file(url,
+#               destfile = "./Data/(26.06.2026) absorbance data.xlsx",
+#               mode = "wb"
+# )
+library(readxl)
+UV <- read_excel("./Data/downloaded_file.xlsx")
+
 RSM <- read_excel("./Data/(26.06.2026) absorbance data.xlsx")
 RSM2 <- RSM %>% mutate(Temperature = str_remove(Temp, "°C") %>% as.numeric())
 
