@@ -52,11 +52,19 @@ for_rsm_vis |> ggplot(aes(x1, x2)) +
      coord_cartesian(xlim = c(-2, 2), ylim = c(-2, 2)) +
      theme_minimal() +
      labs(
-          x = "x1 ~ (Temperature - 50)/10",
-          y = "x2 ~ (pH - 6)/0.5"
+          x = "x<sub>1</sub> ~ (Temperature - 50)/10",
+          y = "x<sub>2</sub> ~ (pH - 6)/0.5"
      ) +
      theme(
           text = element_text(
+               family = "Times New Roman",
+               size = 12
+          ),
+          axis.title.x = element_markdown(
+               family = "Times New Roman",
+               size = 12
+          ),
+          axis.title.y = element_markdown(
                family = "Times New Roman",
                size = 12
           )
@@ -300,7 +308,7 @@ ggplot() +
           plot.caption = element_text(size = 12),
           strip.text = element_text(size = 12)
      )
-ggsave("Figs/km_4starch.png",
+ggsave("./Figs/km_4starch.png",
      width = 5.5, height = 4,
      dpi = 300
 )
@@ -351,7 +359,8 @@ mm_results |> ggplot(
           strip.background = element_rect(fill = "grey90")
      )
 
-ggsave("Figs/km_vmax.png",
+ggsave("./Figs/km_vmax.png",
      width = 5.5, height = 4,
      dpi = 300
 )
+#
