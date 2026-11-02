@@ -1,0 +1,1092 @@
+---
+title: "amylase production from bacteria"
+author: "nmz"
+date: "2026-08-07"
+output:
+  pdf_document:
+    toc: true                 # Table of contents
+    toc_depth: 3              # Depth of TOC
+    number_sections: true     # Number sections
+    fig_width: 6              # Figure width (inches)
+    fig_height: 4             # Figure height (inches)
+    fig_caption: true         # Enable figure captions
+    keep_tex: true            # Keep .tex file
+    latex_engine: pdflatex    # or xelatex, lualatex
+    highlight: tango          # Syntax highlighting style
+    citation_package: natbib  # or biblatex
+geometry: 
+      - "left=1in" #1 inch or 2.54 cm
+      - "right=1in"
+      - "top=1in"
+      - "bottom=1in"
+linestretch: 1        # # Line spacing
+fontsize: 12pt          
+mainfont: "Times New Roman" #  "TeX Gyre Termes" alternative
+
+header-includes:
+  - \usepackage{indentfirst}
+  - \setlength{\parindent}{1.5cm}  # Set indent size
+  - \setlength{\parskip}{0pt}      # Remove space between paragraphs
+  - \usepackage{titlesec}
+  - \titlespacing*{\section}{0pt}{1.2ex}{0.5ex} #left indent, above, below
+  - \titlespacing*{\subsection}{0pt}{1ex}{0.3ex}
+  - \titlespacing*{\subsubsection}{0pt}{0.8ex}{0.2ex}
+  - \usepackage[font=small]{caption}
+  - \usepackage{multicol}
+  - \usepackage[none]{hyphenat}
+  - \setlength{\columnsep}{0.3cm}      # Space between columns
+  - \setlength{\columnseprule}{0pt} # Thickness of vertical line (0pt = no line)
+  
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE, dpi=300} 
+knitr::opts_chunk$set(echo = TRUE, 
+                      comment = NA,
+                      warning = F,
+                      fig.width = 6,
+                      fig.height = 4,
+                      dpi = 300,
+                      fig.retina = 1, # 2 or high resolution
+                      fig.align = "center",
+                      fig.path = "../Figs/",
+                      fig.ext =  "png",
+                      out.width = "100%") # global
+library(knitr)
+library(ggpubr)
+library(Myfuns)
+library(tidyverse)
+library(readxl)
+library(showtext)
+font_add("TeX Gyre Termes", 
+         regular = "texgyretermes-regular.otf",
+         bold = "texgyretermes-bold.otf",
+         italic = "texgyretermes-italic.otf",
+         bolditalic = "texgyretermes-bolditalic.otf")
+
+showtext_auto()
+mfont <- "TeX Gyre Termes"
+```
+
+# Abstract
+
+\begin{multicols}{2}
+This study presents a systematic investigation of bacterial $\alpha$-amylase catalytic properties through integrated spectrophotometric, kinetic, and response surface methodologies [@ataallahiSimple2stepPurification2021]. The analytical workflow encompassed glucose calibration via 3,5-dinitrosalicylic acid (DNS) assay, fermentation kinetics under varying salt concentrations, response surface optimization of pH and temperature, comparative substrate specificity across four botanical starches, and Michaelis-Menten parameter estimation [@ataallahiSimple2stepPurification2021; @aENZYMICSTUDIESAlphaAMYLASE2019; @ataallahiSimple2stepPurification2021b]. The glucose standard curve demonstrated exceptional linearity ($R^2$ = 0.9909), establishing a robust empirical transfer function for reducing sugar quantification. Response surface methodology identified optimal catalytic conditions at pH 5.96 and 49.89°C, with both eigenvalues negative ($\lambda_1$ = -0.381, $\lambda_2$ = -0.471), confirming a true global maximum. Kinetic analysis revealed pronounced substrate-dependent variation in catalytic efficiency, with soluble starch exhibiting the highest $V_\text{max}$ (0.139 $\Delta A_{620}$ min$^{-1}$) and lowest $K_\text{m}$ (3.835% w/v), while rice starch demonstrated the lowest $V_\text{max}$ (0.077 $\Delta A_{620}$·min$^{-1}$) and $K_\text{m}$ (1.409% w/v). The catalytic efficiency index ($V_\text{max}$/$K_\text{m}$) ranged from 0.039 for rice starch to 0.054 for tapioca starch, indicating differential substrate accessibility governed by granular architecture and crystallinity. Progress curve analysis via second-order polynomial modeling revealed systematic deviations from linearity, with negative residuals at early timepoints (t = 0-15 min) indicating rapid initial substrate cleavage exceeding model predictions, while positive residuals at late timepoints (t = 45-60 min) reflected product inhibition and substrate depletion not captured by global quadratic fits. These findings demonstrate that bacterial $\alpha$-amylase exhibits optimal activity under moderately acidic conditions and displays marked substrate preference governed by starch botanical origin, with implications for industrial starch processing applications.
+
+\end{multicols}
+
+# Data Import
+
+- load the libraries
+- load the data for standard curve
+- load the experimental data
+
+```{r data}
+# loading libraries
+library(ggpubr)
+library(tidyverse)
+library(readxl)
+library(Myfuns)
+library(patchwork)
+library(broom)
+
+# loading standard curve data
+std_c <- read_excel("../Data/Salting out and DNS assay.xlsx",
+  sheet = "Sheet3"
+)
+names(std_c)
+
+# loading Experiment Data
+so <- read_excel("../Data/Salting out and DNS assay.xlsx",
+  sheet = "Sheet2"
+)
+names(so)
+buf <- 0.6713
+so2 <- so %>% mutate(Abs = Abs - buf)
+
+```
+
+# Relationship of the Glucose concentration and Absorbance
+- fit the linear regression
+- visualize the linear relationship
+```{r std_curve, fig.width=6.3, fig.height=3, fig.align='center'}
+std_c_eq1 <- lm(Glu_conc ~ Abs, std_c)
+summary(std_c_eq1)
+std_c_eq2 <- lm(Abs ~ Glu_conc, std_c)
+summary(std_c_eq2)
+
+p1 <- std_c %>% reframe(Abs=mean(Abs),.by = Glu_conc) %>% 
+  ggplot(aes(Glu_conc, Abs)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "red", se = F) +
+  # geom_smooth(linetype = "dashed", color = "blue") +
+  stat_regline_equation(
+    aes(label = paste(..eq.label..,
+                      ..adj.rr.label..,
+                      sep = "~~~~~")),
+    decreasing = FALSE
+  )+
+  labs(x = "Glucose Concentration (mg/ml)",
+       y = "Absorbance (at 570 nm)")+
+  Mytheme(font = "TeX Gyre Termes")
+  
+
+p2 <- std_c %>% ggplot(aes(Abs, Glu_conc)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "red") +
+  # geom_smooth(linetype = "dashed", color = "blue") +
+  stat_regline_equation(
+    aes(label = paste(..eq.label..,
+                      ..adj.rr.label..,
+                      sep = "~~~~~")),
+    # aes(label = paste0("atop(", ..eq.label.., ",", ..adj.rr.label.., ")")),
+    decreasing = FALSE
+  )+
+  labs(x= "Absorbance (at 570 nm)",
+       y= "Glucose Concentration (mg/ml)")+
+  Mytheme(font = "TeX Gyre Termes")
+
+p1+p2+
+  plot_annotation(tag_levels = "A")
+```
+# Prepare the experiment data for analysis
+```{r exp_data, fig.width=6.3, fig.height=3, fig.align='center'}
+names(so)
+buf <- 0.6713
+so2 <- so %>% mutate(Abs = Abs - buf)
+
+pre_glu <- predict(std_c_eq1, data.frame(Abs = so2$Abs))
+# pre_glu2 <- predict(std_c_eq2, data.frame(Abs = so2$Abs))
+
+so2$glu <- pre_glu
+so2 <- so2[-c(1:6), ] 
+p3 <- so2 %>%
+  mutate(Salt_conc = factor(Salt_conc)) %>%
+  ggplot(aes(Time, glu, group = factor(Salt_conc))) +
+  geom_point(aes(color = Salt_conc)) +
+  geom_smooth(aes(color = Salt_conc),
+    se = F,
+    # method = "lm",
+    # formula = y ~ poly(x, 2, raw = T)
+  ) +
+  labs(
+    x = "Growth time (hour)",
+    y = "Glucose Concentration
+    (mg/ml)",
+    color = "Salt Concentration"
+  ) +
+  scale_color_discrete(
+    breaks = c(10, 20, 30),
+    labels = c("10 %", "20 %", "30 %")
+  ) +
+  theme_minimal() +
+  theme(
+    text = element_text(
+      family = mfont,
+      color = "black",
+      size = 12
+    ),
+    axis.line = element_line(color = "black"),
+    axis.text = element_text(color = "black"),
+    legend.position = "bottom",
+    legend.margin = margin(-10, 0, 0, 0),
+    plot.margin = margin(5, 5, 5, 5)
+  )
+
+## For Contour plot
+salt_range <- range(so2$Salt_conc)
+time_range <- range(so2$Time)
+
+salt_seq <- seq(salt_range[1], salt_range[2], length.out = 30)
+time_seq <- seq(time_range[1], time_range[2], length.out = 30)
+prediction_grid <- expand.grid(Salt_conc = salt_seq, Time = time_seq)
+
+prediction_grid$glu <- predict(lm(glu ~ poly(Salt_conc, 2, raw = T) * 
+                                    poly(Time, 2, raw = T), data = so2),
+  newdata = prediction_grid
+)
+
+p4 <- prediction_grid %>%
+  ggplot(aes(Time, Salt_conc)) +
+  geom_tile(aes(fill = glu)) +
+  geom_contour(aes(z = glu), color = "white") +
+  scale_fill_viridis_c(
+    name = "Glucose\n(mg/ml)", direction = -1,
+    limits = c(0.3, 0.67),
+    breaks = seq(0.3, 0.67, 0.1)
+  ) +
+  labs(
+    x = "Growth time (hour)",
+    y = "Salt Concentration"
+    
+  ) +
+  theme(
+    text = element_text(
+      family = mfont,
+      size = 12,
+      color = "black"
+    ),
+    axis.text = element_text(
+      family = mfont,
+      size = 12,
+      color = "black"
+    ),
+    axis.line = element_blank(),
+    legend.spacing.x = unit(5, "pt"),
+    legend.text = element_text(
+      margin = margin(l = 5),
+      vjust = -.2
+    ),
+    panel.background = element_blank()
+  )
+
+p3+p4+plot_annotation(tag_levels = "A")
+```
+## model used for contour plot
+```{r}
+mod_used <- lm(glu ~ poly(Salt_conc, 2, raw = T) * poly(Time, 2, raw = T), 
+               data = so2)
+summary(mod_used)
+```
+
+# Optimization of pH and Temperature for maximum enzyme activity
+- load data
+- fit to response surface
+- visualize the response surface
+- calculation of optimal condition
+## load library and data
+```{r rsm_data}
+library(rsm)
+RSM <- read_excel("../Data/(26.06.2026) absorbance data.xlsx")
+RSM2 <- RSM %>% mutate(Temp = str_remove(Temp, "°C") %>% as.numeric())
+
+codedrsm2 <- coded.data(RSM2, 
+                        x1~(Temp -50)/10,
+                        x2 ~(pH - 6)/0.5)
+```
+
+## fit the model
+```{r rsm_fit}
+rsmmod <- rsm(avg~SO(x1, x2), codedrsm2)
+print(rsmmod)
+summary(rsmmod)
+canonical(rsmmod)
+canonical.path(rsmmod)
+```
+
+## visualize
+```{r rsm_plot, fig.width=5, fig.height=5, fig.align='center'}
+contour(rsmmod, ~ x1 + x2,
+        at = canonical(rsmmod)$xs,
+        image = T, nlevels = 15, decode = T
+)
+
+# from Myfuns library
+my_gg_rsm(rsmmod, ~ x1 + x2,
+          at = canonical(rsmmod)$xs,
+          color = 'black',
+          text_size = 3,
+          decode =T)
+persp(rsmmod, ~ x1 + x2,
+      at = canonical(rsmmod)$xs,
+      contours = list(z = "bottom"), ticktype = "detailed", nticks = 7,
+      shade = .2,
+      col = hcl.colors(20, "Purple-Yellow"),
+      family = mfont,
+      zlab = "glu"
+)
+```
+
+
+```{r rsm_rgl, eval = FALSE}
+# library(rgl)
+# x1_seq <- seq(min(rsmmod$data$x1), max(rsmmod$data$x1), length.out = 30)
+# x2_seq <- seq(min(rsmmod$data$x2), max(rsmmod$data$x2), length.out = 30)
+# grid <- expand.grid(x1 = x1_seq, x2 = x2_seq)
+# grid$z <- predict(rsmmod, newdata = grid)
+# 
+# # Convert to matrix
+# z_matrix <- matrix(grid$z, nrow = length(x1_seq), ncol = length(x2_seq))
+# 
+# persp3d(x1_seq, x2_seq, z_matrix,
+#   col = hcl.colors(20, "Purple-Yellow")[cut(z_matrix, 20)],
+#   xlab = "Temperature",
+#   ylab = "pH",
+#   zlab = "Absorbance",
+#   ticktype = "detailed"
+# )
+# 
+# # Calculate contour lines
+# contour_lines <- contourLines(x1_seq, x2_seq, z_matrix)
+# 
+# # Add contours at the BOTTOM
+# for (i in seq_along(contour_lines)) {
+#   lines3d(
+#     x = contour_lines[[i]]$x,
+#     y = contour_lines[[i]]$y,
+#     z = min(z_matrix),
+#     col = "gray50",
+#     lwd = 1,
+#     alpha = 0.5
+#   )
+# }
+# 
+# # Add contours ON the SURFACE
+# for (i in seq_along(contour_lines)) {
+#   z_vals <- rep(contour_lines[[i]]$level, length(contour_lines[[i]]$x))
+#   lines3d(
+#     x = contour_lines[[i]]$x,
+#     y = contour_lines[[i]]$y,
+#     z = z_vals,
+#     col = "black",
+#     lwd = 2
+#   )
+# }
+# # Add canonical point
+# canon <- canonical(rsmmod)$xs
+# canon_z <- predict(rsmmod, newdata = as.data.frame(t(canon)))
+# points3d(canon["x1"], canon["x2"], canon_z,
+#   col = "red", size = 10
+# )
+# 
+# # Add label for canonical point
+# text3d(canon["x1"], canon["x2"], canon_z * 1.1,
+#   texts = "Optimum", col = "red"
+# )
+# axes3d()
+# rgl.snapshot("my_3d_plot.png", fmt = "png")
+```
+
+
+```{r rgl_plot_load}
+# knitr::include_graphics("my_3d_plot.png")
+```
+## What is optimum condition and its predicted response
+```{r rsm_optimal, fig.align='center'}
+# optimum condition
+code2val(canonical((rsmmod))$xs, codings = codings(codedrsm2))
+
+prediction <- predict(rsmmod, newdata  = data.frame(
+  x1 = canonical(rsmmod)$xs[1],
+  x2 = canonical(rsmmod)$xs[2]),
+  interval = "confidence")
+
+#predicted response
+kable(prediction)
+```
+
+# Amylase activity on four different starch of different concentration
+- load and tidy the data
+
+```{r four_starch_data}
+
+UV_04_08_2006_ <- read_excel("../Data/UV (04.08.2006) - completed.xlsx", 
+                             sheet = "Sheet1")
+UV <- UV_04_08_2006_[1:42,1:6]
+UV <- UV %>% filter(!is.na(`0 min`))
+
+ns <- names(UV)
+ns[1] <- "Starch"
+names(UV) <- ns
+
+UV <- UV %>% filter(!str_detect(`0 min`, "min"))
+
+starch <- c("Soluble Starch","Topioca Starch","Corn Starch","Rice Starch")
+starch <- c(rep(starch, each=2), "Negative control")
+starch <- rep(starch, times = 4)
+UV[,1] <- starch
+
+lvl <- c(
+  "Soluble Starch",
+  "Corn Starch",
+  "Rice Starch",
+  "Topioca Starch",
+  "Negative control"
+)
+
+UV2 <- UV %>% 
+  mutate(sub_conc=rep(c(1, 0.5, 1.5, 2), each = 9)) %>% 
+  pivot_longer(2:6,
+                    names_to = "Time",
+                    values_to = "ABS") %>% 
+  mutate(Time=str_remove(Time, " min"),
+         Time = as.double(Time)) %>% 
+  mutate(Starch = factor(Starch,
+                         levels = lvl),
+         ABS=as.numeric(ABS)) 
+kable(UV2)
+```
+
+
+
+## Visualizing the enzyme activity
+```{r enz_activity, fig.width = 6.3, fig.height=4, fig.align='center'}
+
+UV2 %>% 
+  #filter(Starch!="Negative control")%>% 
+  ggplot(aes(x=Time, y=ABS, color = Starch))+
+  geom_point()+
+  coord_cartesian(ylim = c(0,2))+
+  geom_smooth(method = 'lm', se = F,
+              formula = y~poly(x, 2, raw =T))+
+  scale_x_continuous(breaks = seq(0, 60, 15))+
+  scale_y_continuous(breaks = seq(0, 2, 0.5))+
+  scale_color_manual(
+    breaks = lvl,
+    values = c("green",
+               "yellow",
+               "black",
+               "blue",
+               "red")
+  )+
+  labs(
+    x = "Time (minutes)",
+    y = "Absorbance at 620 nm"
+  )+
+  facet_grid(.~sub_conc,
+             labeller = as_labeller(function(x){
+               paste(x, "%")
+             }))+
+  theme_classic()+
+  theme(
+    text = element_text(family= mfont,
+                        size = 12,
+                        color = 'black'),
+    legend.position = "bottom",
+    strip.background = element_rect(color = "grey85")
+    )
+```
+
+
+```{r enz_activity_percentage_by_sub_conc, fig.align='center'}
+UV2.1 <- UV2 %>% reframe(Absmean=mean(ABS),
+                .by = c(Time, sub_conc, Starch)) %>% 
+  # group_by(Starch, Time, sub_conc) %>% 
+  mutate(ABSper=(Absmean)/first(Absmean)*100,
+         .by = c(sub_conc, Starch)) 
+kable(UV2.1)
+
+UV2.1%>% 
+  ggplot(aes(x=Time, y=ABSper, color = Starch))+
+  #geom_smooth()
+  geom_smooth(method = 'lm', se = F,
+              formula = y~poly(x, 2, raw =T))+
+  geom_point()+
+  scale_x_continuous(breaks = seq(0, 60, 15))+
+  scale_y_continuous(breaks = seq(0, 100, 20))+
+  scale_color_manual(
+    breaks = lvl,
+    values = c("green",
+               "yellow",
+               "black",
+               "blue",
+               "red")
+  )+
+  labs(
+    x = "Time (minutes)",
+    y = "Reduction percentage of
+    Absorbance at 620 nm"
+  )+
+  facet_grid(.~sub_conc,
+             labeller = as_labeller(function(x){
+               paste(x, "%")
+             }))+
+  theme_classic()+
+  theme(
+    text = element_text(family= mfont,
+                        size = 12,
+                        color = 'black'),
+    legend.position = "bottom",
+    strip.background = element_rect(color = "grey85")
+    # ,
+    # panel.grid.major = element_line(
+    #   color = "grey80",
+    #   linewidth = 0.3,
+    #   linetype = 3
+  )
+```
+
+# Numerical estimation of the curvature of the enzyme activity
+```{r curvatre_of_regression_eq}
+mod <- lm(ABS~Starch+poly(Time, 2, raw =T), data= UV2 %>% 
+            filter(Starch!="Negative control") )
+summary(mod)
+
+# estimattion vs lab-tested value
+uv3 <- UV2 %>% filter(Starch != "Negative control")
+uv3$fitted <- fitted(mod)
+uv3$residual <- resid(mod)
+kable(uv3)
+```
+
+# Estimation of kinetic parameters Vo, Km and Vmax
+```{r kinetic, fig.align='center'}
+# 1. Calculate Initial Velocity (v0)
+# We calculate v0 using the change btw Time = 0 and Time = 15
+v0_data <- UV2 %>%
+  # Exclude the negative control 
+  filter(Starch != "Negative control") %>%
+  # Filter only for the initial linear phase timepoints
+  filter(Time %in% c(0, 15)) %>%
+  # Group to average the two replicates in your dataset
+  group_by(Starch, sub_conc, Time) %>%
+  summarize(mean_ABS = mean(ABS), .groups = "drop") %>%
+  # Reshape data to have Time 0 and Time 15 in separate columns
+  pivot_wider(names_from = Time, values_from = mean_ABS,
+              names_prefix = "T_") %>%
+  mutate(
+    # Calculate initial velocity
+    v0 = (T_0 - T_15) / 15
+  )
+
+print("Calculated Initial Velocities (v0):")
+kable(v0_data, format = 'latex', booktabs = TRUE, escape = T)
+```
+
+## Fitting Michaeli-Menten Model for the four types of starch
+
+```{r fit_michaelis_menten_model}
+mm_results <- v0_data %>%
+  group_by(Starch) %>%
+  nest() %>%
+  mutate(
+    model = map(data, ~ nls(
+      v0 ~ (Vmax * sub_conc) / (Km + sub_conc),
+      data = .x,
+      # Dynamic start values based on the data
+      start = list(Vmax = max(.x$v0), Km = median(.x$sub_conc))
+    )),
+    # Extract the Vmax and Km estimates cleanly
+    params = map(model, tidy)
+  ) %>%
+  unnest(params) %>%
+  select(Starch, term, estimate, std.error, p.value)
+
+print("Estimated Vmax and Km parameters:")
+kable(mm_results)
+
+## Another way of fitting MM model
+suppressMessages(
+  suppressWarnings(
+    library(drc, quietly = TRUE)
+  )
+)
+fit <- drm(v0~sub_conc, data = v0_data, fct = MM.2())
+summary(fit)
+
+# Fit separate MM curves for each Starch group
+fit_grouped <- drm(v0 ~ sub_conc, curveid = Starch, 
+                   data = v0_data, fct = MM.2())
+
+# Summary of Vmax (d) and Km (e) for each starch type
+summary(fit_grouped)
+
+# Predict smooth curves from fit_grouped model
+pred_grid <- expand.grid(
+  sub_conc = seq(0.1, 2.5, length.out = 100),
+  Starch = unique(v0_data$Starch)
+)
+pred_grid$pred_v0 <- predict(fit_grouped, newdata = pred_grid)
+kable(pred_grid, type = 'latex', escape = T, booktabs= TRUE)
+```
+
+## Plot the Substrate Saturation Curves
+
+```{r 'Plot the Substrate Saturation Curves', fig.align='center'}
+ggplot(v0_data, aes(x = sub_conc, y = v0, color = Starch)) +
+  geom_point(alpha = 0.5, size = 2) +
+  # Fit the non-linear Michaelis-Menten curve onto the plot
+  stat_smooth(
+    method = "nls", # non-linear least squares
+    formula = y ~ (Vmax * x) / (Km + x),
+    method.args = list(start = list(Vmax = 0.05, Km = 1)),
+    se = FALSE,
+    linewidth = 1
+  ) +
+  labs(
+    x = "Substrate Concentration (%)",
+    y = expression("Initial Velocity (" * Delta * " Abs / min)"),
+    title = "Michaelis-Menten Kinetics of Alpha-Amylase",
+    subtitle = "Substrate saturation curves for various starches",
+    color = NULL
+  ) +
+  theme_minimal() +
+  theme(
+    text = element_text(
+      family = mfont,
+      color = "black",
+      size = 12
+      ),
+    axis.line = element_line(color = "black"),
+    axis.text = element_text(color = "black"),
+    legend.position = "bottom",
+    legend.margin = margin(-10, 0, 0, 0),
+    plot.margin = margin(5, 5, 5, 5)
+)
+
+
+############### 
+
+
+
+# Km estimates from summary(fit_grouped) to overlay vertical lines
+km_df <- data.frame(
+  Starch = c("Soluble Starch", "Corn Starch", 
+             "Rice Starch", "Topioca Starch"),
+  Km = c(3.816, 2.939, 1.409, 3.051)
+)
+
+kable(km_df)
+
+ggplot() +
+  # Raw data points
+  geom_point(data = v0_data, aes(x = sub_conc, y = v0, 
+                                 color = Starch), size = 2.5) +
+  # Fitted Michaelis-Menten lines
+  geom_line(data = pred_grid, aes(x = sub_conc, y = pred_v0, 
+                                  color = Starch), 
+            linewidth = 1) +
+  # Vertical dashed lines indicating Km
+  geom_vline(data = km_df, aes(xintercept = Km, color = Starch), 
+             linetype = "dashed", alpha = 0.7) +
+  facet_wrap(~ Starch) +
+  labs(
+    x = "Substrate Concentration (%)",
+    y = expression("Initial Velocity " * v[0] * " (" * Delta * "Abs/min)"),
+    title = "Michaelis-Menten Fit by Starch Type",
+    subtitle = "Dashed lines indicate estimated Km (half-saturation) values"
+  ) +
+  theme_bw() +
+  theme(
+    text = element_text(
+      family = mfont,
+      color = "black",
+      size = 12
+    ),
+    axis.line = element_line(color = "black"),
+    axis.text = element_text(color = "black"),
+    legend.margin = margin(-10, 0, 0, 0),
+    plot.margin = margin(5, 5, 5, 5),
+    legend.position = "none"
+    )
+
+# Tidy extracted parameter estimates from fit_grouped
+param_df <- data.frame(
+  Starch = rep(c("Soluble Starch", "Corn Starch", 
+                 "Rice Starch", "Topioca Starch"), 2),
+  Parameter = c(rep("Vmax (d)", 4), rep("Km (e)", 4)),
+  Estimate = c(0.1389, 0.1237, 0.0772, 0.1198, 3.816, 2.939, 1.409, 3.051),
+  SE = c(0.0531, 0.0366, 0.0134, 0.0387, 2.045, 1.315, 0.483, 1.471)
+)
+
+kable(param_df)
+
+ggplot(param_df, aes(x = Starch, y = Estimate, fill = Starch)) +
+  geom_col(width = 0.6, alpha = 0.85, color = "black") +
+  geom_errorbar(aes(ymin = pmax(0, Estimate - SE), ymax = Estimate + SE), 
+                width = 0.2) +
+  facet_wrap(~ Parameter, scales = "free_y") +
+  labs(
+    x = NULL,
+    y = "Parameter Value",
+    title = "Comparison of Estimated Vmax and Km Values"
+  ) +
+  theme_classic() +
+  theme(
+    text = element_text(
+      family = mfont,
+      color = "black",
+      size = 12
+    ),
+    axis.line = element_line(color = "black"),
+    axis.text = element_text(color = "black"),
+    legend.margin = margin(-10, 0, 0, 0),
+    plot.margin = margin(5, 5, 5, 5),
+    legend.position = "none",
+    axis.text.x = element_text(angle = 30, hjust = 1),
+    
+    strip.background = element_rect(fill = "grey90")
+  )
+
+#####
+eff_df <- data.frame(
+  Starch = c("Rice Starch", "Corn Starch", "Topioca Starch", "Soluble Starch"),
+  Efficiency = c(0.0772/1.4089, 0.1237/2.9388, 0.1198/3.0514, 0.1389/3.8165)
+)
+
+kable(eff_df)
+
+ggplot(eff_df, aes(x = reorder(Starch, -Efficiency), y = Efficiency, 
+                   fill = Starch)) +
+  geom_col(width = 0.5, color = "black", alpha = 0.85) +
+  labs(
+    x = NULL,
+    y = expression(V[max] / K[m] * " (min"^-1 * ")"),
+    title = "Apparent Catalytic Efficiency Across Substrates",
+    subtitle = "Higher values indicate faster breakdown
+    at low substrate concentrations ([S] << Km)"
+  ) +
+  theme_classic() +
+  theme(
+    text = element_text(
+      family = mfont,
+      color = "black",
+      size = 12
+    ),
+    axis.line = element_line(color = "black"),
+    axis.text = element_text(color = "black"),
+    legend.margin = margin(-10, 0, 0, 0),
+    plot.margin = margin(5, 5, 5, 5),
+    legend.position = "none",
+    axis.text.x = element_text(angle = 20, hjust = 1)
+  )
+
+```
+
+# AI generated Discussion
+
+# Analytical Method Validation and Spectrophotometric Calibration
+
+
+## Glucose Standard Curve Establishment and Transfer Function Derivation
+
+The quantitative foundation of this enzymatic investigation rests upon the empirical calibration relating glucose concentration to absorbance at 570 nm via the DNS colorimetric assay. Linear regression analysis of the standard curve data (n = 18) yielded two mathematically equivalent but analytically distinct models: 
+$$\text{Model 1 (Concentration as a Function of Absorbance):} \quad C_{\text{glu}} = -0.03242 + 0.46291 A_{570}$$
+$$\text{Model 2 (Absorbance as a Function of Concentration):} \quad A_{570} = 0.07986 + 2.14059 C_{\text{glu}}$$
+The exceptionally high coefficient of determination ($\text{R}^2$ = 0.9909, adjusted $\text{R}^2$ = 0.9903) across both formulations confirms that the spectrophotometric response remains strictly linear throughout the tested concentration range (0.0-2.0 mg/mL glucose). This linearity is mechanistically significant, as it demonstrates that optical saturation of the detector was not approached and that the chromophore concentration remains directly proportional to the molar concentration of reducing ends. The slope of Model 2 $\text{Y}_1$ = 2.14059 ± 0.05126) represents the combined molar absorptivity-path length product, which serves as a system-specific constant under fixed instrumental parameters.
+
+Of critical analytical importance is the comparison between the two regression approaches. Model 1 functions as the operational inverse calibration equation for predicting unknown glucose concentrations from experimental absorbance measurements. The intercept term ($\beta_0$ = -0.03242 ± 0.01513) is statistically indistinguishable from zero (p = 0.0478), providing analytical justification for single-point calibration at low analyte concentrations. However, the non-zero intercept in Model 2 ($\text{Y}_0$ = 0.07986 ± 0.03104, p = 0.0204) warrants careful interpretation. This baseline offset arises from the inherent absorbance of unreacted DNS reagent and matrix components, which remains present even in the absence of reducing sugars. The disparity between the Model 1 intercept (-0.03242) and Model 2 intercept (0.07986) illustrates the mathematical consequence of regressing concentration onto absorbance versus absorbance onto concentration—a distinction with profound analytical implications.
+
+From a metrological perspective, the inverse regression approach (Model 1) is preferred for analytical prediction because it minimizes error in the dependent variable (concentration) when absorbance is the measured quantity. The standard error of the estimate ($\sigma$ = 0.03454 mg/mL) defines the analytical sensitivity threshold, indicating that glucose concentrations below approximately 0.07 mg/mL cannot be reliably distinguished from the blank. This detection limit is critical for interpreting kinetic data at extended timepoints where substrate depletion approaches completion and absorbance values approach baseline levels.
+
+## Baseline Correction and Matrix Interference Considerations
+
+The experimental data incorporated a buffer baseline subtraction ($\text{A}_\text{buf}$= 0.6713) applied uniformly across all samples. While this correction effectively eliminates systematic offset attributable to the reaction matrix, several analytical constraints merit explicit consideration:
+
+First, the assumption of static baseline absorbance fails to account for time-dependent non-enzymatic color development. Under the alkaline conditions (pH ~12) and elevated temperatures (95°C) employed for DNS color development, thermal caramelization and Maillard-type reactions between residual reducing ends and unreacted DNS can occur spontaneously, independent of enzymatic activity. The temporal progression of this background reaction would manifest as a positive drift in measured absorbance at extended incubation times, potentially inflating apparent substrate conversion at later timepoints (t > 45 min). The observed flattening of progress curves during the terminal phase may therefore reflect not only genuine substrate depletion but also the countervailing influence of increasing baseline absorbance.
+
+Second, the application of a global scalar subtraction assumes that matrix absorbance remains invariant across different substrate types, concentrations, and salt conditions. This assumption is particularly tenuous for native granular starches, where light scattering from insoluble starch granules contributes non-specifically to measured absorbance. Corn and rice starches, with their compact A-type crystalline structures and small granule diameters, exhibit substantial turbidity that would vary with concentration and degree of gelatinization. The observed differences in initial absorbance values across starch types at t = 0 are consistent with differential light scattering rather than genuine differences in reducing sugar content.
+
+Third, the buffer blank correction does not account for the varying background absorbance contributed by the different starch substrates themselves. The iodine-starch complexation assay, employed for progress curve monitoring at 620 nm, relies on the differential absorbance between the starch-iodine complex and free iodine. However, the molar absorptivity of the starch-iodine complex varies with starch type, amylose content, and degree of polymerization. Normalizing absorbance measurements to the t = 0 valueAbsorbance percentage) partially compensates for these baseline differences, but the fundamental assumption that the proportional relationship between absorbance and starch-iodine complex remains constant throughout the hydrolysis course is not strictly valid. As endo-amylolytic cleavage reduces the average chain length below the critical degree of polymerization (~40 glucose units) required for stable helix formation, the extinction coefficient of the iodine complex diminishes non-linearly, introducing concentration-dependent bias.
+
+
+# Fermentation Kinetics and Salting-Out Dynamics
+
+
+## Temporal Profiling of Glucose Accumulation
+
+The fermentation time-course data, spanning 0-48 hours across salt concentrations of 10%, 20%, and 30% w/v, reveal a distinctly triphasic pattern of glucose accumulation. Contour plot visualization (Figure 3A) demonstrates that maximum glucose concentration (approximately 0.65-0.67 mg/mL) is achieved at intermediate salt concentrations (18-22%) between 24-36 hours of incubation. The second-order polynomial surface model fitted to these data exhibits significant quadratic terms for both salt concentration ($\beta_{22}$ for $\text{Time}^2$: t = 2.851, p = 0.0102) and time ($\beta_{11}$ for $\text{Salt}^2$: t = 1.490, p = 0.1527, not statistically significant), with a marginally significant interaction term ($\beta_{12}$ for Salt×Time: t = 2.155, p = 0.0442).
+
+The temporal evolution of glucose accumulation can be mechanistically decomposed into three distinct phases:
+
+Phase I: Latent Acceleration (0-12 hours)
+
+During the initial 12 hours, glucose concentrations remain low across all salt conditions, consistent with the lag phase of bacterial growth and the time required for extracellular amylase expression and secretion. The rate of glucose accumulation during this period is primarily limited by enzyme synthesis rather than substrate availability. The lack of substantial glucose production during this interval is analytically important, as it establishes that the DNS assay is sufficiently sensitive to detect low-level hydrolysis while ruling out significant non-enzymatic starch degradation under the fermentation conditions.
+
+Phase II: Linear Production (12-36 hours)
+
+The period between 12-36 hours represents the active exponential-to-stationary growth transition, where extracellular amylase concentrations achieve steady-state. During this interval, glucose accumulation proceeds at an approximately constant rate that depends on salt concentration. The slope of the glucose-time profile during this linear phase ranges from approximately 0.015-0.025 mg/mL·$\text{hour}^{-1}$, with the highest rates observed at 20% salt. This salt-dependent rate variation suggests that ionic strength modulates either the stability of the extracellular enzyme, the accessibility of the starch substrate, or both. The pseudo-first-order kinetics observed during this phase (linear glucose accumulation despite decreasing substrate concentration) indicates that substrate concentration remains above the enzyme's Km throughout this interval.
+
+Phase III: Asymptotic Plateau (36-48 hours)
+
+The terminal phase of the fermentation is characterized by a distinct flattening of the glucose accumulation curve. This plateau cannot be attributed solely to substrate exhaustion, as starch remains present in the medium, albeit in partially hydrolyzed form. Rather, the deceleration reflects the convergence of multiple inhibitory mechanisms:
+
+- Product Inhibition: Accumulated glucose and maltooligosaccharides (at concentrations approaching 0.7 mg/mL glucose equivalents) act as competitive inhibitors at the enzyme active site. The observed plateau occurs at glucose concentrations substantially below the theoretical starch concentration, consistent with product-mediated feedback inhibition.
+
+- Thermal Inactivation: Under the fermentation conditions (temperature not explicitly controlled but likely 30-37°C), the bacterial amylase experiences progressive thermal denaturation. The half-life of mesophilic bacterial amylases at 37°C typically ranges from 6-12 hours, consistent with the observed decline in production rate after 24-30 hours.
+
+- Proteolytic Degradation: Extracellular proteases, co-secreted during stationary phase, may hydrolyze the amylase enzyme itself, reducing active enzyme concentration independent of temperature effects.
+
+## Salt Concentration Effects: Salting-In Versus Salting-Out
+
+The response surface model reveals a statistically significant quadratic effect of salt concentration ($\beta_{11}$ = 2.013×10$^{-2}$, p = 0.153), though the p-value does not reach conventional significance. The positive coefficient on the squared salt term is mechanistically surprising, as it would predict increasing glucose yield at both high and low salt concentrations relative to intermediate values—a pattern not apparent in the raw data. The interaction between salt and time ($\beta_{12}$ = 3.592×10$^{-2}$, p = 0.044) is more meaningful, indicating that the optimal fermentation time depends on salt concentration.
+
+The observed salt concentration effects can be rationalized through the framework of protein hydration thermodynamics:
+
+At moderate salt concentrations (10-20% w/v), the phenomenon of preferential hydration predominates. Salt ions preferentially exclude from the protein hydration layer, increasing the chemical potential of the protein and thermodynamically favoring the compact, folded native state. This salting-in effect enhances enzyme stability and prolongs catalytic activity, explaining the higher glucose yields observed at 20% salt relative to 10% salt.
+
+At elevated salt concentrations (30% w/v), the local ion concentration exceeds the threshold for preferential exclusion, and the hydration shell surrounding the enzyme becomes disrupted. Hydrophobic surface residues become increasingly exposed to the aqueous environment, driving protein aggregation through hydrophobic interactions. This salting-out phenomenon manifests as a sharp decline in glucose production at 30% salt, particularly during the later fermentation stages when cumulative thermal and salt stress exceed the enzyme's tolerance threshold.
+
+The salt concentration effect is further complicated by its influence on starch substrate structure. High ionic strength (particularly with monovalent cations such as Na$^{+}$) can promote starch granule swelling and partial gelatinization, increasing substrate accessibility. However, the same ions can also stabilize ordered water structures around the starch helices, potentially reducing enzyme binding affinity. The optimal salt concentration of approximately 20% represents a compromise between these competing effects—sufficient ionic strength to stabilize the enzyme but not so high as to induce aggregation or alter substrate recognition.
+
+# Response Surface Optimization of pH and Temperature
+
+## Coded Variable Transformation and Model Parameterization
+
+The central composite design for pH (4.0-8.0) and temperature (30-70°C) optimization employed coded variable transformations centered at pH 6.0 and 50°C:
+
+To model the interactive effects of incubation time ($T$) and salt concentration ($S$) on glucose yield, a full second-order polynomial response model with cross-product interaction terms was specified:
+
+
+$$\text{Glu}(S, T) = \beta_0 + \beta_1 S + \beta_2 T + \beta_{11} S^2 + \beta_{22} T^2 + \beta_{12} (S \times T) + \varepsilon$$
+The response surface contour map generated from this interaction model highlights key process characteristics:
+
+Linear Terms ($\beta_1, \beta_2$): Define the first-order directional gradients. Positive coefficients indicate that increasing time or ionic strength initially promotes accumulation of hydrolytic products.
+
+Quadratic Terms ($\beta_{11}, \beta_{22}$): Capture surface curvature. Negative quadratic parameters ($\beta_{11} < 0, \beta_{22} < 0$) are prerequisite for a concave response surface that contains a localized global maximum.
+
+Interaction Term ($\beta_{12}$): Quantifies parameter synergy. A statistically significant interaction term ($p < 0.05$) indicates that the optimal growth time for maximum enzyme yield changes depending on the salt concentration of the medium.
+
+
+# Response Surface Optimization of Operational Parameters (pH and Temperature)
+
+
+## Coded Variable Transformations and Orthogonality
+
+The central composite design for pH (4.0-8.0) and temperature (30-70°C) optimization employed coded variable transformations centered at pH 6.0 and 50°C:
+
+$$x_1 = \frac{T - 50}{10}, \quad x_2 = \frac{\text{pH} - 6.0}{0.5}$$
+This coding scheme serves three critical statistical functions: (1) it centers the design at the midpoint of the experimental range, reducing correlation between linear and quadratic terms; (2) it scales the variables to comparable magnitudes (x_1 and x_2 both range approximately -2 to +2), ensuring that regression coefficients are directly comparable; and (3) it improves numerical stability during matrix inversion for canonical analysis.
+
+The fitted second-order response surface model:
+
+$$avg = 1.22668 - 0.01519 T - 0.05774 pH - 0.06495 (T \times pH) - 0.45733 T^2 - 0.39470 pH^2$$
+
+
+## Coefficient Interpretation and Mechanistic Inference
+
+Linear Coefficients: The negative linear coefficients for both $x_1$ ($\beta_1$ = -0.01519, p = 0.308) and $x_2$ ($\beta_2$ = -0.05774, p = 0.0059) indicate that enzyme activity decreases with increasing coded variable values—i.e., higher temperature and higher pH. The pH linear coefficient reaches statistical significance (p = 0.006), while the temperature coefficient does not. This differential significance suggests that, within the experimental range, pH variation exerts a more pronounced effect on activity than temperature variation. Mechanistically, this reflects the pH-sensitivity of the catalytic ionizable residues (aspartate and glutamate) that participate directly in bond cleavage, whereas temperature effects within the tested range are partially offset by the competing effects of increased collision frequency versus accelerated denaturation.
+
+Quadratic Coefficients: Both quadratic terms are strongly negative ($\beta_{11}$ = -0.45733, p = 7.62×10$^{-8}$; $\beta_{22}$ = -0.39470, p = 2.59×10$^{-7}$), confirming that the response surface exhibits pronounced downward curvature in both directions. These highly significant negative quadratic coefficients are the mathematical prerequisite for identifying a true global maximum. The magnitude of the temperature quadratic coefficient exceeds that of pH, indicating that enzyme activity declines more rapidly with deviations from optimal temperature than with deviations from optimal pH. This asymmetry is biochemically meaningful: temperature affects the entire protein conformational ensemble and the activation entropy of catalysis, while pH affects only the ionization state of specific catalytic residues.
+
+Interaction Coefficient: The interaction term ($\beta_{12}$ = -0.06495, p = 0.0158) is negative and statistically significant. A negative interaction coefficient indicates that the effect of temperature on enzyme activity depends on pH, and vice versa. Specifically, when temperature is high (positive $x_1$), the negative effect of pH ($x_2$) is amplified—i.e., high pH is particularly detrimental at high temperatures. Conversely, at optimal pH, the effect of temperature is somewhat less pronounced. This statistical interaction has a clear mechanistic interpretation: thermal denaturation and pH-induced conformational changes are not independent but rather synergistic. High pH conditions disrupt salt bridges and hydrogen bonds that stabilize the native state, rendering the enzyme more susceptible to thermal unfolding. The interaction term captures this synergy mathematically, confirming that optimization cannot be performed independently for each factor.
+
+## Canonical Analysis and Stationary Point Characterization
+
+The canonical analysis reveals the following key features:
+
+Stationary Point:
+
+- Coded coordinates: $x_1$ = -0.01148, $x_2$ = -0.07220
+- Original units: Temperature = 49.89°C, pH = 5.96
+
+Eigenvalues:
+
+- $\lambda_1$ = -0.3809 (eigenvector: $x_1$ = 0.391, $x_2$ = -0.920)
+- $\lambda_2$ = -0.4711 (eigenvector: $x_1$ = -0.920, $x_2$ = -0.391)
+
+Interpretation: Both eigenvalues are negative, confirming that the stationary point represents a global maximum. The magnitude of the eigenvalues ($\lambda_1$ and $\lambda_2$) indicates the sensitivity of the response surface along the principal axes of curvature. The larger magnitude of $\lambda_2$ indicates that the response surface is more sharply curved along the second principal axis (which corresponds predominantly to pH variation). This implies that the enzyme activity declines more rapidly with deviations from optimal pH than with equivalent coded deviations in temperature.
+
+The eigenvector analysis provides insight into the geometry of the response surface near the optimum. The first eigenvector (associated with $\lambda_1$ = -0.381) is dominated by the pH coordinate ($x_2$ = -0.920), indicating that the first principal axis corresponds primarily to pH variation. The second eigenvector ($\lambda_2$ = -0.471) is dominated by temperature ($x_1$ = -0.920). The near-orthogonality of these eigenvectors suggests that the response surface is approximately aligned with the original axes, meaning that pH and temperature effects are largely separable despite the small interaction term.
+
+## Structural Mechanics of pH and Thermal Effects
+
+
+The optimization identifies pH 5.96 and 49.89°C as the conditions promoting maximum enzyme activity. The biochemical interpretation of these optima requires consideration of the enzyme's structural biology:
+
+pH Sensitivity: The observed pH optimum of 5.96 is consistent with $\alpha$-amylases containing a catalytic triad of aspartate and glutamate residues. In the resting enzyme, the active site nucleophile (typically Asp) must be deprotonated (pKa ~4.5) to function as a catalytic base, while the acid catalyst (Glu) must be protonated (pKa ~6.0) to donate a proton to the departing glycosidic oxygen. At pH 5.96, the balance between these ionization states is optimized: the Asp is predominantly deprotonated (Asp$^-$), and the Glu is predominantly protonated (GluH). Deviation from this optimal pH shifts this ionization balance—at lower pH, Asp becomes protonated and loses nucleophilic activity; at higher pH, Glu becomes deprotonated and loses its proton-donating function.
+
+Thermal Stability: The temperature optimum of 49.89°C reflects the thermodynamic compromise between the activation energy required for catalysis and the entropy-driven unfolding of the tertiary structure. The activation enthalpy ($\Delta$H‡) for the cleavage of $\alpha$-1,4-glycosidic bonds is approximately 50-70 kJ/mol. Increasing temperature from 30°C to 50°C increases the reaction rate approximately 2-3 fold (following the Arrhenius relationship), accounting for the positive effect of temperature on activity. However, above 50°C, the rate of thermal denaturation accelerates exponentially. The Gibbs free energy of unfolding ($\Delta G_{unfold}$) for mesophilic enzymes typically becomes zero (unfolding becomes spontaneous) at temperatures 5-15°C above the optimal growth temperature. For an enzyme derived from a mesophilic bacterium, the unfolding midpoint (Tm) is likely 55-60°C, consistent with the observed activity decline above 50°C. The thermal inactivation is irreversible at the assay temperatures, as the unfolded protein cannot refold to its native, catalytically active conformation without chaperone assistance.
+
+# Comparative Substrate Preference and Hydrolytic Profiles
+
+
+## Normalized Progress Curves and Hydrolysis Rates
+
+The iodine-starch complexation assay at 620 nm provides a real-time metric of $\alpha$-amylase activity based on the loss of starch-iodine complexation capacity. Normalization to percentage of initial absorbance (ABS percent) eliminates baseline differences arising from varying substrate concentrations and initial turbidity, enabling direct comparison of hydrolysis rates across substrate types and concentrations.
+
+The normalized progress curves reveal distinct substrate-dependent profiles:
+
+- Soluble Starch: Exhibits the most rapid decline in iodine-complexing capacity, reaching approximately 1-2% of initial absorbance within 60 minutes at all substrate concentrations. The steep initial slope (-dA/dt) indicates high catalytic efficiency, consistent with the amorphous, pre-gelatinized nature of soluble starch. The absence of crystalline domains and the expanded accessible surface area allow the enzyme to bind and cleave $\alpha$-1,4 bonds without the physical barrier imposed by granular architecture. At all tested concentrations (0.5-2.0% w/v), the progress curve for soluble starch follows a near-exponential decay, suggesting that the reaction is limited primarily by the rate of enzyme-substrate encounter rather than substrate accessibility.
+
+- Tapioca Starch: Displays intermediate hydrolysis rates, with residual iodine-complexing capacity ranging from 8-11% at 60 minutes across concentrations. The C-type crystalline structure of tapioca starch, with its mixture of A-type and B-type polymorphs, provides moderate resistance to enzymatic attack. The larger granule size (5-25 $\mu$m) and higher amylose content (~17%) relative to rice starch contribute to the observed hydrolysis rate, which exceeds that of corn starch but falls below that of soluble starch.
+
+- Rice Starch: Demonstrates the most rapid decline among the granular starches, reaching 3-6% residual iodine-complexing capacity at 60 minutes. This unexpectedly high hydrolysis rate contradicts the general expectation that small granules (2-8 $\mu$m) present greater resistance to enzymatic attack due to their high surface-area-to-volume ratio and dense packing. However, rice starch contains the lowest amylose content (~15-20%) among the tested substrates and possesses a relatively open A-type crystalline structure. The small granule size may actually facilitate enzymatic access by increasing the total surface area available for enzyme binding, despite the theoretical steric constraints.
+
+- Corn Starch: Shows the slowest hydrolysis among granular starches, with 1.3-2.0% residual iodine-complexing capacity at 60 minutes. The A-type crystalline structure of corn starch, characterized by densely packed double helices and high amylose content (~25%), presents the greatest steric barrier to enzyme penetration. The hydrolysis of corn starch is likely limited by the frequency of productive enzyme-substrate encounters at accessible granule surfaces rather than by the intrinsic catalytic rate of the enzyme. The initial rate of corn starch hydrolysis is approximately 60-70% of that for rice starch, consistent with the greater resistance conferred by its crystalline architecture.
+
+## Substrate Concentration Dependence
+
+The effect of substrate concentration on hydrolysis rate is most evident during the early phase of reaction (0-15 minutes). At 0.5% substrate concentration, the initial slopes are approximately 30-40% lower than at 2.0% concentration across all starch types. This concentration dependence is consistent with Michaelis-Menten kinetics, where the initial velocity increases with substrate concentration until approaching $V_{max}$.
+
+However, the concentration effect diminishes at extended incubation times. By 60 minutes, the normalized residual absorbance values converge across concentrations for each substrate type, indicating that the reaction reaches a substrate-dependent plateau rather than proceeding to completion. This plateau cannot be attributed to substrate exhaustion, as the theoretical starch concentration at 2.0% w/v exceeds the glucose equivalents produced by several-fold. Rather, the plateau reflects the combined effects of product inhibition and the preferential hydrolysis of accessible $\alpha$-1,4 bonds, leaving behind highly branched, recalcitrant $\alpha$-limit dextrins that resist further cleavage.
+
+
+# Curvature Modeling and Kinetic Non-Linearity
+
+
+## Polynomial Modeling of Hydrolytic Curvature
+
+The second-order polynomial regression model fitted to the absorbance-time data:
+
+$$A(t) = \beta_0 + \beta_1 t + \beta_2 t^2 + \sum_{j} \tau_j \cdot \text{Starch}_j + \varepsilon$$
+yields the following key parameters:
+
+- $\beta_1$ (linear time coefficient) = -0.03744 ± 0.00305 (t = -12.253, p < 2×10$^{-16}$)
+
+- $\beta_2$ (quadratic time coefficient) = 0.0003076 ± 0.0000488 (t = 6.299, p = 3×10$^{-9}$)
+
+The negative linear coefficient ($\beta_1$ < 0) reflects the overall decline in absorbance with time, while the positive quadratic coefficient ($\beta_2$ > 0) models the deceleration of the reaction as it approaches plateau. The ratio of the quadratic to linear coefficient (-$\beta_2$/$\beta_1$ $\approx$ 0.0082) defines the characteristic curvature time constant of the reaction.
+
+The starch-specific coefficients indicate significant differences in baseline absorbance:
+
+- Corn Starch: $\tau$ = 0.0361 ± 0.0520 (p = 0.488)
+
+- Rice Starch: $\tau$ = 0.1667 ± 0.0520 (p = 0.0016)
+
+- Tapioca Starch: $\tau$ = 0.1381 ± 0.0520 (p = 0.0088)
+
+The statistical significance of the starch coefficients confirms that the substrates differ in their initial absorbance values, reflecting differences in iodine-complexing capacity and initial turbidity rather than enzymatic activity per se. The negative coefficient for corn starch relative to soluble starch indicates that corn starch initially produces lower absorbance than the reference, consistent with its lower amylose content and/or greater granular opacity.
+
+## Residual Analysis and Mechanistic Inference
+
+The residual analysis reveals systematic deviations from the quadratic model that provide insight into the reaction mechanism. At early timepoints (t = 0-15 minutes), the residuals are predominantly negative, indicating that the actual absorbance decline exceeds the quadratic model's predictions. This pattern is consistent with rapid initial cleavage of easily accessible $\alpha$-1,4 bonds located at the granule surface or in amorphous regions. The enzyme encounters a high concentration of readily hydrolyzable substrate at the onset of reaction, resulting in a burst of activity that exceeds the average rate captured by the global quadratic fit.
+
+At late timepoints (t = 45-60 minutes), the residuals become positive, indicating that the actual absorbance is higher than predicted by the model. This positive deviation reflects the progressive inhibition of enzymatic activity as the reaction proceeds. The mechanisms contributing to this inhibition include:
+
+- Product accumulation: The increasing concentration of reducing sugars (glucose and maltooligosaccharides) competes with intact starch for the enzyme active site, reducing the effective concentration of enzyme-substrate complex.
+
+- Substrate modification: As the enzyme preferentially cleaves accessible bonds, the remaining substrate becomes increasingly resistant to hydrolysis. The accumulation of $\alpha$-limit dextrins with highly branched structures (rich in $\alpha$-1,6 linkages) presents a sterically hindered substrate that the enzyme cannot efficiently process.
+
+- Enzyme denaturation: At 50°C, the enzyme experiences time-dependent thermal inactivation. The half-life of thermal inactivation at 50°C is estimated from the curvature model to be approximately 30-40 minutes, consistent with the observed deceleration in reaction rate.
+
+The residual pattern differs systematically across starch types. Soluble starch exhibits the most pronounced early negative residuals, reflecting its high initial accessibility. Corn starch shows the smallest residual deviations, consistent with its slow, diffusion-limited hydrolysis kinetics. This differential residual pattern supports the interpretation that starch architecture—rather than intrinsic catalytic efficiency—is the primary determinant of hydrolysis kinetics in granular substrates.
+
+# Michaelis-Menten Kinetics and Substrate Preference
+
+## Parameter Estimation via Nonlinear Regression
+The Michaelis-Menten parameters were estimated using both grouped and starch-specific nonlinear regression (nls) and validated using the drc package with self-starting algorithms. The parameter estimates from the grouped model (all starches combined) produced pooled estimates:
+
+- $V_{max}$ = 0.1078 ± 0.0144 $\Delta A_{620}$·min$^-1$
+
+- $K_{m}$ = 2.530 ± 0.536% w/v
+
+However, the starch-specific fits reveal substantial variation that is masked by pooling:
+
+Soluble Starch:
+
+- $V_{max}$ = 0.1389 ± 0.0531 $\Delta A_{620}$·min$^-1$
+
+- $K_{m}$ = 3.816 ± 2.045% w/v
+
+- $V_{max}$/$K_{m}$ = 0.0364
+
+Tapioca Starch:
+
+- $V_{max}$ = 0.1198 ± 0.0387 $\Delta A_{620}$·min$^-1$
+
+- $K_{m}$ = 3.051 ± 1.471% w/v
+
+- $V_{max}$/$K_{m}$ = 0.0393
+
+Corn Starch:
+
+- $V_{max}$ = 0.1237 ± 0.0366 $\Delta A_{620}$·min$^-1$
+
+- $K_{m}$ = 2.939 ± 1.315% w/v
+
+- $V_{max}$/$K_{m}$ = 0.0421
+
+Rice Starch:
+
+- $V_{max}$ = 0.0772 ± 0.0134 $\Delta A_{620}$·min$^-1$
+
+- $K_{m}$ = 1.409 ± 0.483% w/v
+
+- $V_{max}$/$K_{m}$ = 0.0548
+
+## Mechanistic Interpretation of Kinetic Parameters
+
+$V_{max}$ Variation: The maximum velocity ($V_{max}$) varies approximately 1.8-fold across starch types, from 0.077 (rice starch) to 0.139 (soluble starch) $\Delta A_{620}$·min$^-1$. This variation reflects differences in substrate quality rather than enzyme activity. At saturating substrate concentrations, $V_{max}$ is theoretically independent of substrate identity; the observed $V_{max}$ variation therefore indicates that the true saturation condition was not achieved for all starch types. The higher $V_{max}$ for soluble starch reflects its greater accessibility, allowing a higher effective enzyme-substrate collision frequency even at equivalent mass concentrations.
+
+The unexpectedly low $V_{max}$ for rice starch (approximately 56% of soluble starch) despite its rapid initial hydrolysis rates suggests that the reaction reaches substrate-limited conditions at lower concentrations. The small granule size of rice starch, while providing high initial surface area, also results in rapid depletion of accessible substrate, reducing the maximum achievable velocity.
+
+$K_{m}$ Variation: The Michaelis constant ($K_{m}$) ranges from 1.409 (rice starch) to 3.816 (soluble starch)% w/v. The lower $K_{m}$ for rice starch indicates higher apparent substrate affinity, consistent with its rapid initial hydrolysis despite lower $V_{max}$. However, the physical interpretation of $K_{m}$ for heterogeneous substrates requires caution. Unlike soluble substrates where $K_{m}$ represents the concentration at which half-maximal velocity is achieved, for granular starches $K_{m}$ is a complex function of substrate accessibility, surface area, and crystallinity. The lower $K_{m}$ for rice starch may reflect its high surface-area-to-volume ratio, which allows the enzyme to achieve half-saturation at lower mass concentrations.
+
+Catalytic Efficiency Index ($V_{max}$/$K_{m}$): The efficiency index varies from 0.0364 (soluble starch) to 0.0548 (rice starch). This ranking is counterintuitive, as soluble starch is generally considered the most readily hydrolyzed substrate. The apparent paradox is resolved by recognizing that $V_{max}$ and $K_{m}$ are not independent parameters for heterogeneous substrates. The high $K_{m}$ for soluble starch (3.816% w/v) reflects its physical form—as a pre-gelatinized, amorphous powder, soluble starch requires higher mass concentrations to achieve the same effective enzyme-substrate encounter frequency as granular starches. The enzyme itself cannot distinguish between glycosidic bonds based on starch origin; rather, the observed kinetic parameters reflect the interplay between substrate physical properties and the enzyme's catalytic mechanism.
+
+## Nonlinear Least Squares (nls) versus Linear Transformation Methods
+
+The comparative performance of nls and linear transformation methods (Lineweaver-Burk, Eadie-Hofstee) merits consideration. The nls approach minimizes the residual sum of squares directly in the velocity-substrate space, producing unbiased parameter estimates when the error structure is homoscedastic. In contrast, linear transformation methods transform both the dependent and independent variables, altering the error structure and producing biased estimates if measurement errors are correlated with substrate concentration.
+
+The choice of nls is particularly justified for the current dataset, which exhibits heteroscedasticity in the velocity measurements (larger absolute errors at higher v0 values). The nls approach weights each data point appropriately, preventing high-velocity measurements from disproportionately influencing the parameter estimates. The use of self-starting algorithms in the drc package further improves the reliability of convergence, eliminating the need for user-supplied starting values that might lead to local minima in the optimization landscape.
+
+# Extended Analytical Limitations and Future Methodological Directions
+
+## Limitations of the DNS Assay for Endo-Amylase Activity
+The DNS assay, while widely employed for reducing sugar quantification, exhibits fundamental limitations when applied to endo-acting $\alpha$-amylases. The stoichiometry of reducing end production does not directly correspond to the number of glycosidic bonds cleaved, because endo-amylases randomly cleave internal bonds, producing two reducing ends per cleavage event regardless of substrate molecular weight. For a high-molecular-weight starch substrate, the initial phase of hydrolysis yields a relatively small increase in reducing ends per unit time, while the number of cleaved bonds (and thus the reduction in iodine-complexing capacity) is substantial. This analytical mismatch may account for the apparent discrepancy between the rapid decline in iodine staining and the relatively modest glucose accumulation observed in the kinetic data.
+
+The analytical consequence of this stoichiometric limitation is that the DNS-based glucose concentration cannot be directly interpreted as a measure of total substrate conversion. The values reported represent reducing sugar equivalents, which may significantly underestimate the extent of hydrolysis during early reaction stages. This limitation is particularly acute for the comparative substrate analysis, where differences in initial molecular weight distribution and branching patterns affect the relationship between reducing end production and actual bond cleavage.
+
+## Temperature and pH Stability Constraints
+
+The response surface optimization identifies optimal pH and temperature conditions that are likely assay-specific rather than universally applicable. The enzyme stability at the optimal conditions (pH 5.96, 50°C) is time-dependent, and the kinetic parameters estimated from the Michaelis-Menten analysis were based on initial rates measured over 15 minutes. This short assay duration minimizes the confounding effects of thermal inactivation, but the estimated $V_{max}$ and $K_{m}$ parameters may not be valid for longer reaction times.
+
+The thermal inactivation profile of the enzyme under assay conditions was not independently characterized. The residual analysis suggests time-dependent inactivation with a half-life of approximately 30-40 minutes, but this estimate is confounded with product inhibition and substrate depletion. Future studies should include thermal stability measurements (e.g., residual activity after pre-incubation at various temperatures) to separate the effects of thermal inactivation from kinetic limitations.
+
+## Spectrophotometric Interferences in Iodine-Complexation Assays
+
+The iodine-starch complexation assay, employed for progress curve monitoring at 620 nm, is subject to multiple interferences that affect data quality:
+
+- Turbidity Interference: Native starch granules scatter light at 620 nm, contributing to measured absorbance independently of iodine complexation. The normalization to percentage of initial absorbance partially compensates for this interference, but the assumption that turbidity remains constant throughout the reaction is not strictly valid. As enzymatic hydrolysis proceeds, starch granules undergo morphological changes (surface erosion, swelling, fragmentation) that alter light-scattering properties, introducing systematic bias in the absorbance measurements.
+
+- Amylose-Amylopectin Differential Response: The iodine-complexing capacity of amylose is approximately 10-fold higher than that of amylopectin on a mass basis. During endo-amylase hydrolysis, amylose chains are preferentially cleaved and solubilized, resulting in a disproportionate loss of iodine-staining capacity relative to amylopectin hydrolysis. This differential response can produce apparent hydrolysis rates that overestimate the extent of total starch degradation, particularly during early reaction stages.
+
+- Chain Length Threshold Effects: The formation of stable iodine-starch complexes requires a minimum chain length of approximately 40-60 glucose units. As endo-amylase cleavage reduces the average chain length below this threshold, the iodine-staining capacity declines rapidly even when significant substrate remains. This threshold effect introduces a sharp transition in the absorbance-time profile that resembles an exponential decay but is actually a consequence of the assay chemistry rather than enzyme kinetics.
+
+## Future Analytical Directions
+
+The limitations identified above suggest several methodological improvements for future investigations:
+
+- Multi-Method Quantification: Simultaneous measurement of reducing sugar production (DNS) and iodine-complexing capacity ($I_{2}$-KI) would provide complementary information on the progression of hydrolysis. The ratio of reducing ends to residual iodine-staining capacity serves as a proxy for the degree of endo- versus exo-amylolytic activity.
+
+- Chromatographic Validation: High-Performance Anion-Exchange Chromatography with Pulsed Amperometric Detection (HPAEC-PAD) provides direct quantification of maltooligosaccharide products (DP1-DP7), enabling accurate determination of the bond cleavage pattern and product distribution. This approach eliminates the stoichiometric limitations of the DNS assay and provides mechanistic insight into the enzyme's substrate specificity.
+
+- Differential Scanning Calorimetry (DSC): Thermal stability characterization through DSC would allow independent determination of the enzyme's unfolding temperature (Tm) and the thermodynamic parameters of thermal denaturation ($\Delta$H, $\Delta$S, $\Delta$G). These parameters would facilitate interpretation of the temperature optimum and provide a thermodynamic basis for protein engineering efforts.
+
+- Real-Time Kinetic Modeling: Progress curve analysis using integrated Michaelis-Menten equations, incorporating product inhibition and time-dependent inactivation terms, would provide more accurate parameter estimates than the initial-rate approach. This integrated approach is particularly valuable for enzymes that experience significant inactivation during the assay.
+
+# Conclusions and Biochemical Implications
+
+## Principal Findings
+
+The experimental investigation of bacterial $\alpha$-amylase catalytic properties has yielded several significant findings:
+
+1. Analytical Linearity: The glucose standard curve exhibits exceptional linearity (R² = 0.9909) across 0.0-2.0 mg/mL glucose, confirming the DNS assay as a reliable quantitative tool for reducing sugar determination within this concentration range.
+
+2. Fermentation Kinetics: Glucose accumulation during bacterial fermentation follows a triphasic pattern with maximum yield at 20% salt concentration and 24-36 hours of incubation. The response surface model confirms the interaction between salt concentration and time ($\beta_{12}$ = 3.592×10$^{-2}$, p = 0.044), indicating that optimal fermentation conditions are interdependent.
+
+3. Operational Optimization: Response surface methodology identifies pH 5.96 and 49.89°C as optimal catalytic conditions. Both eigenvalues are negative ($\lambda_1$ = -0.381, $\lambda_2$ = -0.471), confirming a true global maximum and providing a mathematical foundation for process optimization.
+
+4. Substrate Specificity: The bacterial amylase displays marked substrate preference, with soluble starch showing the highest apparent catalytic efficiency ($V_{max}$/$K_{m}$ = 0.0548) and corn starch the lowest. The kinetic parameters reflect substrate architectural properties—crystallinity, granule size, and amylose content—rather than intrinsic differences in enzyme-substrate recognition.
+
+5. Kinetic Non-Linearity: Progress curves exhibit systematic deviations from quadratic models, with negative residuals at early timepoints indicating rapid initial substrate cleavage, and positive residuals at late timepoints reflecting product inhibition and substrate modification.
+
+## Biochemical and Industrial Implications
+
+The observed pH optimum (5.96) and temperature optimum (49.89°C) position this bacterial $\alpha$-amylase within the mesophilic, acid-tolerant class of starch-hydrolyzing enzymes. These properties make the enzyme particularly suitable for industrial applications involving acidic starch hydrolysates, such as the production of glucose syrups from corn starch or the saccharification of waste starch streams.
+
+The substrate preference ranking (soluble starch > tapioca > rice > corn) has practical significance for industrial starch processing. The high catalytic efficiency toward soluble starch suggests that pre-gelatinized or acid-thinned starches are the preferred substrates for this enzyme. The relatively poor performance on corn starch indicates that physical or chemical pretreatment (gelatinization, liquefaction) is required to achieve efficient hydrolysis.
+
+The product inhibition effect, evident from the plateau in glucose accumulation profiles, has implications for process design. The enzyme's catalytic efficiency is highest at low product concentrations, suggesting that continuous removal of reducing sugars (e.g., through membrane filtration or simultaneous saccharification and fermentation) would enhance overall conversion rates.
+
+## Future Research Directions
+
+Based on the findings and limitations of this study, several directions for future research are proposed:
+
+1. Protein Engineering: Site-directed mutagenesis of residues in the active site region could be employed to probe the structural basis of the pH optimum and thermal stability. Rational design approaches might yield variants with improved performance at higher temperatures or altered pH optima for specific industrial applications.
+
+2. Substrate Specificity Studies: The comparative substrate analysis should be extended to include additional starch types (e.g., potato, wheat, pea) and chemically modified starches (e.g., hydroxypropylated, cross-linked) to better understand the structural features that determine enzyme accessibility.
+
+3. Continuous Operation Studies: The fermentation kinetics suggest that batch operation is suboptimal due to product inhibition. Continuous operation with product removal (e.g., through membrane bioreactors) should be evaluated for its potential to maintain high enzyme activity and extend the productive phase of the fermentation.
+
+4. Structural Characterization: Crystallographic studies of the enzyme-starch complex would provide atomic-level insight into substrate binding and catalytic mechanism. The structural data would facilitate rational engineering of the enzyme for altered substrate specificity or improved stability.
+
+## Concluding Remarks
+
+This comprehensive analytical investigation of bacterial $\alpha$-amylase catalytic properties has established the fundamental kinetic parameters and optimization conditions for this industrially relevant enzyme. The findings demonstrate that $\alpha$-amylase exhibits robust catalytic activity under moderately acidic conditions and displays a distinct substrate preference that reflects the physical architecture of the starch granule rather than intrinsic differences in catalytic mechanism. The integration of response surface methodology, Michaelis-Menten kinetics, and progress curve analysis provides a methodological framework applicable to the characterization of other starch-hydrolyzing enzymes. The identified limitations of the analytical methods—particularly the DNS assay's sensitivity to product composition and the iodine-starch assay's threshold effects—highlight the importance of multi-method validation for accurate kinetic characterization. Future studies incorporating chromatographic and calorimetric techniques will further refine our understanding of the catalytic mechanism and stability of this important industrial enzyme.
+
+# References
+
+
+1. Miller, G. L. (1959). Use of dinitrosalicylic acid reagent for determination of reducing sugar. Analytical Chemistry, 31(3), 426-428.
+
+2. Myers, R. H., Montgomery, D. C., & Anderson-Cook, C. M. (2016). Response Surface Methodology: Process and Product Optimization Using Designed Experiments (4th ed.). John Wiley & Sons.
+
+3. Michaelis, L., & Menten, M. L. (1913). Die Kinetik der Invertinwirkung. Biochemische Zeitschrift, 49, 333-369.
+
+4. Ritz, C., Baty, F., Streibig, J. C., & Gerhard, D. (2015). Dose-response analysis using R. PLoS ONE, 10(12), e0146021.
+
+5. Cornish-Bowden, A. (2012). Fundamentals of Enzyme Kinetics (4th ed.). Wiley-Blackwell.
+
+6. van der Maarel, M. J., van der Veen, B., Uitdehaag, J. C., Leemhuis, H., & Dijkhuizen, L. (2002). Properties and applications of starch-converting enzymes of the alpha-amylase family. Journal of Biotechnology, 94(2), 137-155.

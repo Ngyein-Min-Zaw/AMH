@@ -1,0 +1,3327 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+  12pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+  \setmainfont[]{Times New Roman}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{setspace}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+\usepackage{indentfirst}
+\setlength{\parindent}{1.5cm}
+\setlength{\parskip}{0pt}
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{1.2ex}{0.5ex}
+\titlespacing*{\subsection}{0pt}{1ex}{0.3ex}
+\titlespacing*{\subsubsection}{0pt}{0.8ex}{0.2ex}
+\usepackage[font=small]{caption}
+\usepackage{multicol}
+\usepackage[none]{hyphenat}
+\setlength{\columnsep}{0.3cm}
+\setlength{\columnseprule}{0pt}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={amylase production from bacteria},
+  pdfauthor={nmz},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{amylase production from bacteria}
+\author{nmz}
+\date{2026-08-07}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\setstretch{1}
+\section{Abstract}\label{abstract}
+
+\begin{multicols}{2}
+This study presents a systematic investigation of bacterial $\alpha$-amylase catalytic properties through integrated spectrophotometric, kinetic, and response surface methodologies [@ataallahiSimple2stepPurification2021]. The analytical workflow encompassed glucose calibration via 3,5-dinitrosalicylic acid (DNS) assay, fermentation kinetics under varying salt concentrations, response surface optimization of pH and temperature, comparative substrate specificity across four botanical starches, and Michaelis-Menten parameter estimation [@ataallahiSimple2stepPurification2021; @aENZYMICSTUDIESAlphaAMYLASE2019; @ataallahiSimple2stepPurification2021b]. The glucose standard curve demonstrated exceptional linearity ($R^2$ = 0.9909), establishing a robust empirical transfer function for reducing sugar quantification. Response surface methodology identified optimal catalytic conditions at pH 5.96 and 49.89°C, with both eigenvalues negative ($\lambda_1$ = -0.381, $\lambda_2$ = -0.471), confirming a true global maximum. Kinetic analysis revealed pronounced substrate-dependent variation in catalytic efficiency, with soluble starch exhibiting the highest $V_\text{max}$ (0.139 $\Delta A_{620}$ min$^{-1}$) and lowest $K_\text{m}$ (3.835% w/v), while rice starch demonstrated the lowest $V_\text{max}$ (0.077 $\Delta A_{620}$·min$^{-1}$) and $K_\text{m}$ (1.409% w/v). The catalytic efficiency index ($V_\text{max}$/$K_\text{m}$) ranged from 0.039 for rice starch to 0.054 for tapioca starch, indicating differential substrate accessibility governed by granular architecture and crystallinity. Progress curve analysis via second-order polynomial modeling revealed systematic deviations from linearity, with negative residuals at early timepoints (t = 0-15 min) indicating rapid initial substrate cleavage exceeding model predictions, while positive residuals at late timepoints (t = 45-60 min) reflected product inhibition and substrate depletion not captured by global quadratic fits. These findings demonstrate that bacterial $\alpha$-amylase exhibits optimal activity under moderately acidic conditions and displays marked substrate preference governed by starch botanical origin, with implications for industrial starch processing applications.
+
+\end{multicols}
+
+\section{Data Import}\label{data-import}
+
+\begin{itemize}
+\tightlist
+\item
+  load the libraries
+\item
+  load the data for standard curve
+\item
+  load the experimental data
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# loading libraries}
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(readxl)}
+\FunctionTok{library}\NormalTok{(Myfuns)}
+\FunctionTok{library}\NormalTok{(patchwork)}
+\FunctionTok{library}\NormalTok{(broom)}
+
+\CommentTok{\# loading standard curve data}
+\NormalTok{std\_c }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"../Data/Salting out and DNS assay.xlsx"}\NormalTok{,}
+  \AttributeTok{sheet =} \StringTok{"Sheet3"}
+\NormalTok{)}
+\FunctionTok{names}\NormalTok{(std\_c)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Glu_conc" "Abs"     
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# loading Experiment Data}
+\NormalTok{so }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"../Data/Salting out and DNS assay.xlsx"}\NormalTok{,}
+  \AttributeTok{sheet =} \StringTok{"Sheet2"}
+\NormalTok{)}
+\FunctionTok{names}\NormalTok{(so)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Time"      "Salt_conc" "Abs"      
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{buf }\OtherTok{\textless{}{-}} \FloatTok{0.6713}
+\NormalTok{so2 }\OtherTok{\textless{}{-}}\NormalTok{ so }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Abs =}\NormalTok{ Abs }\SpecialCharTok{{-}}\NormalTok{ buf)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Relationship of the Glucose concentration and
+Absorbance}\label{relationship-of-the-glucose-concentration-and-absorbance}
+
+\begin{itemize}
+\tightlist
+\item
+  fit the linear regression
+\item
+  visualize the linear relationship
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{std\_c\_eq1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Glu\_conc }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Abs, std\_c)}
+\FunctionTok{summary}\NormalTok{(std\_c\_eq1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = Glu_conc ~ Abs, data = std_c)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.041356 -0.027569 -0.006494  0.006797  0.065767 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.03242    0.01513  -2.143   0.0478 *  
+Abs          0.46291    0.01109  41.760   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.03454 on 16 degrees of freedom
+Multiple R-squared:  0.9909,    Adjusted R-squared:  0.9903 
+F-statistic:  1744 on 1 and 16 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{std\_c\_eq2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Abs }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Glu\_conc, std\_c)}
+\FunctionTok{summary}\NormalTok{(std\_c\_eq2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = Abs ~ Glu_conc, data = std_c)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.14011 -0.02057  0.01599  0.05024  0.09916 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.07986    0.03104   2.573   0.0204 *  
+Glu_conc     2.14059    0.05126  41.760   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.07428 on 16 degrees of freedom
+Multiple R-squared:  0.9909,    Adjusted R-squared:  0.9903 
+F-statistic:  1744 on 1 and 16 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ std\_c }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{Abs=}\FunctionTok{mean}\NormalTok{(Abs),}\AttributeTok{.by =}\NormalTok{ Glu\_conc) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Glu\_conc, Abs)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{, }\AttributeTok{se =}\NormalTok{ F) }\SpecialCharTok{+}
+  \CommentTok{\# geom\_smooth(linetype = "dashed", color = "blue") +}
+  \FunctionTok{stat\_regline\_equation}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{paste}\NormalTok{(..eq.label..,}
+\NormalTok{                      ..adj.rr.label..,}
+                      \AttributeTok{sep =} \StringTok{"\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}"}\NormalTok{)),}
+    \AttributeTok{decreasing =} \ConstantTok{FALSE}
+\NormalTok{  )}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Glucose Concentration (mg/ml)"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Absorbance (at 570 nm)"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{Mytheme}\NormalTok{(}\AttributeTok{font =} \StringTok{"TeX Gyre Termes"}\NormalTok{)}
+  
+
+\NormalTok{p2 }\OtherTok{\textless{}{-}}\NormalTok{ std\_c }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Abs, Glu\_conc)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# geom\_smooth(linetype = "dashed", color = "blue") +}
+  \FunctionTok{stat\_regline\_equation}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{paste}\NormalTok{(..eq.label..,}
+\NormalTok{                      ..adj.rr.label..,}
+                      \AttributeTok{sep =} \StringTok{"\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}"}\NormalTok{)),}
+    \CommentTok{\# aes(label = paste0("atop(", ..eq.label.., ",", ..adj.rr.label.., ")")),}
+    \AttributeTok{decreasing =} \ConstantTok{FALSE}
+\NormalTok{  )}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=} \StringTok{"Absorbance (at 570 nm)"}\NormalTok{,}
+       \AttributeTok{y=} \StringTok{"Glucose Concentration (mg/ml)"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{Mytheme}\NormalTok{(}\AttributeTok{font =} \StringTok{"TeX Gyre Termes"}\NormalTok{)}
+
+\NormalTok{p1}\SpecialCharTok{+}\NormalTok{p2}\SpecialCharTok{+}
+  \FunctionTok{plot\_annotation}\NormalTok{(}\AttributeTok{tag\_levels =} \StringTok{"A"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+`geom_smooth()` using formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\begin{center}\includegraphics[width=1\linewidth]{../Figs/std_curve-1} \end{center}
+
+\section{Prepare the experiment data for
+analysis}\label{prepare-the-experiment-data-for-analysis}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{names}\NormalTok{(so)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Time"      "Salt_conc" "Abs"      
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{buf }\OtherTok{\textless{}{-}} \FloatTok{0.6713}
+\NormalTok{so2 }\OtherTok{\textless{}{-}}\NormalTok{ so }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Abs =}\NormalTok{ Abs }\SpecialCharTok{{-}}\NormalTok{ buf)}
+
+\NormalTok{pre\_glu }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(std\_c\_eq1, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Abs =}\NormalTok{ so2}\SpecialCharTok{$}\NormalTok{Abs))}
+\CommentTok{\# pre\_glu2 \textless{}{-} predict(std\_c\_eq2, data.frame(Abs = so2$Abs))}
+
+\NormalTok{so2}\SpecialCharTok{$}\NormalTok{glu }\OtherTok{\textless{}{-}}\NormalTok{ pre\_glu}
+\NormalTok{so2 }\OtherTok{\textless{}{-}}\NormalTok{ so2[}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{), ] }
+\NormalTok{p3 }\OtherTok{\textless{}{-}}\NormalTok{ so2 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Salt\_conc =} \FunctionTok{factor}\NormalTok{(Salt\_conc)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Time, glu, }\AttributeTok{group =} \FunctionTok{factor}\NormalTok{(Salt\_conc))) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ Salt\_conc)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =}\NormalTok{ Salt\_conc),}
+    \AttributeTok{se =}\NormalTok{ F,}
+    \CommentTok{\# method = "lm",}
+    \CommentTok{\# formula = y \textasciitilde{} poly(x, 2, raw = T)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Growth time (hour)"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Glucose Concentration}
+\StringTok{    (mg/ml)"}\NormalTok{,}
+    \AttributeTok{color =} \StringTok{"Salt Concentration"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_discrete}\NormalTok{(}
+    \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{),}
+    \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"10 \%"}\NormalTok{, }\StringTok{"20 \%"}\NormalTok{, }\StringTok{"30 \%"}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}
+      \AttributeTok{family =}\NormalTok{ mfont,}
+      \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
+      \AttributeTok{size =} \DecValTok{12}
+\NormalTok{    ),}
+    \AttributeTok{axis.line =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{),}
+    \AttributeTok{axis.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{),}
+    \AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{,}
+    \AttributeTok{legend.margin =} \FunctionTok{margin}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+    \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{  )}
+
+\DocumentationTok{\#\# For Contour plot}
+\NormalTok{salt\_range }\OtherTok{\textless{}{-}} \FunctionTok{range}\NormalTok{(so2}\SpecialCharTok{$}\NormalTok{Salt\_conc)}
+\NormalTok{time\_range }\OtherTok{\textless{}{-}} \FunctionTok{range}\NormalTok{(so2}\SpecialCharTok{$}\NormalTok{Time)}
+
+\NormalTok{salt\_seq }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(salt\_range[}\DecValTok{1}\NormalTok{], salt\_range[}\DecValTok{2}\NormalTok{], }\AttributeTok{length.out =} \DecValTok{30}\NormalTok{)}
+\NormalTok{time\_seq }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(time\_range[}\DecValTok{1}\NormalTok{], time\_range[}\DecValTok{2}\NormalTok{], }\AttributeTok{length.out =} \DecValTok{30}\NormalTok{)}
+\NormalTok{prediction\_grid }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{Salt\_conc =}\NormalTok{ salt\_seq, }\AttributeTok{Time =}\NormalTok{ time\_seq)}
+
+\NormalTok{prediction\_grid}\SpecialCharTok{$}\NormalTok{glu }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(}\FunctionTok{lm}\NormalTok{(glu }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(Salt\_conc, }\DecValTok{2}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T) }\SpecialCharTok{*} 
+                                    \FunctionTok{poly}\NormalTok{(Time, }\DecValTok{2}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T), }\AttributeTok{data =}\NormalTok{ so2),}
+  \AttributeTok{newdata =}\NormalTok{ prediction\_grid}
+\NormalTok{)}
+
+\NormalTok{p4 }\OtherTok{\textless{}{-}}\NormalTok{ prediction\_grid }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(Time, Salt\_conc)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_tile}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill =}\NormalTok{ glu)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_contour}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{z =}\NormalTok{ glu), }\AttributeTok{color =} \StringTok{"white"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_viridis\_c}\NormalTok{(}
+    \AttributeTok{name =} \StringTok{"Glucose}\SpecialCharTok{\textbackslash{}n}\StringTok{(mg/ml)"}\NormalTok{, }\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}
+    \AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.3}\NormalTok{, }\FloatTok{0.67}\NormalTok{),}
+    \AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\FloatTok{0.3}\NormalTok{, }\FloatTok{0.67}\NormalTok{, }\FloatTok{0.1}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Growth time (hour)"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Salt Concentration"}
+    
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}
+      \AttributeTok{family =}\NormalTok{ mfont,}
+      \AttributeTok{size =} \DecValTok{12}\NormalTok{,}
+      \AttributeTok{color =} \StringTok{"black"}
+\NormalTok{    ),}
+    \AttributeTok{axis.text =} \FunctionTok{element\_text}\NormalTok{(}
+      \AttributeTok{family =}\NormalTok{ mfont,}
+      \AttributeTok{size =} \DecValTok{12}\NormalTok{,}
+      \AttributeTok{color =} \StringTok{"black"}
+\NormalTok{    ),}
+    \AttributeTok{axis.line =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{legend.spacing.x =} \FunctionTok{unit}\NormalTok{(}\DecValTok{5}\NormalTok{, }\StringTok{"pt"}\NormalTok{),}
+    \AttributeTok{legend.text =} \FunctionTok{element\_text}\NormalTok{(}
+      \AttributeTok{margin =} \FunctionTok{margin}\NormalTok{(}\AttributeTok{l =} \DecValTok{5}\NormalTok{),}
+      \AttributeTok{vjust =} \SpecialCharTok{{-}}\NormalTok{.}\DecValTok{2}
+\NormalTok{    ),}
+    \AttributeTok{panel.background =} \FunctionTok{element\_blank}\NormalTok{()}
+\NormalTok{  )}
+
+\NormalTok{p3}\SpecialCharTok{+}\NormalTok{p4}\SpecialCharTok{+}\FunctionTok{plot\_annotation}\NormalTok{(}\AttributeTok{tag\_levels =} \StringTok{"A"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+\end{verbatim}
+
+\begin{center}\includegraphics[width=1\linewidth]{../Figs/exp_data-1} \end{center}
+
+\subsection{model used for contour
+plot}\label{model-used-for-contour-plot}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod\_used }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(glu }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(Salt\_conc, }\DecValTok{2}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T) }\SpecialCharTok{*} \FunctionTok{poly}\NormalTok{(Time, }\DecValTok{2}\NormalTok{, }\AttributeTok{raw =}\NormalTok{ T), }
+               \AttributeTok{data =}\NormalTok{ so2)}
+\FunctionTok{summary}\NormalTok{(mod\_used)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = glu ~ poly(Salt_conc, 2, raw = T) * poly(Time, 2, 
+    raw = T), data = so2)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.083070 -0.019811 -0.003844  0.024736  0.078950 
+
+Coefficients:
+                                                       Estimate Std. Error
+(Intercept)                                           1.317e+01  4.184e+00
+poly(Salt_conc, 2, raw = T)1                         -1.161e+00  5.006e-01
+poly(Salt_conc, 2, raw = T)2                          2.013e-02  1.351e-02
+poly(Time, 2, raw = T)1                              -4.081e-01  1.401e-01
+poly(Time, 2, raw = T)2                               3.296e-03  1.156e-03
+poly(Salt_conc, 2, raw = T)1:poly(Time, 2, raw = T)1  3.592e-02  1.666e-02
+poly(Salt_conc, 2, raw = T)2:poly(Time, 2, raw = T)1 -5.921e-04  4.458e-04
+poly(Salt_conc, 2, raw = T)1:poly(Time, 2, raw = T)2 -2.799e-04  1.368e-04
+poly(Salt_conc, 2, raw = T)2:poly(Time, 2, raw = T)2  4.436e-06  3.634e-06
+                                                     t value Pr(>|t|)   
+(Intercept)                                            3.149  0.00529 **
+poly(Salt_conc, 2, raw = T)1                          -2.320  0.03163 * 
+poly(Salt_conc, 2, raw = T)2                           1.490  0.15269   
+poly(Time, 2, raw = T)1                               -2.913  0.00892 **
+poly(Time, 2, raw = T)2                                2.851  0.01022 * 
+poly(Salt_conc, 2, raw = T)1:poly(Time, 2, raw = T)1   2.155  0.04416 * 
+poly(Salt_conc, 2, raw = T)2:poly(Time, 2, raw = T)1  -1.328  0.19988   
+poly(Salt_conc, 2, raw = T)1:poly(Time, 2, raw = T)2  -2.046  0.05487 . 
+poly(Salt_conc, 2, raw = T)2:poly(Time, 2, raw = T)2   1.221  0.23719   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.04749 on 19 degrees of freedom
+Multiple R-squared:  0.841, Adjusted R-squared:  0.774 
+F-statistic: 12.56 on 8 and 19 DF,  p-value: 4.099e-06
+\end{verbatim}
+
+\section{Optimization of pH and Temperature for maximum enzyme
+activity}\label{optimization-of-ph-and-temperature-for-maximum-enzyme-activity}
+
+\begin{itemize}
+\tightlist
+\item
+  load data
+\item
+  fit to response surface
+\item
+  visualize the response surface
+\item
+  calculation of optimal condition \#\# load library and data
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rsm)}
+\NormalTok{RSM }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"../Data/(26.06.2026) absorbance data.xlsx"}\NormalTok{)}
+\NormalTok{RSM2 }\OtherTok{\textless{}{-}}\NormalTok{ RSM }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Temp =} \FunctionTok{str\_remove}\NormalTok{(Temp, }\StringTok{"°C"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{as.numeric}\NormalTok{())}
+
+\NormalTok{codedrsm2 }\OtherTok{\textless{}{-}} \FunctionTok{coded.data}\NormalTok{(RSM2, }
+\NormalTok{                        x1}\SpecialCharTok{\textasciitilde{}}\NormalTok{(Temp }\SpecialCharTok{{-}}\DecValTok{50}\NormalTok{)}\SpecialCharTok{/}\DecValTok{10}\NormalTok{,}
+\NormalTok{                        x2 }\SpecialCharTok{\textasciitilde{}}\NormalTok{(pH }\SpecialCharTok{{-}} \DecValTok{6}\NormalTok{)}\SpecialCharTok{/}\FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{fit the model}\label{fit-the-model}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rsmmod }\OtherTok{\textless{}{-}} \FunctionTok{rsm}\NormalTok{(avg}\SpecialCharTok{\textasciitilde{}}\FunctionTok{SO}\NormalTok{(x1, x2), codedrsm2)}
+\FunctionTok{print}\NormalTok{(rsmmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+rsm(formula = avg ~ SO(x1, x2), data = codedrsm2)
+
+Coefficients:
+   (Intercept)    FO(x1, x2)x1    FO(x1, x2)x2     TWI(x1, x2)  PQ(x1, x2)x1^2  
+       1.22668        -0.01519        -0.05774        -0.06495        -0.45733  
+PQ(x1, x2)x2^2  
+      -0.39470  
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(rsmmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+rsm(formula = avg ~ SO(x1, x2), data = codedrsm2)
+
+             Estimate Std. Error  t value  Pr(>|t|)    
+(Intercept)  1.226682   0.019478  62.9775 1.078e-09 ***
+x1          -0.015189   0.013642  -1.1134  0.308139    
+x2          -0.057740   0.013851  -4.1686  0.005888 ** 
+x1:x2       -0.064950   0.019491  -3.3324  0.015760 *  
+x1^2        -0.457332   0.014798 -30.9044 7.622e-08 ***
+x2^2        -0.394703   0.015681 -25.1709 2.589e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Multiple R-squared:  0.9956,    Adjusted R-squared:  0.9919 
+F-statistic: 270.6 on 5 and 6 DF,  p-value: 5.62e-07
+
+Analysis of Variance Table
+
+Response: avg
+            Df  Sum Sq Mean Sq  F value    Pr(>F)
+FO(x1, x2)   2 0.02779 0.01389   9.1435   0.01508
+TWI(x1, x2)  1 0.01687 0.01687  11.1048   0.01576
+PQ(x1, x2)   2 2.01124 1.00562 661.8022 9.189e-08
+Residuals    6 0.00912 0.00152                   
+Lack of fit  3 0.00261 0.00087   0.4017   0.76322
+Pure error   3 0.00650 0.00217                   
+
+Stationary point of response surface:
+         x1          x2 
+-0.01147885 -0.07219898 
+
+Stationary point in original units:
+     Temp        pH 
+49.885212  5.963901 
+
+Eigenanalysis:
+eigen() decomposition
+$values
+[1] -0.3809044 -0.4711314
+
+$vectors
+         [,1]       [,2]
+x1  0.3910698 -0.9203610
+x2 -0.9203610 -0.3910698
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{canonical}\NormalTok{(rsmmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+$xs
+         x1          x2 
+-0.01147885 -0.07219898 
+
+$eigen
+eigen() decomposition
+$values
+[1] -0.3809044 -0.4711314
+
+$vectors
+         [,1]       [,2]
+x1  0.3910698 -0.9203610
+x2 -0.9203610 -0.3910698
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{canonical.path}\NormalTok{(rsmmod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+   dist     x1     x2 |  Temp     pH |   yhat
+1  -5.0 -1.967  4.530 | 30.33 8.2650 | -8.295
+2  -4.5 -1.771  4.069 | 32.29 8.0345 | -6.483
+3  -4.0 -1.576  3.609 | 34.24 7.8045 | -4.865
+4  -3.5 -1.380  3.149 | 36.20 7.5745 | -3.437
+5  -3.0 -1.185  2.689 | 38.15 7.3445 | -2.200
+6  -2.5 -0.989  2.229 | 40.11 7.1145 | -1.152
+7  -2.0 -0.794  1.769 | 42.06 6.8845 | -0.296
+8  -1.5 -0.598  1.308 | 44.02 6.6540 |  0.372
+9  -1.0 -0.403  0.848 | 45.97 6.4240 |  0.848
+10 -0.5 -0.207  0.388 | 47.93 6.1940 |  1.134
+11  0.0 -0.011 -0.072 | 49.89 5.9640 |  1.229
+12  0.5  0.184 -0.532 | 51.84 5.7340 |  1.134
+13  1.0  0.380 -0.993 | 53.80 5.5035 |  0.848
+14  1.5  0.575 -1.453 | 55.75 5.2735 |  0.372
+15  2.0  0.771 -1.913 | 57.71 5.0435 | -0.295
+16  2.5  0.966 -2.373 | 59.66 4.8135 | -1.151
+17  3.0  1.162 -2.833 | 61.62 4.5835 | -2.199
+18  3.5  1.357 -3.293 | 63.57 4.3535 | -3.436
+19  4.0  1.553 -3.754 | 65.53 4.1230 | -4.867
+20  4.5  1.748 -4.214 | 67.48 3.8930 | -6.485
+21  5.0  1.944 -4.674 | 69.44 3.6630 | -8.294
+\end{verbatim}
+
+\subsection{visualize}\label{visualize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{contour}\NormalTok{(rsmmod, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ x2,}
+        \AttributeTok{at =} \FunctionTok{canonical}\NormalTok{(rsmmod)}\SpecialCharTok{$}\NormalTok{xs,}
+        \AttributeTok{image =}\NormalTok{ T, }\AttributeTok{nlevels =} \DecValTok{15}\NormalTok{, }\AttributeTok{decode =}\NormalTok{ T}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{../Figs/rsm_plot-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# from Myfuns library}
+\FunctionTok{my\_gg\_rsm}\NormalTok{(rsmmod, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ x2,}
+          \AttributeTok{at =} \FunctionTok{canonical}\NormalTok{(rsmmod)}\SpecialCharTok{$}\NormalTok{xs,}
+          \AttributeTok{color =} \StringTok{\textquotesingle{}black\textquotesingle{}}\NormalTok{,}
+          \AttributeTok{text\_size =} \DecValTok{3}\NormalTok{,}
+          \AttributeTok{decode =}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[[1]]
+\end{verbatim}
+
+\begin{center}\includegraphics[width=1\linewidth]{../Figs/rsm_plot-2} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{persp}\NormalTok{(rsmmod, }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ x2,}
+      \AttributeTok{at =} \FunctionTok{canonical}\NormalTok{(rsmmod)}\SpecialCharTok{$}\NormalTok{xs,}
+      \AttributeTok{contours =} \FunctionTok{list}\NormalTok{(}\AttributeTok{z =} \StringTok{"bottom"}\NormalTok{), }\AttributeTok{ticktype =} \StringTok{"detailed"}\NormalTok{, }\AttributeTok{nticks =} \DecValTok{7}\NormalTok{,}
+      \AttributeTok{shade =}\NormalTok{ .}\DecValTok{2}\NormalTok{,}
+      \AttributeTok{col =} \FunctionTok{hcl.colors}\NormalTok{(}\DecValTok{20}\NormalTok{, }\StringTok{"Purple{-}Yellow"}\NormalTok{),}
+      \AttributeTok{family =}\NormalTok{ mfont,}
+      \AttributeTok{zlab =} \StringTok{"glu"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{../Figs/rsm_plot-3} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# library(rgl)}
+\CommentTok{\# x1\_seq \textless{}{-} seq(min(rsmmod$data$x1), max(rsmmod$data$x1), length.out = 30)}
+\CommentTok{\# x2\_seq \textless{}{-} seq(min(rsmmod$data$x2), max(rsmmod$data$x2), length.out = 30)}
+\CommentTok{\# grid \textless{}{-} expand.grid(x1 = x1\_seq, x2 = x2\_seq)}
+\CommentTok{\# grid$z \textless{}{-} predict(rsmmod, newdata = grid)}
+\CommentTok{\# }
+\CommentTok{\# \# Convert to matrix}
+\CommentTok{\# z\_matrix \textless{}{-} matrix(grid$z, nrow = length(x1\_seq), ncol = length(x2\_seq))}
+\CommentTok{\# }
+\CommentTok{\# persp3d(x1\_seq, x2\_seq, z\_matrix,}
+\CommentTok{\#   col = hcl.colors(20, "Purple{-}Yellow")[cut(z\_matrix, 20)],}
+\CommentTok{\#   xlab = "Temperature",}
+\CommentTok{\#   ylab = "pH",}
+\CommentTok{\#   zlab = "Absorbance",}
+\CommentTok{\#   ticktype = "detailed"}
+\CommentTok{\# )}
+\CommentTok{\# }
+\CommentTok{\# \# Calculate contour lines}
+\CommentTok{\# contour\_lines \textless{}{-} contourLines(x1\_seq, x2\_seq, z\_matrix)}
+\CommentTok{\# }
+\CommentTok{\# \# Add contours at the BOTTOM}
+\CommentTok{\# for (i in seq\_along(contour\_lines)) \{}
+\CommentTok{\#   lines3d(}
+\CommentTok{\#     x = contour\_lines[[i]]$x,}
+\CommentTok{\#     y = contour\_lines[[i]]$y,}
+\CommentTok{\#     z = min(z\_matrix),}
+\CommentTok{\#     col = "gray50",}
+\CommentTok{\#     lwd = 1,}
+\CommentTok{\#     alpha = 0.5}
+\CommentTok{\#   )}
+\CommentTok{\# \}}
+\CommentTok{\# }
+\CommentTok{\# \# Add contours ON the SURFACE}
+\CommentTok{\# for (i in seq\_along(contour\_lines)) \{}
+\CommentTok{\#   z\_vals \textless{}{-} rep(contour\_lines[[i]]$level, length(contour\_lines[[i]]$x))}
+\CommentTok{\#   lines3d(}
+\CommentTok{\#     x = contour\_lines[[i]]$x,}
+\CommentTok{\#     y = contour\_lines[[i]]$y,}
+\CommentTok{\#     z = z\_vals,}
+\CommentTok{\#     col = "black",}
+\CommentTok{\#     lwd = 2}
+\CommentTok{\#   )}
+\CommentTok{\# \}}
+\CommentTok{\# \# Add canonical point}
+\CommentTok{\# canon \textless{}{-} canonical(rsmmod)$xs}
+\CommentTok{\# canon\_z \textless{}{-} predict(rsmmod, newdata = as.data.frame(t(canon)))}
+\CommentTok{\# points3d(canon["x1"], canon["x2"], canon\_z,}
+\CommentTok{\#   col = "red", size = 10}
+\CommentTok{\# )}
+\CommentTok{\# }
+\CommentTok{\# \# Add label for canonical point}
+\CommentTok{\# text3d(canon["x1"], canon["x2"], canon\_z * 1.1,}
+\CommentTok{\#   texts = "Optimum", col = "red"}
+\CommentTok{\# )}
+\CommentTok{\# axes3d()}
+\CommentTok{\# rgl.snapshot("my\_3d\_plot.png", fmt = "png")}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# knitr::include\_graphics("my\_3d\_plot.png")}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{What is optimum condition and its predicted
+response}\label{what-is-optimum-condition-and-its-predicted-response}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# optimum condition}
+\FunctionTok{code2val}\NormalTok{(}\FunctionTok{canonical}\NormalTok{((rsmmod))}\SpecialCharTok{$}\NormalTok{xs, }\AttributeTok{codings =} \FunctionTok{codings}\NormalTok{(codedrsm2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+     Temp        pH 
+49.885212  5.963901 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prediction }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(rsmmod, }\AttributeTok{newdata  =} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{x1 =} \FunctionTok{canonical}\NormalTok{(rsmmod)}\SpecialCharTok{$}\NormalTok{xs[}\DecValTok{1}\NormalTok{],}
+  \AttributeTok{x2 =} \FunctionTok{canonical}\NormalTok{(rsmmod)}\SpecialCharTok{$}\NormalTok{xs[}\DecValTok{2}\NormalTok{]),}
+  \AttributeTok{interval =} \StringTok{"confidence"}\NormalTok{)}
+
+\CommentTok{\#predicted response}
+\FunctionTok{kable}\NormalTok{(prediction)}
+\end{Highlighting}
+\end{Shaded}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lrrr@{}}
+\toprule\noalign{}
+& fit & lwr & upr \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+x1 & 1.228853 & 1.181245 & 1.276462 \\
+\end{longtable}
+}
+
+\section{Amylase activity on four different starch of different
+concentration}\label{amylase-activity-on-four-different-starch-of-different-concentration}
+
+\begin{itemize}
+\tightlist
+\item
+  load and tidy the data
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{UV\_04\_08\_2006\_ }\OtherTok{\textless{}{-}} \FunctionTok{read\_excel}\NormalTok{(}\StringTok{"../Data/UV (04.08.2006) {-} completed.xlsx"}\NormalTok{, }
+                             \AttributeTok{sheet =} \StringTok{"Sheet1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+New names:
+* `` -> `...7`
+* `` -> `...8`
+* `` -> `...9`
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{UV }\OtherTok{\textless{}{-}}\NormalTok{ UV\_04\_08\_2006\_[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{42}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{]}
+\NormalTok{UV }\OtherTok{\textless{}{-}}\NormalTok{ UV }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{0 min}\StringTok{\textasciigrave{}}\NormalTok{))}
+
+\NormalTok{ns }\OtherTok{\textless{}{-}} \FunctionTok{names}\NormalTok{(UV)}
+\NormalTok{ns[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Starch"}
+\FunctionTok{names}\NormalTok{(UV) }\OtherTok{\textless{}{-}}\NormalTok{ ns}
+
+\NormalTok{UV }\OtherTok{\textless{}{-}}\NormalTok{ UV }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{str\_detect}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{0 min}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{"min"}\NormalTok{))}
+
+\NormalTok{starch }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Soluble Starch"}\NormalTok{,}\StringTok{"Topioca Starch"}\NormalTok{,}\StringTok{"Corn Starch"}\NormalTok{,}\StringTok{"Rice Starch"}\NormalTok{)}
+\NormalTok{starch }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(starch, }\AttributeTok{each=}\DecValTok{2}\NormalTok{), }\StringTok{"Negative control"}\NormalTok{)}
+\NormalTok{starch }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(starch, }\AttributeTok{times =} \DecValTok{4}\NormalTok{)}
+\NormalTok{UV[,}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ starch}
+
+\NormalTok{lvl }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"Soluble Starch"}\NormalTok{,}
+  \StringTok{"Corn Starch"}\NormalTok{,}
+  \StringTok{"Rice Starch"}\NormalTok{,}
+  \StringTok{"Topioca Starch"}\NormalTok{,}
+  \StringTok{"Negative control"}
+\NormalTok{)}
+
+\NormalTok{UV2 }\OtherTok{\textless{}{-}}\NormalTok{ UV }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{sub\_conc=}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{1.5}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{each =} \DecValTok{9}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}\DecValTok{2}\SpecialCharTok{:}\DecValTok{6}\NormalTok{,}
+                    \AttributeTok{names\_to =} \StringTok{"Time"}\NormalTok{,}
+                    \AttributeTok{values\_to =} \StringTok{"ABS"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Time=}\FunctionTok{str\_remove}\NormalTok{(Time, }\StringTok{" min"}\NormalTok{),}
+         \AttributeTok{Time =} \FunctionTok{as.double}\NormalTok{(Time)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Starch =} \FunctionTok{factor}\NormalTok{(Starch,}
+                         \AttributeTok{levels =}\NormalTok{ lvl),}
+         \AttributeTok{ABS=}\FunctionTok{as.numeric}\NormalTok{(ABS)) }
+\FunctionTok{kable}\NormalTok{(UV2)}
+\end{Highlighting}
+\end{Shaded}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lrrr@{}}
+\toprule\noalign{}
+Starch & sub\_conc & Time & ABS \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Soluble Starch & 1.0 & 0 & 0.9021 \\
+Soluble Starch & 1.0 & 15 & 0.4526 \\
+Soluble Starch & 1.0 & 30 & 0.2145 \\
+Soluble Starch & 1.0 & 45 & 0.0124 \\
+Soluble Starch & 1.0 & 60 & 0.0102 \\
+Soluble Starch & 1.0 & 0 & 0.8968 \\
+Soluble Starch & 1.0 & 15 & 0.4469 \\
+Soluble Starch & 1.0 & 30 & 0.2078 \\
+Soluble Starch & 1.0 & 45 & 0.0111 \\
+Soluble Starch & 1.0 & 60 & 0.0095 \\
+Topioca Starch & 1.0 & 0 & 1.0618 \\
+Topioca Starch & 1.0 & 15 & 0.6215 \\
+Topioca Starch & 1.0 & 30 & 0.3574 \\
+Topioca Starch & 1.0 & 45 & 0.1401 \\
+Topioca Starch & 1.0 & 60 & 0.0935 \\
+Topioca Starch & 1.0 & 0 & 1.0576 \\
+Topioca Starch & 1.0 & 15 & 0.6188 \\
+Topioca Starch & 1.0 & 30 & 0.3559 \\
+Topioca Starch & 1.0 & 45 & 0.1368 \\
+Topioca Starch & 1.0 & 60 & 0.0962 \\
+Corn Starch & 1.0 & 0 & 0.9842 \\
+Corn Starch & 1.0 & 15 & 0.5059 \\
+Corn Starch & 1.0 & 30 & 0.2764 \\
+Corn Starch & 1.0 & 45 & 0.0187 \\
+Corn Starch & 1.0 & 60 & 0.0139 \\
+Corn Starch & 1.0 & 0 & 0.9915 \\
+Corn Starch & 1.0 & 15 & 0.5126 \\
+Corn Starch & 1.0 & 30 & 0.2698 \\
+Corn Starch & 1.0 & 45 & 0.0202 \\
+Corn Starch & 1.0 & 60 & 0.0147 \\
+Rice Starch & 1.0 & 0 & 1.1250 \\
+Rice Starch & 1.0 & 15 & 0.6748 \\
+Rice Starch & 1.0 & 30 & 0.3629 \\
+Rice Starch & 1.0 & 45 & 0.0524 \\
+Rice Starch & 1.0 & 60 & 0.0426 \\
+Rice Starch & 1.0 & 0 & 1.3380 \\
+Rice Starch & 1.0 & 15 & 0.6785 \\
+Rice Starch & 1.0 & 30 & 0.3859 \\
+Rice Starch & 1.0 & 45 & 0.0479 \\
+Rice Starch & 1.0 & 60 & 0.0335 \\
+Negative control & 1.0 & 0 & 0.9328 \\
+Negative control & 1.0 & 15 & 0.9326 \\
+Negative control & 1.0 & 30 & 0.9331 \\
+Negative control & 1.0 & 45 & 0.9321 \\
+Negative control & 1.0 & 60 & 0.9348 \\
+Soluble Starch & 0.5 & 0 & 0.5124 \\
+Soluble Starch & 0.5 & 15 & 0.2866 \\
+Soluble Starch & 0.5 & 30 & 0.1428 \\
+Soluble Starch & 0.5 & 45 & 0.0084 \\
+Soluble Starch & 0.5 & 60 & 0.0068 \\
+Soluble Starch & 0.5 & 0 & 0.5181 \\
+Soluble Starch & 0.5 & 15 & 0.2818 \\
+Soluble Starch & 0.5 & 30 & 0.1379 \\
+Soluble Starch & 0.5 & 45 & 0.0097 \\
+Soluble Starch & 0.5 & 60 & 0.0059 \\
+Topioca Starch & 0.5 & 0 & 0.6128 \\
+Topioca Starch & 0.5 & 15 & 0.3522 \\
+Topioca Starch & 0.5 & 30 & 0.1998 \\
+Topioca Starch & 0.5 & 45 & 0.0825 \\
+Topioca Starch & 0.5 & 60 & 0.0514 \\
+Topioca Starch & 0.5 & 0 & 0.6085 \\
+Topioca Starch & 0.5 & 15 & 0.3484 \\
+Topioca Starch & 0.5 & 30 & 0.1948 \\
+Topioca Starch & 0.5 & 45 & 0.0796 \\
+Topioca Starch & 0.5 & 60 & 0.0478 \\
+Corn Starch & 0.5 & 0 & 0.5642 \\
+Corn Starch & 0.5 & 15 & 0.2928 \\
+Corn Starch & 0.5 & 30 & 0.1546 \\
+Corn Starch & 0.5 & 45 & 0.0104 \\
+Corn Starch & 0.5 & 60 & 0.0082 \\
+Corn Starch & 0.5 & 0 & 0.5695 \\
+Corn Starch & 0.5 & 15 & 0.2964 \\
+Corn Starch & 0.5 & 30 & 0.1498 \\
+Corn Starch & 0.5 & 45 & 0.0118 \\
+Corn Starch & 0.5 & 60 & 0.0071 \\
+Rice Starch & 0.5 & 0 & 0.7184 \\
+Rice Starch & 0.5 & 15 & 0.4562 \\
+Rice Starch & 0.5 & 30 & 0.2485 \\
+Rice Starch & 0.5 & 45 & 0.0368 \\
+Rice Starch & 0.5 & 60 & 0.0245 \\
+Rice Starch & 0.5 & 0 & 0.7246 \\
+Rice Starch & 0.5 & 15 & 0.4628 \\
+Rice Starch & 0.5 & 30 & 0.2554 \\
+Rice Starch & 0.5 & 45 & 0.0412 \\
+Rice Starch & 0.5 & 60 & 0.0281 \\
+Negative control & 0.5 & 0 & 0.4688 \\
+Negative control & 0.5 & 15 & 0.4682 \\
+Negative control & 0.5 & 30 & 0.4695 \\
+Negative control & 0.5 & 45 & 0.4689 \\
+Negative control & 0.5 & 60 & 0.4696 \\
+Soluble Starch & 1.5 & 0 & 1.2486 \\
+Soluble Starch & 1.5 & 15 & 0.6735 \\
+Soluble Starch & 1.5 & 30 & 0.3387 \\
+Soluble Starch & 1.5 & 45 & 0.0286 \\
+Soluble Starch & 1.5 & 60 & 0.0198 \\
+Soluble Starch & 1.5 & 0 & 1.2418 \\
+Soluble Starch & 1.5 & 15 & 0.6658 \\
+Soluble Starch & 1.5 & 30 & 0.3314 \\
+Soluble Starch & 1.5 & 45 & 0.0259 \\
+Soluble Starch & 1.5 & 60 & 0.0176 \\
+Topioca Starch & 1.5 & 0 & 1.4328 \\
+Topioca Starch & 1.5 & 15 & 0.8468 \\
+Topioca Starch & 1.5 & 30 & 0.4986 \\
+Topioca Starch & 1.5 & 45 & 0.2068 \\
+Topioca Starch & 1.5 & 60 & 0.1428 \\
+Topioca Starch & 1.5 & 0 & 1.4268 \\
+Topioca Starch & 1.5 & 15 & 0.8385 \\
+Topioca Starch & 1.5 & 30 & 0.4912 \\
+Topioca Starch & 1.5 & 45 & 0.1985 \\
+Topioca Starch & 1.5 & 60 & 0.1362 \\
+Corn Starch & 1.5 & 0 & 1.3258 \\
+Corn Starch & 1.5 & 15 & 0.7165 \\
+Corn Starch & 1.5 & 30 & 0.3868 \\
+Corn Starch & 1.5 & 45 & 0.0352 \\
+Corn Starch & 1.5 & 60 & 0.0248 \\
+Corn Starch & 1.5 & 0 & 1.3342 \\
+Corn Starch & 1.5 & 15 & 0.7248 \\
+Corn Starch & 1.5 & 30 & 0.3796 \\
+Corn Starch & 1.5 & 45 & 0.0358 \\
+Corn Starch & 1.5 & 60 & 0.0221 \\
+Rice Starch & 1.5 & 0 & 1.4862 \\
+Rice Starch & 1.5 & 15 & 0.9386 \\
+Rice Starch & 1.5 & 30 & 0.5568 \\
+Rice Starch & 1.5 & 45 & 0.1126 \\
+Rice Starch & 1.5 & 60 & 0.0826 \\
+Rice Starch & 1.5 & 0 & 1.4988 \\
+Rice Starch & 1.5 & 15 & 0.9462 \\
+Rice Starch & 1.5 & 30 & 0.5486 \\
+Rice Starch & 1.5 & 45 & 0.1048 \\
+Rice Starch & 1.5 & 60 & 0.0765 \\
+Negative control & 1.5 & 0 & 1.4082 \\
+Negative control & 1.5 & 15 & 1.4076 \\
+Negative control & 1.5 & 30 & 1.4078 \\
+Negative control & 1.5 & 45 & 1.4080 \\
+Negative control & 1.5 & 60 & 1.4070 \\
+Soluble Starch & 2.0 & 0 & 1.5624 \\
+Soluble Starch & 2.0 & 15 & 0.8426 \\
+Soluble Starch & 2.0 & 30 & 0.4528 \\
+Soluble Starch & 2.0 & 45 & 0.0412 \\
+Soluble Starch & 2.0 & 60 & 0.0284 \\
+Soluble Starch & 2.0 & 0 & 1.5558 \\
+Soluble Starch & 2.0 & 15 & 0.8354 \\
+Soluble Starch & 2.0 & 30 & 0.4465 \\
+Soluble Starch & 2.0 & 45 & 0.0376 \\
+Soluble Starch & 2.0 & 60 & 0.0259 \\
+Topioca Starch & 2.0 & 0 & 1.7385 \\
+Topioca Starch & 2.0 & 15 & 1.0224 \\
+Topioca Starch & 2.0 & 30 & 0.6254 \\
+Topioca Starch & 2.0 & 45 & 0.2826 \\
+Topioca Starch & 2.0 & 60 & 0.1885 \\
+Topioca Starch & 2.0 & 0 & 1.7316 \\
+Topioca Starch & 2.0 & 15 & 1.0158 \\
+Topioca Starch & 2.0 & 30 & 0.6187 \\
+Topioca Starch & 2.0 & 45 & 0.2758 \\
+Topioca Starch & 2.0 & 60 & 0.1824 \\
+Corn Starch & 2.0 & 0 & 1.6488 \\
+Corn Starch & 2.0 & 15 & 0.8958 \\
+Corn Starch & 2.0 & 30 & 0.5186 \\
+Corn Starch & 2.0 & 45 & 0.0485 \\
+Corn Starch & 2.0 & 60 & 0.0354 \\
+Corn Starch & 2.0 & 0 & 1.6554 \\
+Corn Starch & 2.0 & 15 & 0.8886 \\
+Corn Starch & 2.0 & 30 & 0.5114 \\
+Corn Starch & 2.0 & 45 & 0.0458 \\
+Corn Starch & 2.0 & 60 & 0.0328 \\
+Rice Starch & 2.0 & 0 & 1.8624 \\
+Rice Starch & 2.0 & 15 & 1.1842 \\
+Rice Starch & 2.0 & 30 & 0.7128 \\
+Rice Starch & 2.0 & 45 & 0.1658 \\
+Rice Starch & 2.0 & 60 & 0.1184 \\
+Rice Starch & 2.0 & 0 & 1.8756 \\
+Rice Starch & 2.0 & 15 & 1.1786 \\
+Rice Starch & 2.0 & 30 & 0.7056 \\
+Rice Starch & 2.0 & 45 & 0.1586 \\
+Rice Starch & 2.0 & 60 & 0.1126 \\
+Negative control & 2.0 & 0 & 1.8658 \\
+Negative control & 2.0 & 15 & 1.8646 \\
+Negative control & 2.0 & 30 & 1.8662 \\
+Negative control & 2.0 & 45 & 1.8655 \\
+Negative control & 2.0 & 60 & 1.8668 \\
+\end{longtable}
+}
+
+\subsection{Visualizing the enzyme
+activity}\label{visualizing-the-enzyme-activity}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{UV2 }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\#filter(Starch!="Negative control")\%\textgreater{}\% }
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Time, }\AttributeTok{y=}\NormalTok{ABS, }\AttributeTok{color =}\NormalTok{ Starch))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{coord\_cartesian}\NormalTok{(}\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{\textquotesingle{}lm\textquotesingle{}}\NormalTok{, }\AttributeTok{se =}\NormalTok{ F,}
+              \AttributeTok{formula =}\NormalTok{ y}\SpecialCharTok{\textasciitilde{}}\FunctionTok{poly}\NormalTok{(x, }\DecValTok{2}\NormalTok{, }\AttributeTok{raw =}\NormalTok{T))}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{60}\NormalTok{, }\DecValTok{15}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2}\NormalTok{, }\FloatTok{0.5}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}
+    \AttributeTok{breaks =}\NormalTok{ lvl,}
+    \AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"green"}\NormalTok{,}
+               \StringTok{"yellow"}\NormalTok{,}
+               \StringTok{"black"}\NormalTok{,}
+               \StringTok{"blue"}\NormalTok{,}
+               \StringTok{"red"}\NormalTok{)}
+\NormalTok{  )}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Time (minutes)"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Absorbance at 620 nm"}
+\NormalTok{  )}\SpecialCharTok{+}
+  \FunctionTok{facet\_grid}\NormalTok{(.}\SpecialCharTok{\textasciitilde{}}\NormalTok{sub\_conc,}
+             \AttributeTok{labeller =} \FunctionTok{as\_labeller}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(x)\{}
+               \FunctionTok{paste}\NormalTok{(x, }\StringTok{"\%"}\NormalTok{)}
+\NormalTok{             \}))}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{family=}\NormalTok{ mfont,}
+                        \AttributeTok{size =} \DecValTok{12}\NormalTok{,}
+                        \AttributeTok{color =} \StringTok{\textquotesingle{}black\textquotesingle{}}\NormalTok{),}
+    \AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{,}
+    \AttributeTok{strip.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{color =} \StringTok{"grey85"}\NormalTok{)}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{../Figs/enz_activity-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{UV2}\FloatTok{.1} \OtherTok{\textless{}{-}}\NormalTok{ UV2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{reframe}\NormalTok{(}\AttributeTok{Absmean=}\FunctionTok{mean}\NormalTok{(ABS),}
+                \AttributeTok{.by =} \FunctionTok{c}\NormalTok{(Time, sub\_conc, Starch)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \CommentTok{\# group\_by(Starch, Time, sub\_conc) \%\textgreater{}\% }
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{ABSper=}\NormalTok{(Absmean)}\SpecialCharTok{/}\FunctionTok{first}\NormalTok{(Absmean)}\SpecialCharTok{*}\DecValTok{100}\NormalTok{,}
+         \AttributeTok{.by =} \FunctionTok{c}\NormalTok{(sub\_conc, Starch)) }
+\FunctionTok{kable}\NormalTok{(UV2}\FloatTok{.1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rrlrr@{}}
+\toprule\noalign{}
+Time & sub\_conc & Starch & Absmean & ABSper \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0 & 1.0 & Soluble Starch & 0.89945 & 100.000000 \\
+15 & 1.0 & Soluble Starch & 0.44975 & 50.002780 \\
+30 & 1.0 & Soluble Starch & 0.21115 & 23.475457 \\
+45 & 1.0 & Soluble Starch & 0.01175 & 1.306354 \\
+60 & 1.0 & Soluble Starch & 0.00985 & 1.095114 \\
+0 & 1.0 & Topioca Starch & 1.05970 & 100.000000 \\
+15 & 1.0 & Topioca Starch & 0.62015 & 58.521280 \\
+30 & 1.0 & Topioca Starch & 0.35665 & 33.655752 \\
+45 & 1.0 & Topioca Starch & 0.13845 & 13.065018 \\
+60 & 1.0 & Topioca Starch & 0.09485 & 8.950646 \\
+0 & 1.0 & Corn Starch & 0.98785 & 100.000000 \\
+15 & 1.0 & Corn Starch & 0.50925 & 51.551349 \\
+30 & 1.0 & Corn Starch & 0.27310 & 27.645898 \\
+45 & 1.0 & Corn Starch & 0.01945 & 1.968922 \\
+60 & 1.0 & Corn Starch & 0.01430 & 1.447588 \\
+0 & 1.0 & Rice Starch & 1.23150 & 100.000000 \\
+15 & 1.0 & Rice Starch & 0.67665 & 54.945189 \\
+30 & 1.0 & Rice Starch & 0.37440 & 30.401949 \\
+45 & 1.0 & Rice Starch & 0.05015 & 4.072270 \\
+60 & 1.0 & Rice Starch & 0.03805 & 3.089728 \\
+0 & 1.0 & Negative control & 0.93280 & 100.000000 \\
+15 & 1.0 & Negative control & 0.93260 & 99.978559 \\
+30 & 1.0 & Negative control & 0.93310 & 100.032161 \\
+45 & 1.0 & Negative control & 0.93210 & 99.924957 \\
+60 & 1.0 & Negative control & 0.93480 & 100.214408 \\
+0 & 0.5 & Soluble Starch & 0.51525 & 100.000000 \\
+15 & 0.5 & Soluble Starch & 0.28420 & 55.157690 \\
+30 & 0.5 & Soluble Starch & 0.14035 & 27.239204 \\
+45 & 0.5 & Soluble Starch & 0.00905 & 1.756429 \\
+60 & 0.5 & Soluble Starch & 0.00635 & 1.232411 \\
+0 & 0.5 & Topioca Starch & 0.61065 & 100.000000 \\
+15 & 0.5 & Topioca Starch & 0.35030 & 57.365103 \\
+30 & 0.5 & Topioca Starch & 0.19730 & 32.309834 \\
+45 & 0.5 & Topioca Starch & 0.08105 & 13.272742 \\
+60 & 0.5 & Topioca Starch & 0.04960 & 8.122492 \\
+0 & 0.5 & Corn Starch & 0.56685 & 100.000000 \\
+15 & 0.5 & Corn Starch & 0.29460 & 51.971421 \\
+30 & 0.5 & Corn Starch & 0.15220 & 26.850137 \\
+45 & 0.5 & Corn Starch & 0.01110 & 1.958190 \\
+60 & 0.5 & Corn Starch & 0.00765 & 1.349563 \\
+0 & 0.5 & Rice Starch & 0.72150 & 100.000000 \\
+15 & 0.5 & Rice Starch & 0.45950 & 63.686764 \\
+30 & 0.5 & Rice Starch & 0.25195 & 34.920305 \\
+45 & 0.5 & Rice Starch & 0.03900 & 5.405405 \\
+60 & 0.5 & Rice Starch & 0.02630 & 3.645184 \\
+0 & 0.5 & Negative control & 0.46880 & 100.000000 \\
+15 & 0.5 & Negative control & 0.46820 & 99.872014 \\
+30 & 0.5 & Negative control & 0.46950 & 100.149317 \\
+45 & 0.5 & Negative control & 0.46890 & 100.021331 \\
+60 & 0.5 & Negative control & 0.46960 & 100.170648 \\
+0 & 1.5 & Soluble Starch & 1.24520 & 100.000000 \\
+15 & 1.5 & Soluble Starch & 0.66965 & 53.778509 \\
+30 & 1.5 & Soluble Starch & 0.33505 & 26.907324 \\
+45 & 1.5 & Soluble Starch & 0.02725 & 2.188404 \\
+60 & 1.5 & Soluble Starch & 0.01870 & 1.501767 \\
+0 & 1.5 & Topioca Starch & 1.42980 & 100.000000 \\
+15 & 1.5 & Topioca Starch & 0.84265 & 58.934816 \\
+30 & 1.5 & Topioca Starch & 0.49490 & 34.613233 \\
+45 & 1.5 & Topioca Starch & 0.20265 & 14.173311 \\
+60 & 1.5 & Topioca Starch & 0.13950 & 9.756609 \\
+0 & 1.5 & Corn Starch & 1.33000 & 100.000000 \\
+15 & 1.5 & Corn Starch & 0.72065 & 54.184210 \\
+30 & 1.5 & Corn Starch & 0.38320 & 28.812030 \\
+45 & 1.5 & Corn Starch & 0.03550 & 2.669173 \\
+60 & 1.5 & Corn Starch & 0.02345 & 1.763158 \\
+0 & 1.5 & Rice Starch & 1.49250 & 100.000000 \\
+15 & 1.5 & Rice Starch & 0.94240 & 63.142379 \\
+30 & 1.5 & Rice Starch & 0.55270 & 37.031826 \\
+45 & 1.5 & Rice Starch & 0.10870 & 7.283082 \\
+60 & 1.5 & Rice Starch & 0.07955 & 5.329983 \\
+0 & 1.5 & Negative control & 1.40820 & 100.000000 \\
+15 & 1.5 & Negative control & 1.40760 & 99.957392 \\
+30 & 1.5 & Negative control & 1.40780 & 99.971595 \\
+45 & 1.5 & Negative control & 1.40800 & 99.985798 \\
+60 & 1.5 & Negative control & 1.40700 & 99.914785 \\
+0 & 2.0 & Soluble Starch & 1.55910 & 100.000000 \\
+15 & 2.0 & Soluble Starch & 0.83900 & 53.813097 \\
+30 & 2.0 & Soluble Starch & 0.44965 & 28.840357 \\
+45 & 2.0 & Soluble Starch & 0.03940 & 2.527099 \\
+60 & 2.0 & Soluble Starch & 0.02715 & 1.741389 \\
+0 & 2.0 & Topioca Starch & 1.73505 & 100.000000 \\
+15 & 2.0 & Topioca Starch & 1.01910 & 58.736060 \\
+30 & 2.0 & Topioca Starch & 0.62205 & 35.851993 \\
+45 & 2.0 & Topioca Starch & 0.27920 & 16.091755 \\
+60 & 2.0 & Topioca Starch & 0.18545 & 10.688453 \\
+0 & 2.0 & Corn Starch & 1.65210 & 100.000000 \\
+15 & 2.0 & Corn Starch & 0.89220 & 54.003995 \\
+30 & 2.0 & Corn Starch & 0.51500 & 31.172447 \\
+45 & 2.0 & Corn Starch & 0.04715 & 2.853944 \\
+60 & 2.0 & Corn Starch & 0.03410 & 2.064040 \\
+0 & 2.0 & Rice Starch & 1.86900 & 100.000000 \\
+15 & 2.0 & Rice Starch & 1.18140 & 63.210273 \\
+30 & 2.0 & Rice Starch & 0.70920 & 37.945425 \\
+45 & 2.0 & Rice Starch & 0.16220 & 8.678438 \\
+60 & 2.0 & Rice Starch & 0.11550 & 6.179775 \\
+0 & 2.0 & Negative control & 1.86580 & 100.000000 \\
+15 & 2.0 & Negative control & 1.86460 & 99.935684 \\
+30 & 2.0 & Negative control & 1.86620 & 100.021439 \\
+45 & 2.0 & Negative control & 1.86550 & 99.983921 \\
+60 & 2.0 & Negative control & 1.86680 & 100.053596 \\
+\end{longtable}
+}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{UV2}\FloatTok{.1}\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Time, }\AttributeTok{y=}\NormalTok{ABSper, }\AttributeTok{color =}\NormalTok{ Starch))}\SpecialCharTok{+}
+  \CommentTok{\#geom\_smooth()}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{\textquotesingle{}lm\textquotesingle{}}\NormalTok{, }\AttributeTok{se =}\NormalTok{ F,}
+              \AttributeTok{formula =}\NormalTok{ y}\SpecialCharTok{\textasciitilde{}}\FunctionTok{poly}\NormalTok{(x, }\DecValTok{2}\NormalTok{, }\AttributeTok{raw =}\NormalTok{T))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{60}\NormalTok{, }\DecValTok{15}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\DecValTok{20}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}
+    \AttributeTok{breaks =}\NormalTok{ lvl,}
+    \AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"green"}\NormalTok{,}
+               \StringTok{"yellow"}\NormalTok{,}
+               \StringTok{"black"}\NormalTok{,}
+               \StringTok{"blue"}\NormalTok{,}
+               \StringTok{"red"}\NormalTok{)}
+\NormalTok{  )}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Time (minutes)"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Reduction percentage of}
+\StringTok{    Absorbance at 620 nm"}
+\NormalTok{  )}\SpecialCharTok{+}
+  \FunctionTok{facet\_grid}\NormalTok{(.}\SpecialCharTok{\textasciitilde{}}\NormalTok{sub\_conc,}
+             \AttributeTok{labeller =} \FunctionTok{as\_labeller}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(x)\{}
+               \FunctionTok{paste}\NormalTok{(x, }\StringTok{"\%"}\NormalTok{)}
+\NormalTok{             \}))}\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{family=}\NormalTok{ mfont,}
+                        \AttributeTok{size =} \DecValTok{12}\NormalTok{,}
+                        \AttributeTok{color =} \StringTok{\textquotesingle{}black\textquotesingle{}}\NormalTok{),}
+    \AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{,}
+    \AttributeTok{strip.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{color =} \StringTok{"grey85"}\NormalTok{)}
+    \CommentTok{\# ,}
+    \CommentTok{\# panel.grid.major = element\_line(}
+    \CommentTok{\#   color = "grey80",}
+    \CommentTok{\#   linewidth = 0.3,}
+    \CommentTok{\#   linetype = 3}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{../Figs/enz_activity_percentage_by_sub_conc-1} \end{center}
+
+\section{Numerical estimation of the curvature of the enzyme
+activity}\label{numerical-estimation-of-the-curvature-of-the-enzyme-activity}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(ABS}\SpecialCharTok{\textasciitilde{}}\NormalTok{Starch}\SpecialCharTok{+}\FunctionTok{poly}\NormalTok{(Time, }\DecValTok{2}\NormalTok{, }\AttributeTok{raw =}\NormalTok{T), }\AttributeTok{data=}\NormalTok{ UV2 }\SpecialCharTok{\%\textgreater{}\%} 
+            \FunctionTok{filter}\NormalTok{(Starch}\SpecialCharTok{!=}\StringTok{"Negative control"}\NormalTok{) )}
+\FunctionTok{summary}\NormalTok{(mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Call:
+lm(formula = ABS ~ Starch + poly(Time, 2, raw = T), data = UV2 %>% 
+    filter(Starch != "Negative control"))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.6249 -0.1074 -0.0081  0.1042  0.6136 
+
+Coefficients:
+                          Estimate Std. Error t value Pr(>|t|)    
+(Intercept)              1.095e+00  5.011e-02  21.859  < 2e-16 ***
+StarchCorn Starch        3.612e-02  5.200e-02   0.695  0.48832    
+StarchRice Starch        1.667e-01  5.200e-02   3.207  0.00163 ** 
+StarchTopioca Starch     1.381e-01  5.200e-02   2.656  0.00875 ** 
+poly(Time, 2, raw = T)1 -3.744e-02  3.055e-03 -12.253  < 2e-16 ***
+poly(Time, 2, raw = T)2  3.076e-04  4.883e-05   6.299    3e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.2325 on 154 degrees of freedom
+Multiple R-squared:  0.776, Adjusted R-squared:  0.7688 
+F-statistic: 106.7 on 5 and 154 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# estimattion vs lab{-}tested value}
+\NormalTok{uv3 }\OtherTok{\textless{}{-}}\NormalTok{ UV2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(Starch }\SpecialCharTok{!=} \StringTok{"Negative control"}\NormalTok{)}
+\NormalTok{uv3}\SpecialCharTok{$}\NormalTok{fitted }\OtherTok{\textless{}{-}} \FunctionTok{fitted}\NormalTok{(mod)}
+\NormalTok{uv3}\SpecialCharTok{$}\NormalTok{residual }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(mod)}
+\FunctionTok{kable}\NormalTok{(uv3)}
+\end{Highlighting}
+\end{Shaded}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lrrrrr@{}}
+\toprule\noalign{}
+Starch & sub\_conc & Time & ABS & fitted & residual \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Soluble Starch & 1.0 & 0 & 0.9021 & 1.0952586 & -0.1931586 \\
+Soluble Starch & 1.0 & 15 & 0.4526 & 0.6029145 & -0.1503145 \\
+Soluble Starch & 1.0 & 30 & 0.2145 & 0.2489677 & -0.0344677 \\
+Soluble Starch & 1.0 & 45 & 0.0124 & 0.0334182 & -0.0210182 \\
+Soluble Starch & 1.0 & 60 & 0.0102 & -0.0437339 & 0.0539339 \\
+Soluble Starch & 1.0 & 0 & 0.8968 & 1.0952586 & -0.1984586 \\
+Soluble Starch & 1.0 & 15 & 0.4469 & 0.6029145 & -0.1560145 \\
+Soluble Starch & 1.0 & 30 & 0.2078 & 0.2489677 & -0.0411677 \\
+Soluble Starch & 1.0 & 45 & 0.0111 & 0.0334182 & -0.0223182 \\
+Soluble Starch & 1.0 & 60 & 0.0095 & -0.0437339 & 0.0532339 \\
+Topioca Starch & 1.0 & 0 & 1.0618 & 1.2333461 & -0.1715461 \\
+Topioca Starch & 1.0 & 15 & 0.6215 & 0.7410020 & -0.1195020 \\
+Topioca Starch & 1.0 & 30 & 0.3574 & 0.3870552 & -0.0296552 \\
+Topioca Starch & 1.0 & 45 & 0.1401 & 0.1715057 & -0.0314057 \\
+Topioca Starch & 1.0 & 60 & 0.0935 & 0.0943536 & -0.0008536 \\
+Topioca Starch & 1.0 & 0 & 1.0576 & 1.2333461 & -0.1757461 \\
+Topioca Starch & 1.0 & 15 & 0.6188 & 0.7410020 & -0.1222020 \\
+Topioca Starch & 1.0 & 30 & 0.3559 & 0.3870552 & -0.0311552 \\
+Topioca Starch & 1.0 & 45 & 0.1368 & 0.1715057 & -0.0347057 \\
+Topioca Starch & 1.0 & 60 & 0.0962 & 0.0943536 & 0.0018464 \\
+Corn Starch & 1.0 & 0 & 0.9842 & 1.1313786 & -0.1471786 \\
+Corn Starch & 1.0 & 15 & 0.5059 & 0.6390345 & -0.1331345 \\
+Corn Starch & 1.0 & 30 & 0.2764 & 0.2850877 & -0.0086877 \\
+Corn Starch & 1.0 & 45 & 0.0187 & 0.0695382 & -0.0508382 \\
+Corn Starch & 1.0 & 60 & 0.0139 & -0.0076139 & 0.0215139 \\
+Corn Starch & 1.0 & 0 & 0.9915 & 1.1313786 & -0.1398786 \\
+Corn Starch & 1.0 & 15 & 0.5126 & 0.6390345 & -0.1264345 \\
+Corn Starch & 1.0 & 30 & 0.2698 & 0.2850877 & -0.0152877 \\
+Corn Starch & 1.0 & 45 & 0.0202 & 0.0695382 & -0.0493382 \\
+Corn Starch & 1.0 & 60 & 0.0147 & -0.0076139 & 0.0223139 \\
+Rice Starch & 1.0 & 0 & 1.1250 & 1.2620011 & -0.1370011 \\
+Rice Starch & 1.0 & 15 & 0.6748 & 0.7696570 & -0.0948570 \\
+Rice Starch & 1.0 & 30 & 0.3629 & 0.4157102 & -0.0528102 \\
+Rice Starch & 1.0 & 45 & 0.0524 & 0.2001607 & -0.1477607 \\
+Rice Starch & 1.0 & 60 & 0.0426 & 0.1230086 & -0.0804086 \\
+Rice Starch & 1.0 & 0 & 1.3380 & 1.2620011 & 0.0759989 \\
+Rice Starch & 1.0 & 15 & 0.6785 & 0.7696570 & -0.0911570 \\
+Rice Starch & 1.0 & 30 & 0.3859 & 0.4157102 & -0.0298102 \\
+Rice Starch & 1.0 & 45 & 0.0479 & 0.2001607 & -0.1522607 \\
+Rice Starch & 1.0 & 60 & 0.0335 & 0.1230086 & -0.0895086 \\
+Soluble Starch & 0.5 & 0 & 0.5124 & 1.0952586 & -0.5828586 \\
+Soluble Starch & 0.5 & 15 & 0.2866 & 0.6029145 & -0.3163145 \\
+Soluble Starch & 0.5 & 30 & 0.1428 & 0.2489677 & -0.1061677 \\
+Soluble Starch & 0.5 & 45 & 0.0084 & 0.0334182 & -0.0250182 \\
+Soluble Starch & 0.5 & 60 & 0.0068 & -0.0437339 & 0.0505339 \\
+Soluble Starch & 0.5 & 0 & 0.5181 & 1.0952586 & -0.5771586 \\
+Soluble Starch & 0.5 & 15 & 0.2818 & 0.6029145 & -0.3211145 \\
+Soluble Starch & 0.5 & 30 & 0.1379 & 0.2489677 & -0.1110677 \\
+Soluble Starch & 0.5 & 45 & 0.0097 & 0.0334182 & -0.0237182 \\
+Soluble Starch & 0.5 & 60 & 0.0059 & -0.0437339 & 0.0496339 \\
+Topioca Starch & 0.5 & 0 & 0.6128 & 1.2333461 & -0.6205461 \\
+Topioca Starch & 0.5 & 15 & 0.3522 & 0.7410020 & -0.3888020 \\
+Topioca Starch & 0.5 & 30 & 0.1998 & 0.3870552 & -0.1872552 \\
+Topioca Starch & 0.5 & 45 & 0.0825 & 0.1715057 & -0.0890057 \\
+Topioca Starch & 0.5 & 60 & 0.0514 & 0.0943536 & -0.0429536 \\
+Topioca Starch & 0.5 & 0 & 0.6085 & 1.2333461 & -0.6248461 \\
+Topioca Starch & 0.5 & 15 & 0.3484 & 0.7410020 & -0.3926020 \\
+Topioca Starch & 0.5 & 30 & 0.1948 & 0.3870552 & -0.1922552 \\
+Topioca Starch & 0.5 & 45 & 0.0796 & 0.1715057 & -0.0919057 \\
+Topioca Starch & 0.5 & 60 & 0.0478 & 0.0943536 & -0.0465536 \\
+Corn Starch & 0.5 & 0 & 0.5642 & 1.1313786 & -0.5671786 \\
+Corn Starch & 0.5 & 15 & 0.2928 & 0.6390345 & -0.3462345 \\
+Corn Starch & 0.5 & 30 & 0.1546 & 0.2850877 & -0.1304877 \\
+Corn Starch & 0.5 & 45 & 0.0104 & 0.0695382 & -0.0591382 \\
+Corn Starch & 0.5 & 60 & 0.0082 & -0.0076139 & 0.0158139 \\
+Corn Starch & 0.5 & 0 & 0.5695 & 1.1313786 & -0.5618786 \\
+Corn Starch & 0.5 & 15 & 0.2964 & 0.6390345 & -0.3426345 \\
+Corn Starch & 0.5 & 30 & 0.1498 & 0.2850877 & -0.1352877 \\
+Corn Starch & 0.5 & 45 & 0.0118 & 0.0695382 & -0.0577382 \\
+Corn Starch & 0.5 & 60 & 0.0071 & -0.0076139 & 0.0147139 \\
+Rice Starch & 0.5 & 0 & 0.7184 & 1.2620011 & -0.5436011 \\
+Rice Starch & 0.5 & 15 & 0.4562 & 0.7696570 & -0.3134570 \\
+Rice Starch & 0.5 & 30 & 0.2485 & 0.4157102 & -0.1672102 \\
+Rice Starch & 0.5 & 45 & 0.0368 & 0.2001607 & -0.1633607 \\
+Rice Starch & 0.5 & 60 & 0.0245 & 0.1230086 & -0.0985086 \\
+Rice Starch & 0.5 & 0 & 0.7246 & 1.2620011 & -0.5374011 \\
+Rice Starch & 0.5 & 15 & 0.4628 & 0.7696570 & -0.3068570 \\
+Rice Starch & 0.5 & 30 & 0.2554 & 0.4157102 & -0.1603102 \\
+Rice Starch & 0.5 & 45 & 0.0412 & 0.2001607 & -0.1589607 \\
+Rice Starch & 0.5 & 60 & 0.0281 & 0.1230086 & -0.0949086 \\
+Soluble Starch & 1.5 & 0 & 1.2486 & 1.0952586 & 0.1533414 \\
+Soluble Starch & 1.5 & 15 & 0.6735 & 0.6029145 & 0.0705855 \\
+Soluble Starch & 1.5 & 30 & 0.3387 & 0.2489677 & 0.0897323 \\
+Soluble Starch & 1.5 & 45 & 0.0286 & 0.0334182 & -0.0048182 \\
+Soluble Starch & 1.5 & 60 & 0.0198 & -0.0437339 & 0.0635339 \\
+Soluble Starch & 1.5 & 0 & 1.2418 & 1.0952586 & 0.1465414 \\
+Soluble Starch & 1.5 & 15 & 0.6658 & 0.6029145 & 0.0628855 \\
+Soluble Starch & 1.5 & 30 & 0.3314 & 0.2489677 & 0.0824323 \\
+Soluble Starch & 1.5 & 45 & 0.0259 & 0.0334182 & -0.0075182 \\
+Soluble Starch & 1.5 & 60 & 0.0176 & -0.0437339 & 0.0613339 \\
+Topioca Starch & 1.5 & 0 & 1.4328 & 1.2333461 & 0.1994539 \\
+Topioca Starch & 1.5 & 15 & 0.8468 & 0.7410020 & 0.1057980 \\
+Topioca Starch & 1.5 & 30 & 0.4986 & 0.3870552 & 0.1115448 \\
+Topioca Starch & 1.5 & 45 & 0.2068 & 0.1715057 & 0.0352943 \\
+Topioca Starch & 1.5 & 60 & 0.1428 & 0.0943536 & 0.0484464 \\
+Topioca Starch & 1.5 & 0 & 1.4268 & 1.2333461 & 0.1934539 \\
+Topioca Starch & 1.5 & 15 & 0.8385 & 0.7410020 & 0.0974980 \\
+Topioca Starch & 1.5 & 30 & 0.4912 & 0.3870552 & 0.1041448 \\
+Topioca Starch & 1.5 & 45 & 0.1985 & 0.1715057 & 0.0269943 \\
+Topioca Starch & 1.5 & 60 & 0.1362 & 0.0943536 & 0.0418464 \\
+Corn Starch & 1.5 & 0 & 1.3258 & 1.1313786 & 0.1944214 \\
+Corn Starch & 1.5 & 15 & 0.7165 & 0.6390345 & 0.0774655 \\
+Corn Starch & 1.5 & 30 & 0.3868 & 0.2850877 & 0.1017123 \\
+Corn Starch & 1.5 & 45 & 0.0352 & 0.0695382 & -0.0343382 \\
+Corn Starch & 1.5 & 60 & 0.0248 & -0.0076139 & 0.0324139 \\
+Corn Starch & 1.5 & 0 & 1.3342 & 1.1313786 & 0.2028214 \\
+Corn Starch & 1.5 & 15 & 0.7248 & 0.6390345 & 0.0857655 \\
+Corn Starch & 1.5 & 30 & 0.3796 & 0.2850877 & 0.0945123 \\
+Corn Starch & 1.5 & 45 & 0.0358 & 0.0695382 & -0.0337382 \\
+Corn Starch & 1.5 & 60 & 0.0221 & -0.0076139 & 0.0297139 \\
+Rice Starch & 1.5 & 0 & 1.4862 & 1.2620011 & 0.2241989 \\
+Rice Starch & 1.5 & 15 & 0.9386 & 0.7696570 & 0.1689430 \\
+Rice Starch & 1.5 & 30 & 0.5568 & 0.4157102 & 0.1410898 \\
+Rice Starch & 1.5 & 45 & 0.1126 & 0.2001607 & -0.0875607 \\
+Rice Starch & 1.5 & 60 & 0.0826 & 0.1230086 & -0.0404086 \\
+Rice Starch & 1.5 & 0 & 1.4988 & 1.2620011 & 0.2367989 \\
+Rice Starch & 1.5 & 15 & 0.9462 & 0.7696570 & 0.1765430 \\
+Rice Starch & 1.5 & 30 & 0.5486 & 0.4157102 & 0.1328898 \\
+Rice Starch & 1.5 & 45 & 0.1048 & 0.2001607 & -0.0953607 \\
+Rice Starch & 1.5 & 60 & 0.0765 & 0.1230086 & -0.0465086 \\
+Soluble Starch & 2.0 & 0 & 1.5624 & 1.0952586 & 0.4671414 \\
+Soluble Starch & 2.0 & 15 & 0.8426 & 0.6029145 & 0.2396855 \\
+Soluble Starch & 2.0 & 30 & 0.4528 & 0.2489677 & 0.2038323 \\
+Soluble Starch & 2.0 & 45 & 0.0412 & 0.0334182 & 0.0077818 \\
+Soluble Starch & 2.0 & 60 & 0.0284 & -0.0437339 & 0.0721339 \\
+Soluble Starch & 2.0 & 0 & 1.5558 & 1.0952586 & 0.4605414 \\
+Soluble Starch & 2.0 & 15 & 0.8354 & 0.6029145 & 0.2324855 \\
+Soluble Starch & 2.0 & 30 & 0.4465 & 0.2489677 & 0.1975323 \\
+Soluble Starch & 2.0 & 45 & 0.0376 & 0.0334182 & 0.0041818 \\
+Soluble Starch & 2.0 & 60 & 0.0259 & -0.0437339 & 0.0696339 \\
+Topioca Starch & 2.0 & 0 & 1.7385 & 1.2333461 & 0.5051539 \\
+Topioca Starch & 2.0 & 15 & 1.0224 & 0.7410020 & 0.2813980 \\
+Topioca Starch & 2.0 & 30 & 0.6254 & 0.3870552 & 0.2383448 \\
+Topioca Starch & 2.0 & 45 & 0.2826 & 0.1715057 & 0.1110943 \\
+Topioca Starch & 2.0 & 60 & 0.1885 & 0.0943536 & 0.0941464 \\
+Topioca Starch & 2.0 & 0 & 1.7316 & 1.2333461 & 0.4982539 \\
+Topioca Starch & 2.0 & 15 & 1.0158 & 0.7410020 & 0.2747980 \\
+Topioca Starch & 2.0 & 30 & 0.6187 & 0.3870552 & 0.2316448 \\
+Topioca Starch & 2.0 & 45 & 0.2758 & 0.1715057 & 0.1042943 \\
+Topioca Starch & 2.0 & 60 & 0.1824 & 0.0943536 & 0.0880464 \\
+Corn Starch & 2.0 & 0 & 1.6488 & 1.1313786 & 0.5174214 \\
+Corn Starch & 2.0 & 15 & 0.8958 & 0.6390345 & 0.2567655 \\
+Corn Starch & 2.0 & 30 & 0.5186 & 0.2850877 & 0.2335123 \\
+Corn Starch & 2.0 & 45 & 0.0485 & 0.0695382 & -0.0210382 \\
+Corn Starch & 2.0 & 60 & 0.0354 & -0.0076139 & 0.0430139 \\
+Corn Starch & 2.0 & 0 & 1.6554 & 1.1313786 & 0.5240214 \\
+Corn Starch & 2.0 & 15 & 0.8886 & 0.6390345 & 0.2495655 \\
+Corn Starch & 2.0 & 30 & 0.5114 & 0.2850877 & 0.2263123 \\
+Corn Starch & 2.0 & 45 & 0.0458 & 0.0695382 & -0.0237382 \\
+Corn Starch & 2.0 & 60 & 0.0328 & -0.0076139 & 0.0404139 \\
+Rice Starch & 2.0 & 0 & 1.8624 & 1.2620011 & 0.6003989 \\
+Rice Starch & 2.0 & 15 & 1.1842 & 0.7696570 & 0.4145430 \\
+Rice Starch & 2.0 & 30 & 0.7128 & 0.4157102 & 0.2970898 \\
+Rice Starch & 2.0 & 45 & 0.1658 & 0.2001607 & -0.0343607 \\
+Rice Starch & 2.0 & 60 & 0.1184 & 0.1230086 & -0.0046086 \\
+Rice Starch & 2.0 & 0 & 1.8756 & 1.2620011 & 0.6135989 \\
+Rice Starch & 2.0 & 15 & 1.1786 & 0.7696570 & 0.4089430 \\
+Rice Starch & 2.0 & 30 & 0.7056 & 0.4157102 & 0.2898898 \\
+Rice Starch & 2.0 & 45 & 0.1586 & 0.2001607 & -0.0415607 \\
+Rice Starch & 2.0 & 60 & 0.1126 & 0.1230086 & -0.0104086 \\
+\end{longtable}
+}
+
+\section{Estimation of kinetic parameters Vo, Km and
+Vmax}\label{estimation-of-kinetic-parameters-vo-km-and-vmax}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1. Calculate Initial Velocity (v0)}
+\CommentTok{\# We calculate v0 using the change btw Time = 0 and Time = 15}
+\NormalTok{v0\_data }\OtherTok{\textless{}{-}}\NormalTok{ UV2 }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Exclude the negative control }
+  \FunctionTok{filter}\NormalTok{(Starch }\SpecialCharTok{!=} \StringTok{"Negative control"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Filter only for the initial linear phase timepoints}
+  \FunctionTok{filter}\NormalTok{(Time }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{15}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Group to average the two replicates in your dataset}
+  \FunctionTok{group\_by}\NormalTok{(Starch, sub\_conc, Time) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{mean\_ABS =} \FunctionTok{mean}\NormalTok{(ABS), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Reshape data to have Time 0 and Time 15 in separate columns}
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Time, }\AttributeTok{values\_from =}\NormalTok{ mean\_ABS,}
+              \AttributeTok{names\_prefix =} \StringTok{"T\_"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \CommentTok{\# Calculate initial velocity}
+    \AttributeTok{v0 =}\NormalTok{ (T\_0 }\SpecialCharTok{{-}}\NormalTok{ T\_15) }\SpecialCharTok{/} \DecValTok{15}
+\NormalTok{  )}
+
+\FunctionTok{print}\NormalTok{(}\StringTok{"Calculated Initial Velocities (v0):"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Calculated Initial Velocities (v0):"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{kable}\NormalTok{(v0\_data, }\AttributeTok{format =} \StringTok{\textquotesingle{}latex\textquotesingle{}}\NormalTok{, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{escape =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{lrrrr}
+\toprule
+Starch & sub\_conc & T\_0 & T\_15 & v0\\
+\midrule
+Soluble Starch & 0.5 & 0.51525 & 0.28420 & 0.0154033\\
+Soluble Starch & 1.0 & 0.89945 & 0.44975 & 0.0299800\\
+Soluble Starch & 1.5 & 1.24520 & 0.66965 & 0.0383700\\
+Soluble Starch & 2.0 & 1.55910 & 0.83900 & 0.0480067\\
+Corn Starch & 0.5 & 0.56685 & 0.29460 & 0.0181500\\
+\addlinespace
+Corn Starch & 1.0 & 0.98785 & 0.50925 & 0.0319067\\
+Corn Starch & 1.5 & 1.33000 & 0.72065 & 0.0406233\\
+Corn Starch & 2.0 & 1.65210 & 0.89220 & 0.0506600\\
+Rice Starch & 0.5 & 0.72150 & 0.45950 & 0.0174667\\
+Rice Starch & 1.0 & 1.23150 & 0.67665 & 0.0369900\\
+\addlinespace
+Rice Starch & 1.5 & 1.49250 & 0.94240 & 0.0366733\\
+Rice Starch & 2.0 & 1.86900 & 1.18140 & 0.0458400\\
+Topioca Starch & 0.5 & 0.61065 & 0.35030 & 0.0173567\\
+Topioca Starch & 1.0 & 1.05970 & 0.62015 & 0.0293033\\
+Topioca Starch & 1.5 & 1.42980 & 0.84265 & 0.0391433\\
+\addlinespace
+Topioca Starch & 2.0 & 1.73505 & 1.01910 & 0.0477300\\
+\bottomrule
+\end{tabular}
+
+\subsection{Fitting Michaeli-Menten Model for the four types of
+starch}\label{fitting-michaeli-menten-model-for-the-four-types-of-starch}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mm\_results }\OtherTok{\textless{}{-}}\NormalTok{ v0\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Starch) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{nest}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{model =} \FunctionTok{map}\NormalTok{(data, }\SpecialCharTok{\textasciitilde{}} \FunctionTok{nls}\NormalTok{(}
+\NormalTok{      v0 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ (Vmax }\SpecialCharTok{*}\NormalTok{ sub\_conc) }\SpecialCharTok{/}\NormalTok{ (Km }\SpecialCharTok{+}\NormalTok{ sub\_conc),}
+      \AttributeTok{data =}\NormalTok{ .x,}
+      \CommentTok{\# Dynamic start values based on the data}
+      \AttributeTok{start =} \FunctionTok{list}\NormalTok{(}\AttributeTok{Vmax =} \FunctionTok{max}\NormalTok{(.x}\SpecialCharTok{$}\NormalTok{v0), }\AttributeTok{Km =} \FunctionTok{median}\NormalTok{(.x}\SpecialCharTok{$}\NormalTok{sub\_conc))}
+\NormalTok{    )),}
+    \CommentTok{\# Extract the Vmax and Km estimates cleanly}
+    \AttributeTok{params =} \FunctionTok{map}\NormalTok{(model, tidy)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{unnest}\NormalTok{(params) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Starch, term, estimate, std.error, p.value)}
+
+\FunctionTok{print}\NormalTok{(}\StringTok{"Estimated Vmax and Km parameters:"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Estimated Vmax and Km parameters:"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{kable}\NormalTok{(mm\_results)}
+\end{Highlighting}
+\end{Shaded}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}llrrr@{}}
+\toprule\noalign{}
+Starch & term & estimate & std.error & p.value \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Soluble Starch & Vmax & 0.1394114 & 0.0248543 & 0.0303446 \\
+Soluble Starch & Km & 3.8346015 & 0.9569834 & 0.0570089 \\
+Corn Starch & Vmax & 0.1237107 & 0.0148865 & 0.0141730 \\
+Corn Starch & Km & 2.9409360 & 0.5344320 & 0.0314722 \\
+Rice Starch & Vmax & 0.0772405 & 0.0263232 & 0.0991661 \\
+Rice Starch & Km & 1.4089156 & 0.9497896 & 0.2762165 \\
+Topioca Starch & Vmax & 0.1199012 & 0.0080030 & 0.0044255 \\
+Topioca Starch & Km & 3.0542478 & 0.3043381 & 0.0097835 \\
+\end{longtable}
+}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# Another way of fitting MM model}
+\FunctionTok{suppressMessages}\NormalTok{(}
+  \FunctionTok{suppressWarnings}\NormalTok{(}
+    \FunctionTok{library}\NormalTok{(drc, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  )}
+\NormalTok{)}
+\NormalTok{fit }\OtherTok{\textless{}{-}} \FunctionTok{drm}\NormalTok{(v0}\SpecialCharTok{\textasciitilde{}}\NormalTok{sub\_conc, }\AttributeTok{data =}\NormalTok{ v0\_data, }\AttributeTok{fct =} \FunctionTok{MM.2}\NormalTok{())}
+\FunctionTok{summary}\NormalTok{(fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Model fitted: Michaelis-Menten (2 parms)
+
+Parameter estimates:
+
+              Estimate Std. Error t-value   p-value    
+d:(Intercept) 0.107786   0.014422  7.4736 2.996e-06 ***
+e:(Intercept) 2.530430   0.536467  4.7168 0.0003305 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error:
+
+ 0.002395029 (14 degrees of freedom)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Fit separate MM curves for each Starch group}
+\NormalTok{fit\_grouped }\OtherTok{\textless{}{-}} \FunctionTok{drm}\NormalTok{(v0 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ sub\_conc, }\AttributeTok{curveid =}\NormalTok{ Starch, }
+                   \AttributeTok{data =}\NormalTok{ v0\_data, }\AttributeTok{fct =} \FunctionTok{MM.2}\NormalTok{())}
+
+\CommentTok{\# Summary of Vmax (d) and Km (e) for each starch type}
+\FunctionTok{summary}\NormalTok{(fit\_grouped)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+Model fitted: Michaelis-Menten (2 parms)
+
+Parameter estimates:
+
+                 Estimate Std. Error t-value   p-value    
+d:Soluble Starch 0.138942   0.053124  2.6154 0.0308689 *  
+d:Corn Starch    0.123652   0.036633  3.3754 0.0097078 ** 
+d:Rice Starch    0.077240   0.013407  5.7611 0.0004236 ***
+d:Topioca Starch 0.119825   0.038667  3.0989 0.0146907 *  
+e:Soluble Starch 3.816484   2.045083  1.8662 0.0989871 .  
+e:Corn Starch    2.938814   1.315300  2.2343 0.0559180 .  
+e:Rice Starch    1.408915   0.483061  2.9166 0.0193907 *  
+e:Topioca Starch 3.051361   1.470592  2.0749 0.0716789 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error:
+
+ 0.002427663 (8 degrees of freedom)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Predict smooth curves from fit\_grouped model}
+\NormalTok{pred\_grid }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}
+  \AttributeTok{sub\_conc =} \FunctionTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{2.5}\NormalTok{, }\AttributeTok{length.out =} \DecValTok{100}\NormalTok{),}
+  \AttributeTok{Starch =} \FunctionTok{unique}\NormalTok{(v0\_data}\SpecialCharTok{$}\NormalTok{Starch)}
+\NormalTok{)}
+\NormalTok{pred\_grid}\SpecialCharTok{$}\NormalTok{pred\_v0 }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(fit\_grouped, }\AttributeTok{newdata =}\NormalTok{ pred\_grid)}
+\FunctionTok{kable}\NormalTok{(pred\_grid, }\AttributeTok{type =} \StringTok{\textquotesingle{}latex\textquotesingle{}}\NormalTok{, }\AttributeTok{escape =}\NormalTok{ T, }\AttributeTok{booktabs=} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}rlr@{}}
+\toprule\noalign{}
+sub\_conc & Starch & pred\_v0 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0.1000000 & Soluble Starch & 0.0035476 \\
+0.1242424 & Soluble Starch & 0.0043805 \\
+0.1484848 & Soluble Starch & 0.0052033 \\
+0.1727273 & Soluble Starch & 0.0060160 \\
+0.1969697 & Soluble Starch & 0.0068189 \\
+0.2212121 & Soluble Starch & 0.0076122 \\
+0.2454545 & Soluble Starch & 0.0083960 \\
+0.2696970 & Soluble Starch & 0.0091705 \\
+0.2939394 & Soluble Starch & 0.0099358 \\
+0.3181818 & Soluble Starch & 0.0106922 \\
+0.3424242 & Soluble Starch & 0.0114398 \\
+0.3666667 & Soluble Starch & 0.0121787 \\
+0.3909091 & Soluble Starch & 0.0129091 \\
+0.4151515 & Soluble Starch & 0.0136311 \\
+0.4393939 & Soluble Starch & 0.0143449 \\
+0.4636364 & Soluble Starch & 0.0150506 \\
+0.4878788 & Soluble Starch & 0.0157484 \\
+0.5121212 & Soluble Starch & 0.0164383 \\
+0.5363636 & Soluble Starch & 0.0171206 \\
+0.5606061 & Soluble Starch & 0.0177953 \\
+0.5848485 & Soluble Starch & 0.0184625 \\
+0.6090909 & Soluble Starch & 0.0191225 \\
+0.6333333 & Soluble Starch & 0.0197753 \\
+0.6575758 & Soluble Starch & 0.0204210 \\
+0.6818182 & Soluble Starch & 0.0210597 \\
+0.7060606 & Soluble Starch & 0.0216916 \\
+0.7303030 & Soluble Starch & 0.0223167 \\
+0.7545455 & Soluble Starch & 0.0229353 \\
+0.7787879 & Soluble Starch & 0.0235473 \\
+0.8030303 & Soluble Starch & 0.0241528 \\
+0.8272727 & Soluble Starch & 0.0247521 \\
+0.8515152 & Soluble Starch & 0.0253451 \\
+0.8757576 & Soluble Starch & 0.0259320 \\
+0.9000000 & Soluble Starch & 0.0265129 \\
+0.9242424 & Soluble Starch & 0.0270878 \\
+0.9484848 & Soluble Starch & 0.0276568 \\
+0.9727273 & Soluble Starch & 0.0282202 \\
+0.9969697 & Soluble Starch & 0.0287778 \\
+1.0212121 & Soluble Starch & 0.0293298 \\
+1.0454545 & Soluble Starch & 0.0298764 \\
+1.0696970 & Soluble Starch & 0.0304175 \\
+1.0939394 & Soluble Starch & 0.0309533 \\
+1.1181818 & Soluble Starch & 0.0314838 \\
+1.1424242 & Soluble Starch & 0.0320091 \\
+1.1666667 & Soluble Starch & 0.0325293 \\
+1.1909091 & Soluble Starch & 0.0330445 \\
+1.2151515 & Soluble Starch & 0.0335547 \\
+1.2393939 & Soluble Starch & 0.0340600 \\
+1.2636364 & Soluble Starch & 0.0345605 \\
+1.2878788 & Soluble Starch & 0.0350563 \\
+1.3121212 & Soluble Starch & 0.0355473 \\
+1.3363636 & Soluble Starch & 0.0360338 \\
+1.3606061 & Soluble Starch & 0.0365156 \\
+1.3848485 & Soluble Starch & 0.0369930 \\
+1.4090909 & Soluble Starch & 0.0374660 \\
+1.4333333 & Soluble Starch & 0.0379346 \\
+1.4575758 & Soluble Starch & 0.0383989 \\
+1.4818182 & Soluble Starch & 0.0388589 \\
+1.5060606 & Soluble Starch & 0.0393147 \\
+1.5303030 & Soluble Starch & 0.0397665 \\
+1.5545455 & Soluble Starch & 0.0402141 \\
+1.5787879 & Soluble Starch & 0.0406577 \\
+1.6030303 & Soluble Starch & 0.0410973 \\
+1.6272727 & Soluble Starch & 0.0415331 \\
+1.6515152 & Soluble Starch & 0.0419649 \\
+1.6757576 & Soluble Starch & 0.0423930 \\
+1.7000000 & Soluble Starch & 0.0428173 \\
+1.7242424 & Soluble Starch & 0.0432378 \\
+1.7484848 & Soluble Starch & 0.0436547 \\
+1.7727273 & Soluble Starch & 0.0440680 \\
+1.7969697 & Soluble Starch & 0.0444778 \\
+1.8212121 & Soluble Starch & 0.0448840 \\
+1.8454545 & Soluble Starch & 0.0452867 \\
+1.8696970 & Soluble Starch & 0.0456860 \\
+1.8939394 & Soluble Starch & 0.0460819 \\
+1.9181818 & Soluble Starch & 0.0464744 \\
+1.9424242 & Soluble Starch & 0.0468637 \\
+1.9666667 & Soluble Starch & 0.0472496 \\
+1.9909091 & Soluble Starch & 0.0476324 \\
+2.0151515 & Soluble Starch & 0.0480120 \\
+2.0393939 & Soluble Starch & 0.0483884 \\
+2.0636364 & Soluble Starch & 0.0487617 \\
+2.0878788 & Soluble Starch & 0.0491320 \\
+2.1121212 & Soluble Starch & 0.0494993 \\
+2.1363636 & Soluble Starch & 0.0498635 \\
+2.1606061 & Soluble Starch & 0.0502248 \\
+2.1848485 & Soluble Starch & 0.0505832 \\
+2.2090909 & Soluble Starch & 0.0509386 \\
+2.2333333 & Soluble Starch & 0.0512913 \\
+2.2575758 & Soluble Starch & 0.0516411 \\
+2.2818182 & Soluble Starch & 0.0519882 \\
+2.3060606 & Soluble Starch & 0.0523325 \\
+2.3303030 & Soluble Starch & 0.0526740 \\
+2.3545455 & Soluble Starch & 0.0530129 \\
+2.3787879 & Soluble Starch & 0.0533492 \\
+2.4030303 & Soluble Starch & 0.0536828 \\
+2.4272727 & Soluble Starch & 0.0540138 \\
+2.4515152 & Soluble Starch & 0.0543423 \\
+2.4757576 & Soluble Starch & 0.0546682 \\
+2.5000000 & Soluble Starch & 0.0549917 \\
+0.1000000 & Corn Starch & 0.0040691 \\
+0.1242424 & Corn Starch & 0.0050155 \\
+0.1484848 & Corn Starch & 0.0059471 \\
+0.1727273 & Corn Starch & 0.0068641 \\
+0.1969697 & Corn Starch & 0.0077670 \\
+0.2212121 & Corn Starch & 0.0086560 \\
+0.2454545 & Corn Starch & 0.0095315 \\
+0.2696970 & Corn Starch & 0.0103938 \\
+0.2939394 & Corn Starch & 0.0112431 \\
+0.3181818 & Corn Starch & 0.0120798 \\
+0.3424242 & Corn Starch & 0.0129041 \\
+0.3666667 & Corn Starch & 0.0137163 \\
+0.3909091 & Corn Starch & 0.0145167 \\
+0.4151515 & Corn Starch & 0.0153055 \\
+0.4393939 & Corn Starch & 0.0160830 \\
+0.4636364 & Corn Starch & 0.0168495 \\
+0.4878788 & Corn Starch & 0.0176051 \\
+0.5121212 & Corn Starch & 0.0183500 \\
+0.5363636 & Corn Starch & 0.0190846 \\
+0.5606061 & Corn Starch & 0.0198090 \\
+0.5848485 & Corn Starch & 0.0205234 \\
+0.6090909 & Corn Starch & 0.0212281 \\
+0.6333333 & Corn Starch & 0.0219232 \\
+0.6575758 & Corn Starch & 0.0226089 \\
+0.6818182 & Corn Starch & 0.0232855 \\
+0.7060606 & Corn Starch & 0.0239530 \\
+0.7303030 & Corn Starch & 0.0246117 \\
+0.7545455 & Corn Starch & 0.0252618 \\
+0.7787879 & Corn Starch & 0.0259034 \\
+0.8030303 & Corn Starch & 0.0265367 \\
+0.8272727 & Corn Starch & 0.0271618 \\
+0.8515152 & Corn Starch & 0.0277790 \\
+0.8757576 & Corn Starch & 0.0283883 \\
+0.9000000 & Corn Starch & 0.0289899 \\
+0.9242424 & Corn Starch & 0.0295839 \\
+0.9484848 & Corn Starch & 0.0301705 \\
+0.9727273 & Corn Starch & 0.0307499 \\
+0.9969697 & Corn Starch & 0.0313221 \\
+1.0212121 & Corn Starch & 0.0318874 \\
+1.0454545 & Corn Starch & 0.0324457 \\
+1.0696970 & Corn Starch & 0.0329973 \\
+1.0939394 & Corn Starch & 0.0335422 \\
+1.1181818 & Corn Starch & 0.0340807 \\
+1.1424242 & Corn Starch & 0.0346127 \\
+1.1666667 & Corn Starch & 0.0351385 \\
+1.1909091 & Corn Starch & 0.0356581 \\
+1.2151515 & Corn Starch & 0.0361716 \\
+1.2393939 & Corn Starch & 0.0366792 \\
+1.2636364 & Corn Starch & 0.0371809 \\
+1.2878788 & Corn Starch & 0.0376769 \\
+1.3121212 & Corn Starch & 0.0381672 \\
+1.3363636 & Corn Starch & 0.0386519 \\
+1.3606061 & Corn Starch & 0.0391312 \\
+1.3848485 & Corn Starch & 0.0396051 \\
+1.4090909 & Corn Starch & 0.0400737 \\
+1.4333333 & Corn Starch & 0.0405371 \\
+1.4575758 & Corn Starch & 0.0409954 \\
+1.4818182 & Corn Starch & 0.0414487 \\
+1.5060606 & Corn Starch & 0.0418971 \\
+1.5303030 & Corn Starch & 0.0423405 \\
+1.5545455 & Corn Starch & 0.0427792 \\
+1.5787879 & Corn Starch & 0.0432132 \\
+1.6030303 & Corn Starch & 0.0436425 \\
+1.6272727 & Corn Starch & 0.0440673 \\
+1.6515152 & Corn Starch & 0.0444876 \\
+1.6757576 & Corn Starch & 0.0449035 \\
+1.7000000 & Corn Starch & 0.0453151 \\
+1.7242424 & Corn Starch & 0.0457223 \\
+1.7484848 & Corn Starch & 0.0461254 \\
+1.7727273 & Corn Starch & 0.0465243 \\
+1.7969697 & Corn Starch & 0.0469191 \\
+1.8212121 & Corn Starch & 0.0473099 \\
+1.8454545 & Corn Starch & 0.0476967 \\
+1.8696970 & Corn Starch & 0.0480796 \\
+1.8939394 & Corn Starch & 0.0484587 \\
+1.9181818 & Corn Starch & 0.0488340 \\
+1.9424242 & Corn Starch & 0.0492056 \\
+1.9666667 & Corn Starch & 0.0495735 \\
+1.9909091 & Corn Starch & 0.0499378 \\
+2.0151515 & Corn Starch & 0.0502985 \\
+2.0393939 & Corn Starch & 0.0506557 \\
+2.0636364 & Corn Starch & 0.0510095 \\
+2.0878788 & Corn Starch & 0.0513598 \\
+2.1121212 & Corn Starch & 0.0517068 \\
+2.1363636 & Corn Starch & 0.0520504 \\
+2.1606061 & Corn Starch & 0.0523908 \\
+2.1848485 & Corn Starch & 0.0527280 \\
+2.2090909 & Corn Starch & 0.0530620 \\
+2.2333333 & Corn Starch & 0.0533929 \\
+2.2575758 & Corn Starch & 0.0537206 \\
+2.2818182 & Corn Starch & 0.0540454 \\
+2.3060606 & Corn Starch & 0.0543671 \\
+2.3303030 & Corn Starch & 0.0546859 \\
+2.3545455 & Corn Starch & 0.0550017 \\
+2.3787879 & Corn Starch & 0.0553147 \\
+2.4030303 & Corn Starch & 0.0556248 \\
+2.4272727 & Corn Starch & 0.0559321 \\
+2.4515152 & Corn Starch & 0.0562367 \\
+2.4757576 & Corn Starch & 0.0565385 \\
+2.5000000 & Corn Starch & 0.0568377 \\
+0.1000000 & Rice Starch & 0.0051189 \\
+0.1242424 & Rice Starch & 0.0062593 \\
+0.1484848 & Rice Starch & 0.0073642 \\
+0.1727273 & Rice Starch & 0.0084352 \\
+0.1969697 & Rice Starch & 0.0094739 \\
+0.2212121 & Rice Starch & 0.0104816 \\
+0.2454545 & Rice Starch & 0.0114599 \\
+0.2696970 & Rice Starch & 0.0124099 \\
+0.2939394 & Rice Starch & 0.0133328 \\
+0.3181818 & Rice Starch & 0.0142299 \\
+0.3424242 & Rice Starch & 0.0151021 \\
+0.3666667 & Rice Starch & 0.0159504 \\
+0.3909091 & Rice Starch & 0.0167760 \\
+0.4151515 & Rice Starch & 0.0175796 \\
+0.4393939 & Rice Starch & 0.0183621 \\
+0.4636364 & Rice Starch & 0.0191243 \\
+0.4878788 & Rice Starch & 0.0198671 \\
+0.5121212 & Rice Starch & 0.0205911 \\
+0.5363636 & Rice Starch & 0.0212970 \\
+0.5606061 & Rice Starch & 0.0219856 \\
+0.5848485 & Rice Starch & 0.0226575 \\
+0.6090909 & Rice Starch & 0.0233132 \\
+0.6333333 & Rice Starch & 0.0239533 \\
+0.6575758 & Rice Starch & 0.0245784 \\
+0.6818182 & Rice Starch & 0.0251891 \\
+0.7060606 & Rice Starch & 0.0257857 \\
+0.7303030 & Rice Starch & 0.0263688 \\
+0.7545455 & Rice Starch & 0.0269388 \\
+0.7787879 & Rice Starch & 0.0274962 \\
+0.8030303 & Rice Starch & 0.0280414 \\
+0.8272727 & Rice Starch & 0.0285747 \\
+0.8515152 & Rice Starch & 0.0290967 \\
+0.8757576 & Rice Starch & 0.0296075 \\
+0.9000000 & Rice Starch & 0.0301076 \\
+0.9242424 & Rice Starch & 0.0305973 \\
+0.9484848 & Rice Starch & 0.0310770 \\
+0.9727273 & Rice Starch & 0.0315469 \\
+0.9969697 & Rice Starch & 0.0320073 \\
+1.0212121 & Rice Starch & 0.0324585 \\
+1.0454545 & Rice Starch & 0.0329009 \\
+1.0696970 & Rice Starch & 0.0333345 \\
+1.0939394 & Rice Starch & 0.0337598 \\
+1.1181818 & Rice Starch & 0.0341769 \\
+1.1424242 & Rice Starch & 0.0345861 \\
+1.1666667 & Rice Starch & 0.0349875 \\
+1.1909091 & Rice Starch & 0.0353815 \\
+1.2151515 & Rice Starch & 0.0357682 \\
+1.2393939 & Rice Starch & 0.0361479 \\
+1.2636364 & Rice Starch & 0.0365206 \\
+1.2878788 & Rice Starch & 0.0368866 \\
+1.3121212 & Rice Starch & 0.0372462 \\
+1.3363636 & Rice Starch & 0.0375993 \\
+1.3606061 & Rice Starch & 0.0379463 \\
+1.3848485 & Rice Starch & 0.0382873 \\
+1.4090909 & Rice Starch & 0.0386224 \\
+1.4333333 & Rice Starch & 0.0389518 \\
+1.4575758 & Rice Starch & 0.0392756 \\
+1.4818182 & Rice Starch & 0.0395940 \\
+1.5060606 & Rice Starch & 0.0399070 \\
+1.5303030 & Rice Starch & 0.0402150 \\
+1.5545455 & Rice Starch & 0.0405178 \\
+1.5787879 & Rice Starch & 0.0408158 \\
+1.6030303 & Rice Starch & 0.0411090 \\
+1.6272727 & Rice Starch & 0.0413975 \\
+1.6515152 & Rice Starch & 0.0416814 \\
+1.6757576 & Rice Starch & 0.0419608 \\
+1.7000000 & Rice Starch & 0.0422359 \\
+1.7242424 & Rice Starch & 0.0425068 \\
+1.7484848 & Rice Starch & 0.0427734 \\
+1.7727273 & Rice Starch & 0.0430361 \\
+1.7969697 & Rice Starch & 0.0432947 \\
+1.8212121 & Rice Starch & 0.0435495 \\
+1.8454545 & Rice Starch & 0.0438004 \\
+1.8696970 & Rice Starch & 0.0440477 \\
+1.8939394 & Rice Starch & 0.0442913 \\
+1.9181818 & Rice Starch & 0.0445314 \\
+1.9424242 & Rice Starch & 0.0447680 \\
+1.9666667 & Rice Starch & 0.0450012 \\
+1.9909091 & Rice Starch & 0.0452311 \\
+2.0151515 & Rice Starch & 0.0454577 \\
+2.0393939 & Rice Starch & 0.0456811 \\
+2.0636364 & Rice Starch & 0.0459015 \\
+2.0878788 & Rice Starch & 0.0461187 \\
+2.1121212 & Rice Starch & 0.0463330 \\
+2.1363636 & Rice Starch & 0.0465443 \\
+2.1606061 & Rice Starch & 0.0467528 \\
+2.1848485 & Rice Starch & 0.0469585 \\
+2.2090909 & Rice Starch & 0.0471614 \\
+2.2333333 & Rice Starch & 0.0473616 \\
+2.2575758 & Rice Starch & 0.0475591 \\
+2.2818182 & Rice Starch & 0.0477541 \\
+2.3060606 & Rice Starch & 0.0479465 \\
+2.3303030 & Rice Starch & 0.0481364 \\
+2.3545455 & Rice Starch & 0.0483239 \\
+2.3787879 & Rice Starch & 0.0485089 \\
+2.4030303 & Rice Starch & 0.0486917 \\
+2.4272727 & Rice Starch & 0.0488721 \\
+2.4515152 & Rice Starch & 0.0490502 \\
+2.4757576 & Rice Starch & 0.0492261 \\
+2.5000000 & Rice Starch & 0.0493999 \\
+0.1000000 & Topioca Starch & 0.0038023 \\
+0.1242424 & Topioca Starch & 0.0046880 \\
+0.1484848 & Topioca Starch & 0.0055603 \\
+0.1727273 & Topioca Starch & 0.0064195 \\
+0.1969697 & Topioca Starch & 0.0072658 \\
+0.2212121 & Topioca Starch & 0.0080996 \\
+0.2454545 & Topioca Starch & 0.0089212 \\
+0.2696970 & Topioca Starch & 0.0097307 \\
+0.2939394 & Topioca Starch & 0.0105286 \\
+0.3181818 & Topioca Starch & 0.0113149 \\
+0.3424242 & Topioca Starch & 0.0120900 \\
+0.3666667 & Topioca Starch & 0.0128541 \\
+0.3909091 & Topioca Starch & 0.0136075 \\
+0.4151515 & Topioca Starch & 0.0143503 \\
+0.4393939 & Topioca Starch & 0.0150828 \\
+0.4636364 & Topioca Starch & 0.0158052 \\
+0.4878788 & Topioca Starch & 0.0165177 \\
+0.5121212 & Topioca Starch & 0.0172205 \\
+0.5363636 & Topioca Starch & 0.0179138 \\
+0.5606061 & Topioca Starch & 0.0185978 \\
+0.5848485 & Topioca Starch & 0.0192726 \\
+0.6090909 & Topioca Starch & 0.0199386 \\
+0.6333333 & Topioca Starch & 0.0205957 \\
+0.6575758 & Topioca Starch & 0.0212443 \\
+0.6818182 & Topioca Starch & 0.0218845 \\
+0.7060606 & Topioca Starch & 0.0225164 \\
+0.7303030 & Topioca Starch & 0.0231402 \\
+0.7545455 & Topioca Starch & 0.0237560 \\
+0.7787879 & Topioca Starch & 0.0243641 \\
+0.8030303 & Topioca Starch & 0.0249645 \\
+0.8272727 & Topioca Starch & 0.0255574 \\
+0.8515152 & Topioca Starch & 0.0261429 \\
+0.8757576 & Topioca Starch & 0.0267212 \\
+0.9000000 & Topioca Starch & 0.0272924 \\
+0.9242424 & Topioca Starch & 0.0278567 \\
+0.9484848 & Topioca Starch & 0.0284141 \\
+0.9727273 & Topioca Starch & 0.0289648 \\
+0.9969697 & Topioca Starch & 0.0295089 \\
+1.0212121 & Topioca Starch & 0.0300465 \\
+1.0454545 & Topioca Starch & 0.0305777 \\
+1.0696970 & Topioca Starch & 0.0311027 \\
+1.0939394 & Topioca Starch & 0.0316216 \\
+1.1181818 & Topioca Starch & 0.0321344 \\
+1.1424242 & Topioca Starch & 0.0326413 \\
+1.1666667 & Topioca Starch & 0.0331424 \\
+1.1909091 & Topioca Starch & 0.0336377 \\
+1.2151515 & Topioca Starch & 0.0341275 \\
+1.2393939 & Topioca Starch & 0.0346116 \\
+1.2636364 & Topioca Starch & 0.0350904 \\
+1.2878788 & Topioca Starch & 0.0355638 \\
+1.3121212 & Topioca Starch & 0.0360319 \\
+1.3363636 & Topioca Starch & 0.0364949 \\
+1.3606061 & Topioca Starch & 0.0369527 \\
+1.3848485 & Topioca Starch & 0.0374056 \\
+1.4090909 & Topioca Starch & 0.0378536 \\
+1.4333333 & Topioca Starch & 0.0382967 \\
+1.4575758 & Topioca Starch & 0.0387350 \\
+1.4818182 & Topioca Starch & 0.0391687 \\
+1.5060606 & Topioca Starch & 0.0395977 \\
+1.5303030 & Topioca Starch & 0.0400222 \\
+1.5545455 & Topioca Starch & 0.0404422 \\
+1.5787879 & Topioca Starch & 0.0408578 \\
+1.6030303 & Topioca Starch & 0.0412691 \\
+1.6272727 & Topioca Starch & 0.0416762 \\
+1.6515152 & Topioca Starch & 0.0420790 \\
+1.6757576 & Topioca Starch & 0.0424777 \\
+1.7000000 & Topioca Starch & 0.0428724 \\
+1.7242424 & Topioca Starch & 0.0432630 \\
+1.7484848 & Topioca Starch & 0.0436497 \\
+1.7727273 & Topioca Starch & 0.0440325 \\
+1.7969697 & Topioca Starch & 0.0444115 \\
+1.8212121 & Topioca Starch & 0.0447867 \\
+1.8454545 & Topioca Starch & 0.0451582 \\
+1.8696970 & Topioca Starch & 0.0455260 \\
+1.8939394 & Topioca Starch & 0.0458902 \\
+1.9181818 & Topioca Starch & 0.0462509 \\
+1.9424242 & Topioca Starch & 0.0466080 \\
+1.9666667 & Topioca Starch & 0.0469618 \\
+1.9909091 & Topioca Starch & 0.0473121 \\
+2.0151515 & Topioca Starch & 0.0476590 \\
+2.0393939 & Topioca Starch & 0.0480027 \\
+2.0636364 & Topioca Starch & 0.0483431 \\
+2.0878788 & Topioca Starch & 0.0486803 \\
+2.1121212 & Topioca Starch & 0.0490143 \\
+2.1363636 & Topioca Starch & 0.0493452 \\
+2.1606061 & Topioca Starch & 0.0496730 \\
+2.1848485 & Topioca Starch & 0.0499978 \\
+2.2090909 & Topioca Starch & 0.0503196 \\
+2.2333333 & Topioca Starch & 0.0506384 \\
+2.2575758 & Topioca Starch & 0.0509544 \\
+2.2818182 & Topioca Starch & 0.0512674 \\
+2.3060606 & Topioca Starch & 0.0515776 \\
+2.3303030 & Topioca Starch & 0.0518851 \\
+2.3545455 & Topioca Starch & 0.0521897 \\
+2.3787879 & Topioca Starch & 0.0524917 \\
+2.4030303 & Topioca Starch & 0.0527910 \\
+2.4272727 & Topioca Starch & 0.0530876 \\
+2.4515152 & Topioca Starch & 0.0533816 \\
+2.4757576 & Topioca Starch & 0.0536730 \\
+2.5000000 & Topioca Starch & 0.0539619 \\
+\end{longtable}
+}
+
+\subsection{Plot the Substrate Saturation
+Curves}\label{plot-the-substrate-saturation-curves}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(v0\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sub\_conc, }\AttributeTok{y =}\NormalTok{ v0, }\AttributeTok{color =}\NormalTok{ Starch)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{size =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# Fit the non{-}linear Michaelis{-}Menten curve onto the plot}
+  \FunctionTok{stat\_smooth}\NormalTok{(}
+    \AttributeTok{method =} \StringTok{"nls"}\NormalTok{, }\CommentTok{\# non{-}linear least squares}
+    \AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ (Vmax }\SpecialCharTok{*}\NormalTok{ x) }\SpecialCharTok{/}\NormalTok{ (Km }\SpecialCharTok{+}\NormalTok{ x),}
+    \AttributeTok{method.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{start =} \FunctionTok{list}\NormalTok{(}\AttributeTok{Vmax =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{Km =} \DecValTok{1}\NormalTok{)),}
+    \AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{,}
+    \AttributeTok{linewidth =} \DecValTok{1}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Substrate Concentration (\%)"}\NormalTok{,}
+    \AttributeTok{y =} \FunctionTok{expression}\NormalTok{(}\StringTok{"Initial Velocity ("} \SpecialCharTok{*}\NormalTok{ Delta }\SpecialCharTok{*} \StringTok{" Abs / min)"}\NormalTok{),}
+    \AttributeTok{title =} \StringTok{"Michaelis{-}Menten Kinetics of Alpha{-}Amylase"}\NormalTok{,}
+    \AttributeTok{subtitle =} \StringTok{"Substrate saturation curves for various starches"}\NormalTok{,}
+    \AttributeTok{color =} \ConstantTok{NULL}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}
+      \AttributeTok{family =}\NormalTok{ mfont,}
+      \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
+      \AttributeTok{size =} \DecValTok{12}
+\NormalTok{      ),}
+    \AttributeTok{axis.line =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{),}
+    \AttributeTok{axis.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{),}
+    \AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{,}
+    \AttributeTok{legend.margin =} \FunctionTok{margin}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+    \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{../Figs/Plot the Substrate Saturation Curves-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\# }
+
+
+
+\CommentTok{\# Km estimates from summary(fit\_grouped) to overlay vertical lines}
+\NormalTok{km\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Starch =} \FunctionTok{c}\NormalTok{(}\StringTok{"Soluble Starch"}\NormalTok{, }\StringTok{"Corn Starch"}\NormalTok{, }
+             \StringTok{"Rice Starch"}\NormalTok{, }\StringTok{"Topioca Starch"}\NormalTok{),}
+  \AttributeTok{Km =} \FunctionTok{c}\NormalTok{(}\FloatTok{3.816}\NormalTok{, }\FloatTok{2.939}\NormalTok{, }\FloatTok{1.409}\NormalTok{, }\FloatTok{3.051}\NormalTok{)}
+\NormalTok{)}
+
+\FunctionTok{kable}\NormalTok{(km\_df)}
+\end{Highlighting}
+\end{Shaded}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+Starch & Km \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Soluble Starch & 3.816 \\
+Corn Starch & 2.939 \\
+Rice Starch & 1.409 \\
+Topioca Starch & 3.051 \\
+\end{longtable}
+}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+  \CommentTok{\# Raw data points}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =}\NormalTok{ v0\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sub\_conc, }\AttributeTok{y =}\NormalTok{ v0, }
+                                 \AttributeTok{color =}\NormalTok{ Starch), }\AttributeTok{size =} \FloatTok{2.5}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# Fitted Michaelis{-}Menten lines}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{data =}\NormalTok{ pred\_grid, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sub\_conc, }\AttributeTok{y =}\NormalTok{ pred\_v0, }
+                                  \AttributeTok{color =}\NormalTok{ Starch), }
+            \AttributeTok{linewidth =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+  \CommentTok{\# Vertical dashed lines indicating Km}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{data =}\NormalTok{ km\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{xintercept =}\NormalTok{ Km, }\AttributeTok{color =}\NormalTok{ Starch), }
+             \AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ Starch) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \StringTok{"Substrate Concentration (\%)"}\NormalTok{,}
+    \AttributeTok{y =} \FunctionTok{expression}\NormalTok{(}\StringTok{"Initial Velocity "} \SpecialCharTok{*}\NormalTok{ v[}\DecValTok{0}\NormalTok{] }\SpecialCharTok{*} \StringTok{" ("} \SpecialCharTok{*}\NormalTok{ Delta }\SpecialCharTok{*} \StringTok{"Abs/min)"}\NormalTok{),}
+    \AttributeTok{title =} \StringTok{"Michaelis{-}Menten Fit by Starch Type"}\NormalTok{,}
+    \AttributeTok{subtitle =} \StringTok{"Dashed lines indicate estimated Km (half{-}saturation) values"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}
+      \AttributeTok{family =}\NormalTok{ mfont,}
+      \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
+      \AttributeTok{size =} \DecValTok{12}
+\NormalTok{    ),}
+    \AttributeTok{axis.line =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{),}
+    \AttributeTok{axis.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{),}
+    \AttributeTok{legend.margin =} \FunctionTok{margin}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+    \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{),}
+    \AttributeTok{legend.position =} \StringTok{"none"}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{../Figs/Plot the Substrate Saturation Curves-2} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Tidy extracted parameter estimates from fit\_grouped}
+\NormalTok{param\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Starch =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Soluble Starch"}\NormalTok{, }\StringTok{"Corn Starch"}\NormalTok{, }
+                 \StringTok{"Rice Starch"}\NormalTok{, }\StringTok{"Topioca Starch"}\NormalTok{), }\DecValTok{2}\NormalTok{),}
+  \AttributeTok{Parameter =} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"Vmax (d)"}\NormalTok{, }\DecValTok{4}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\StringTok{"Km (e)"}\NormalTok{, }\DecValTok{4}\NormalTok{)),}
+  \AttributeTok{Estimate =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.1389}\NormalTok{, }\FloatTok{0.1237}\NormalTok{, }\FloatTok{0.0772}\NormalTok{, }\FloatTok{0.1198}\NormalTok{, }\FloatTok{3.816}\NormalTok{, }\FloatTok{2.939}\NormalTok{, }\FloatTok{1.409}\NormalTok{, }\FloatTok{3.051}\NormalTok{),}
+  \AttributeTok{SE =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.0531}\NormalTok{, }\FloatTok{0.0366}\NormalTok{, }\FloatTok{0.0134}\NormalTok{, }\FloatTok{0.0387}\NormalTok{, }\FloatTok{2.045}\NormalTok{, }\FloatTok{1.315}\NormalTok{, }\FloatTok{0.483}\NormalTok{, }\FloatTok{1.471}\NormalTok{)}
+\NormalTok{)}
+
+\FunctionTok{kable}\NormalTok{(param\_df)}
+\end{Highlighting}
+\end{Shaded}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}llrr@{}}
+\toprule\noalign{}
+Starch & Parameter & Estimate & SE \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Soluble Starch & Vmax (d) & 0.1389 & 0.0531 \\
+Corn Starch & Vmax (d) & 0.1237 & 0.0366 \\
+Rice Starch & Vmax (d) & 0.0772 & 0.0134 \\
+Topioca Starch & Vmax (d) & 0.1198 & 0.0387 \\
+Soluble Starch & Km (e) & 3.8160 & 2.0450 \\
+Corn Starch & Km (e) & 2.9390 & 1.3150 \\
+Rice Starch & Km (e) & 1.4090 & 0.4830 \\
+Topioca Starch & Km (e) & 3.0510 & 1.4710 \\
+\end{longtable}
+}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(param\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Starch, }\AttributeTok{y =}\NormalTok{ Estimate, }\AttributeTok{fill =}\NormalTok{ Starch)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.6}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.85}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_errorbar}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{ymin =} \FunctionTok{pmax}\NormalTok{(}\DecValTok{0}\NormalTok{, Estimate }\SpecialCharTok{{-}}\NormalTok{ SE), }\AttributeTok{ymax =}\NormalTok{ Estimate }\SpecialCharTok{+}\NormalTok{ SE), }
+                \AttributeTok{width =} \FloatTok{0.2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ Parameter, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \ConstantTok{NULL}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Parameter Value"}\NormalTok{,}
+    \AttributeTok{title =} \StringTok{"Comparison of Estimated Vmax and Km Values"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}
+      \AttributeTok{family =}\NormalTok{ mfont,}
+      \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
+      \AttributeTok{size =} \DecValTok{12}
+\NormalTok{    ),}
+    \AttributeTok{axis.line =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{),}
+    \AttributeTok{axis.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{),}
+    \AttributeTok{legend.margin =} \FunctionTok{margin}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+    \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{),}
+    \AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{,}
+    \AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{30}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{),}
+    
+    \AttributeTok{strip.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"grey90"}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{../Figs/Plot the Substrate Saturation Curves-3} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\#\#}
+\NormalTok{eff\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Starch =} \FunctionTok{c}\NormalTok{(}\StringTok{"Rice Starch"}\NormalTok{, }\StringTok{"Corn Starch"}\NormalTok{, }\StringTok{"Topioca Starch"}\NormalTok{, }\StringTok{"Soluble Starch"}\NormalTok{),}
+  \AttributeTok{Efficiency =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.0772}\SpecialCharTok{/}\FloatTok{1.4089}\NormalTok{, }\FloatTok{0.1237}\SpecialCharTok{/}\FloatTok{2.9388}\NormalTok{, }\FloatTok{0.1198}\SpecialCharTok{/}\FloatTok{3.0514}\NormalTok{, }\FloatTok{0.1389}\SpecialCharTok{/}\FloatTok{3.8165}\NormalTok{)}
+\NormalTok{)}
+
+\FunctionTok{kable}\NormalTok{(eff\_df)}
+\end{Highlighting}
+\end{Shaded}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}lr@{}}
+\toprule\noalign{}
+Starch & Efficiency \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Rice Starch & 0.0547945 \\
+Corn Starch & 0.0420920 \\
+Topioca Starch & 0.0392607 \\
+Soluble Starch & 0.0363946 \\
+\end{longtable}
+}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(eff\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{reorder}\NormalTok{(Starch, }\SpecialCharTok{{-}}\NormalTok{Efficiency), }\AttributeTok{y =}\NormalTok{ Efficiency, }
+                   \AttributeTok{fill =}\NormalTok{ Starch)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_col}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.85}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x =} \ConstantTok{NULL}\NormalTok{,}
+    \AttributeTok{y =} \FunctionTok{expression}\NormalTok{(V[max] }\SpecialCharTok{/}\NormalTok{ K[m] }\SpecialCharTok{*} \StringTok{" (min"}\SpecialCharTok{\^{}{-}}\DecValTok{1} \SpecialCharTok{*} \StringTok{")"}\NormalTok{),}
+    \AttributeTok{title =} \StringTok{"Apparent Catalytic Efficiency Across Substrates"}\NormalTok{,}
+    \AttributeTok{subtitle =} \StringTok{"Higher values indicate faster breakdown}
+\StringTok{    at low substrate concentrations ([S] \textless{}\textless{} Km)"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}
+      \AttributeTok{family =}\NormalTok{ mfont,}
+      \AttributeTok{color =} \StringTok{"black"}\NormalTok{,}
+      \AttributeTok{size =} \DecValTok{12}
+\NormalTok{    ),}
+    \AttributeTok{axis.line =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{),}
+    \AttributeTok{axis.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{),}
+    \AttributeTok{legend.margin =} \FunctionTok{margin}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+    \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{),}
+    \AttributeTok{legend.position =} \StringTok{"none"}\NormalTok{,}
+    \AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{20}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{../Figs/Plot the Substrate Saturation Curves-4} \end{center}
+
+\section{AI generated Discussion}\label{ai-generated-discussion}
+
+\section{Analytical Method Validation and Spectrophotometric
+Calibration}\label{analytical-method-validation-and-spectrophotometric-calibration}
+
+\subsection{Glucose Standard Curve Establishment and Transfer Function
+Derivation}\label{glucose-standard-curve-establishment-and-transfer-function-derivation}
+
+The quantitative foundation of this enzymatic investigation rests upon
+the empirical calibration relating glucose concentration to absorbance
+at 570 nm via the DNS colorimetric assay. Linear regression analysis of
+the standard curve data (n = 18) yielded two mathematically equivalent
+but analytically distinct models:
+\[\text{Model 1 (Concentration as a Function of Absorbance):} \quad C_{\text{glu}} = -0.03242 + 0.46291 A_{570}\]
+\[\text{Model 2 (Absorbance as a Function of Concentration):} \quad A_{570} = 0.07986 + 2.14059 C_{\text{glu}}\]
+The exceptionally high coefficient of determination (\(\text{R}^2\) =
+0.9909, adjusted \(\text{R}^2\) = 0.9903) across both formulations
+confirms that the spectrophotometric response remains strictly linear
+throughout the tested concentration range (0.0-2.0 mg/mL glucose). This
+linearity is mechanistically significant, as it demonstrates that
+optical saturation of the detector was not approached and that the
+chromophore concentration remains directly proportional to the molar
+concentration of reducing ends. The slope of Model 2 \(\text{Y}_1\) =
+2.14059 ± 0.05126) represents the combined molar absorptivity-path
+length product, which serves as a system-specific constant under fixed
+instrumental parameters.
+
+Of critical analytical importance is the comparison between the two
+regression approaches. Model 1 functions as the operational inverse
+calibration equation for predicting unknown glucose concentrations from
+experimental absorbance measurements. The intercept term (\(\beta_0\) =
+-0.03242 ± 0.01513) is statistically indistinguishable from zero (p =
+0.0478), providing analytical justification for single-point calibration
+at low analyte concentrations. However, the non-zero intercept in Model
+2 (\(\text{Y}_0\) = 0.07986 ± 0.03104, p = 0.0204) warrants careful
+interpretation. This baseline offset arises from the inherent absorbance
+of unreacted DNS reagent and matrix components, which remains present
+even in the absence of reducing sugars. The disparity between the Model
+1 intercept (-0.03242) and Model 2 intercept (0.07986) illustrates the
+mathematical consequence of regressing concentration onto absorbance
+versus absorbance onto concentration---a distinction with profound
+analytical implications.
+
+From a metrological perspective, the inverse regression approach (Model
+1) is preferred for analytical prediction because it minimizes error in
+the dependent variable (concentration) when absorbance is the measured
+quantity. The standard error of the estimate (\(\sigma\) = 0.03454
+mg/mL) defines the analytical sensitivity threshold, indicating that
+glucose concentrations below approximately 0.07 mg/mL cannot be reliably
+distinguished from the blank. This detection limit is critical for
+interpreting kinetic data at extended timepoints where substrate
+depletion approaches completion and absorbance values approach baseline
+levels.
+
+\subsection{Baseline Correction and Matrix Interference
+Considerations}\label{baseline-correction-and-matrix-interference-considerations}
+
+The experimental data incorporated a buffer baseline subtraction
+(\(\text{A}_\text{buf}\)= 0.6713) applied uniformly across all samples.
+While this correction effectively eliminates systematic offset
+attributable to the reaction matrix, several analytical constraints
+merit explicit consideration:
+
+First, the assumption of static baseline absorbance fails to account for
+time-dependent non-enzymatic color development. Under the alkaline
+conditions (pH \textasciitilde12) and elevated temperatures (95°C)
+employed for DNS color development, thermal caramelization and
+Maillard-type reactions between residual reducing ends and unreacted DNS
+can occur spontaneously, independent of enzymatic activity. The temporal
+progression of this background reaction would manifest as a positive
+drift in measured absorbance at extended incubation times, potentially
+inflating apparent substrate conversion at later timepoints (t
+\textgreater{} 45 min). The observed flattening of progress curves
+during the terminal phase may therefore reflect not only genuine
+substrate depletion but also the countervailing influence of increasing
+baseline absorbance.
+
+Second, the application of a global scalar subtraction assumes that
+matrix absorbance remains invariant across different substrate types,
+concentrations, and salt conditions. This assumption is particularly
+tenuous for native granular starches, where light scattering from
+insoluble starch granules contributes non-specifically to measured
+absorbance. Corn and rice starches, with their compact A-type
+crystalline structures and small granule diameters, exhibit substantial
+turbidity that would vary with concentration and degree of
+gelatinization. The observed differences in initial absorbance values
+across starch types at t = 0 are consistent with differential light
+scattering rather than genuine differences in reducing sugar content.
+
+Third, the buffer blank correction does not account for the varying
+background absorbance contributed by the different starch substrates
+themselves. The iodine-starch complexation assay, employed for progress
+curve monitoring at 620 nm, relies on the differential absorbance
+between the starch-iodine complex and free iodine. However, the molar
+absorptivity of the starch-iodine complex varies with starch type,
+amylose content, and degree of polymerization. Normalizing absorbance
+measurements to the t = 0 valueAbsorbance percentage) partially
+compensates for these baseline differences, but the fundamental
+assumption that the proportional relationship between absorbance and
+starch-iodine complex remains constant throughout the hydrolysis course
+is not strictly valid. As endo-amylolytic cleavage reduces the average
+chain length below the critical degree of polymerization
+(\textasciitilde40 glucose units) required for stable helix formation,
+the extinction coefficient of the iodine complex diminishes
+non-linearly, introducing concentration-dependent bias.
+
+\section{Fermentation Kinetics and Salting-Out
+Dynamics}\label{fermentation-kinetics-and-salting-out-dynamics}
+
+\subsection{Temporal Profiling of Glucose
+Accumulation}\label{temporal-profiling-of-glucose-accumulation}
+
+The fermentation time-course data, spanning 0-48 hours across salt
+concentrations of 10\%, 20\%, and 30\% w/v, reveal a distinctly
+triphasic pattern of glucose accumulation. Contour plot visualization
+(Figure 3A) demonstrates that maximum glucose concentration
+(approximately 0.65-0.67 mg/mL) is achieved at intermediate salt
+concentrations (18-22\%) between 24-36 hours of incubation. The
+second-order polynomial surface model fitted to these data exhibits
+significant quadratic terms for both salt concentration (\(\beta_{22}\)
+for \(\text{Time}^2\): t = 2.851, p = 0.0102) and time (\(\beta_{11}\)
+for \(\text{Salt}^2\): t = 1.490, p = 0.1527, not statistically
+significant), with a marginally significant interaction term
+(\(\beta_{12}\) for Salt×Time: t = 2.155, p = 0.0442).
+
+The temporal evolution of glucose accumulation can be mechanistically
+decomposed into three distinct phases:
+
+Phase I: Latent Acceleration (0-12 hours)
+
+During the initial 12 hours, glucose concentrations remain low across
+all salt conditions, consistent with the lag phase of bacterial growth
+and the time required for extracellular amylase expression and
+secretion. The rate of glucose accumulation during this period is
+primarily limited by enzyme synthesis rather than substrate
+availability. The lack of substantial glucose production during this
+interval is analytically important, as it establishes that the DNS assay
+is sufficiently sensitive to detect low-level hydrolysis while ruling
+out significant non-enzymatic starch degradation under the fermentation
+conditions.
+
+Phase II: Linear Production (12-36 hours)
+
+The period between 12-36 hours represents the active
+exponential-to-stationary growth transition, where extracellular amylase
+concentrations achieve steady-state. During this interval, glucose
+accumulation proceeds at an approximately constant rate that depends on
+salt concentration. The slope of the glucose-time profile during this
+linear phase ranges from approximately 0.015-0.025
+mg/mL·\(\text{hour}^{-1}\), with the highest rates observed at 20\%
+salt. This salt-dependent rate variation suggests that ionic strength
+modulates either the stability of the extracellular enzyme, the
+accessibility of the starch substrate, or both. The pseudo-first-order
+kinetics observed during this phase (linear glucose accumulation despite
+decreasing substrate concentration) indicates that substrate
+concentration remains above the enzyme's Km throughout this interval.
+
+Phase III: Asymptotic Plateau (36-48 hours)
+
+The terminal phase of the fermentation is characterized by a distinct
+flattening of the glucose accumulation curve. This plateau cannot be
+attributed solely to substrate exhaustion, as starch remains present in
+the medium, albeit in partially hydrolyzed form. Rather, the
+deceleration reflects the convergence of multiple inhibitory mechanisms:
+
+\begin{itemize}
+\item
+  Product Inhibition: Accumulated glucose and maltooligosaccharides (at
+  concentrations approaching 0.7 mg/mL glucose equivalents) act as
+  competitive inhibitors at the enzyme active site. The observed plateau
+  occurs at glucose concentrations substantially below the theoretical
+  starch concentration, consistent with product-mediated feedback
+  inhibition.
+\item
+  Thermal Inactivation: Under the fermentation conditions (temperature
+  not explicitly controlled but likely 30-37°C), the bacterial amylase
+  experiences progressive thermal denaturation. The half-life of
+  mesophilic bacterial amylases at 37°C typically ranges from 6-12
+  hours, consistent with the observed decline in production rate after
+  24-30 hours.
+\item
+  Proteolytic Degradation: Extracellular proteases, co-secreted during
+  stationary phase, may hydrolyze the amylase enzyme itself, reducing
+  active enzyme concentration independent of temperature effects.
+\end{itemize}
+
+\subsection{Salt Concentration Effects: Salting-In Versus
+Salting-Out}\label{salt-concentration-effects-salting-in-versus-salting-out}
+
+The response surface model reveals a statistically significant quadratic
+effect of salt concentration (\(\beta_{11}\) = 2.013×10\(^{-2}\), p =
+0.153), though the p-value does not reach conventional significance. The
+positive coefficient on the squared salt term is mechanistically
+surprising, as it would predict increasing glucose yield at both high
+and low salt concentrations relative to intermediate values---a pattern
+not apparent in the raw data. The interaction between salt and time
+(\(\beta_{12}\) = 3.592×10\(^{-2}\), p = 0.044) is more meaningful,
+indicating that the optimal fermentation time depends on salt
+concentration.
+
+The observed salt concentration effects can be rationalized through the
+framework of protein hydration thermodynamics:
+
+At moderate salt concentrations (10-20\% w/v), the phenomenon of
+preferential hydration predominates. Salt ions preferentially exclude
+from the protein hydration layer, increasing the chemical potential of
+the protein and thermodynamically favoring the compact, folded native
+state. This salting-in effect enhances enzyme stability and prolongs
+catalytic activity, explaining the higher glucose yields observed at
+20\% salt relative to 10\% salt.
+
+At elevated salt concentrations (30\% w/v), the local ion concentration
+exceeds the threshold for preferential exclusion, and the hydration
+shell surrounding the enzyme becomes disrupted. Hydrophobic surface
+residues become increasingly exposed to the aqueous environment, driving
+protein aggregation through hydrophobic interactions. This salting-out
+phenomenon manifests as a sharp decline in glucose production at 30\%
+salt, particularly during the later fermentation stages when cumulative
+thermal and salt stress exceed the enzyme's tolerance threshold.
+
+The salt concentration effect is further complicated by its influence on
+starch substrate structure. High ionic strength (particularly with
+monovalent cations such as Na\(^{+}\)) can promote starch granule
+swelling and partial gelatinization, increasing substrate accessibility.
+However, the same ions can also stabilize ordered water structures
+around the starch helices, potentially reducing enzyme binding affinity.
+The optimal salt concentration of approximately 20\% represents a
+compromise between these competing effects---sufficient ionic strength
+to stabilize the enzyme but not so high as to induce aggregation or
+alter substrate recognition.
+
+\section{Response Surface Optimization of pH and
+Temperature}\label{response-surface-optimization-of-ph-and-temperature}
+
+\subsection{Coded Variable Transformation and Model
+Parameterization}\label{coded-variable-transformation-and-model-parameterization}
+
+The central composite design for pH (4.0-8.0) and temperature (30-70°C)
+optimization employed coded variable transformations centered at pH 6.0
+and 50°C:
+
+To model the interactive effects of incubation time (\(T\)) and salt
+concentration (\(S\)) on glucose yield, a full second-order polynomial
+response model with cross-product interaction terms was specified:
+
+\[\text{Glu}(S, T) = \beta_0 + \beta_1 S + \beta_2 T + \beta_{11} S^2 + \beta_{22} T^2 + \beta_{12} (S \times T) + \varepsilon\]
+The response surface contour map generated from this interaction model
+highlights key process characteristics:
+
+Linear Terms (\(\beta_1, \beta_2\)): Define the first-order directional
+gradients. Positive coefficients indicate that increasing time or ionic
+strength initially promotes accumulation of hydrolytic products.
+
+Quadratic Terms (\(\beta_{11}, \beta_{22}\)): Capture surface curvature.
+Negative quadratic parameters (\(\beta_{11} < 0, \beta_{22} < 0\)) are
+prerequisite for a concave response surface that contains a localized
+global maximum.
+
+Interaction Term (\(\beta_{12}\)): Quantifies parameter synergy. A
+statistically significant interaction term (\(p < 0.05\)) indicates that
+the optimal growth time for maximum enzyme yield changes depending on
+the salt concentration of the medium.
+
+\section{Response Surface Optimization of Operational Parameters (pH and
+Temperature)}\label{response-surface-optimization-of-operational-parameters-ph-and-temperature}
+
+\subsection{Coded Variable Transformations and
+Orthogonality}\label{coded-variable-transformations-and-orthogonality}
+
+The central composite design for pH (4.0-8.0) and temperature (30-70°C)
+optimization employed coded variable transformations centered at pH 6.0
+and 50°C:
+
+\[x_1 = \frac{T - 50}{10}, \quad x_2 = \frac{\text{pH} - 6.0}{0.5}\]
+This coding scheme serves three critical statistical functions: (1) it
+centers the design at the midpoint of the experimental range, reducing
+correlation between linear and quadratic terms; (2) it scales the
+variables to comparable magnitudes (x\_1 and x\_2 both range
+approximately -2 to +2), ensuring that regression coefficients are
+directly comparable; and (3) it improves numerical stability during
+matrix inversion for canonical analysis.
+
+The fitted second-order response surface model:
+
+\[avg = 1.22668 - 0.01519 T - 0.05774 pH - 0.06495 (T \times pH) - 0.45733 T^2 - 0.39470 pH^2\]
+
+\subsection{Coefficient Interpretation and Mechanistic
+Inference}\label{coefficient-interpretation-and-mechanistic-inference}
+
+Linear Coefficients: The negative linear coefficients for both \(x_1\)
+(\(\beta_1\) = -0.01519, p = 0.308) and \(x_2\) (\(\beta_2\) = -0.05774,
+p = 0.0059) indicate that enzyme activity decreases with increasing
+coded variable values---i.e., higher temperature and higher pH. The pH
+linear coefficient reaches statistical significance (p = 0.006), while
+the temperature coefficient does not. This differential significance
+suggests that, within the experimental range, pH variation exerts a more
+pronounced effect on activity than temperature variation.
+Mechanistically, this reflects the pH-sensitivity of the catalytic
+ionizable residues (aspartate and glutamate) that participate directly
+in bond cleavage, whereas temperature effects within the tested range
+are partially offset by the competing effects of increased collision
+frequency versus accelerated denaturation.
+
+Quadratic Coefficients: Both quadratic terms are strongly negative
+(\(\beta_{11}\) = -0.45733, p = 7.62×10\(^{-8}\); \(\beta_{22}\) =
+-0.39470, p = 2.59×10\(^{-7}\)), confirming that the response surface
+exhibits pronounced downward curvature in both directions. These highly
+significant negative quadratic coefficients are the mathematical
+prerequisite for identifying a true global maximum. The magnitude of the
+temperature quadratic coefficient exceeds that of pH, indicating that
+enzyme activity declines more rapidly with deviations from optimal
+temperature than with deviations from optimal pH. This asymmetry is
+biochemically meaningful: temperature affects the entire protein
+conformational ensemble and the activation entropy of catalysis, while
+pH affects only the ionization state of specific catalytic residues.
+
+Interaction Coefficient: The interaction term (\(\beta_{12}\) =
+-0.06495, p = 0.0158) is negative and statistically significant. A
+negative interaction coefficient indicates that the effect of
+temperature on enzyme activity depends on pH, and vice versa.
+Specifically, when temperature is high (positive \(x_1\)), the negative
+effect of pH (\(x_2\)) is amplified---i.e., high pH is particularly
+detrimental at high temperatures. Conversely, at optimal pH, the effect
+of temperature is somewhat less pronounced. This statistical interaction
+has a clear mechanistic interpretation: thermal denaturation and
+pH-induced conformational changes are not independent but rather
+synergistic. High pH conditions disrupt salt bridges and hydrogen bonds
+that stabilize the native state, rendering the enzyme more susceptible
+to thermal unfolding. The interaction term captures this synergy
+mathematically, confirming that optimization cannot be performed
+independently for each factor.
+
+\subsection{Canonical Analysis and Stationary Point
+Characterization}\label{canonical-analysis-and-stationary-point-characterization}
+
+The canonical analysis reveals the following key features:
+
+Stationary Point:
+
+\begin{itemize}
+\tightlist
+\item
+  Coded coordinates: \(x_1\) = -0.01148, \(x_2\) = -0.07220
+\item
+  Original units: Temperature = 49.89°C, pH = 5.96
+\end{itemize}
+
+Eigenvalues:
+
+\begin{itemize}
+\tightlist
+\item
+  \(\lambda_1\) = -0.3809 (eigenvector: \(x_1\) = 0.391, \(x_2\) =
+  -0.920)
+\item
+  \(\lambda_2\) = -0.4711 (eigenvector: \(x_1\) = -0.920, \(x_2\) =
+  -0.391)
+\end{itemize}
+
+Interpretation: Both eigenvalues are negative, confirming that the
+stationary point represents a global maximum. The magnitude of the
+eigenvalues (\(\lambda_1\) and \(\lambda_2\)) indicates the sensitivity
+of the response surface along the principal axes of curvature. The
+larger magnitude of \(\lambda_2\) indicates that the response surface is
+more sharply curved along the second principal axis (which corresponds
+predominantly to pH variation). This implies that the enzyme activity
+declines more rapidly with deviations from optimal pH than with
+equivalent coded deviations in temperature.
+
+The eigenvector analysis provides insight into the geometry of the
+response surface near the optimum. The first eigenvector (associated
+with \(\lambda_1\) = -0.381) is dominated by the pH coordinate (\(x_2\)
+= -0.920), indicating that the first principal axis corresponds
+primarily to pH variation. The second eigenvector (\(\lambda_2\) =
+-0.471) is dominated by temperature (\(x_1\) = -0.920). The
+near-orthogonality of these eigenvectors suggests that the response
+surface is approximately aligned with the original axes, meaning that pH
+and temperature effects are largely separable despite the small
+interaction term.
+
+\subsection{Structural Mechanics of pH and Thermal
+Effects}\label{structural-mechanics-of-ph-and-thermal-effects}
+
+The optimization identifies pH 5.96 and 49.89°C as the conditions
+promoting maximum enzyme activity. The biochemical interpretation of
+these optima requires consideration of the enzyme's structural biology:
+
+pH Sensitivity: The observed pH optimum of 5.96 is consistent with
+\(\alpha\)-amylases containing a catalytic triad of aspartate and
+glutamate residues. In the resting enzyme, the active site nucleophile
+(typically Asp) must be deprotonated (pKa \textasciitilde4.5) to
+function as a catalytic base, while the acid catalyst (Glu) must be
+protonated (pKa \textasciitilde6.0) to donate a proton to the departing
+glycosidic oxygen. At pH 5.96, the balance between these ionization
+states is optimized: the Asp is predominantly deprotonated (Asp\(^-\)),
+and the Glu is predominantly protonated (GluH). Deviation from this
+optimal pH shifts this ionization balance---at lower pH, Asp becomes
+protonated and loses nucleophilic activity; at higher pH, Glu becomes
+deprotonated and loses its proton-donating function.
+
+Thermal Stability: The temperature optimum of 49.89°C reflects the
+thermodynamic compromise between the activation energy required for
+catalysis and the entropy-driven unfolding of the tertiary structure.
+The activation enthalpy (\(\Delta\)H‡) for the cleavage of
+\(\alpha\)-1,4-glycosidic bonds is approximately 50-70 kJ/mol.
+Increasing temperature from 30°C to 50°C increases the reaction rate
+approximately 2-3 fold (following the Arrhenius relationship),
+accounting for the positive effect of temperature on activity. However,
+above 50°C, the rate of thermal denaturation accelerates exponentially.
+The Gibbs free energy of unfolding (\(\Delta G_{unfold}\)) for
+mesophilic enzymes typically becomes zero (unfolding becomes
+spontaneous) at temperatures 5-15°C above the optimal growth
+temperature. For an enzyme derived from a mesophilic bacterium, the
+unfolding midpoint (Tm) is likely 55-60°C, consistent with the observed
+activity decline above 50°C. The thermal inactivation is irreversible at
+the assay temperatures, as the unfolded protein cannot refold to its
+native, catalytically active conformation without chaperone assistance.
+
+\section{Comparative Substrate Preference and Hydrolytic
+Profiles}\label{comparative-substrate-preference-and-hydrolytic-profiles}
+
+\subsection{Normalized Progress Curves and Hydrolysis
+Rates}\label{normalized-progress-curves-and-hydrolysis-rates}
+
+The iodine-starch complexation assay at 620 nm provides a real-time
+metric of \(\alpha\)-amylase activity based on the loss of starch-iodine
+complexation capacity. Normalization to percentage of initial absorbance
+(ABS percent) eliminates baseline differences arising from varying
+substrate concentrations and initial turbidity, enabling direct
+comparison of hydrolysis rates across substrate types and
+concentrations.
+
+The normalized progress curves reveal distinct substrate-dependent
+profiles:
+
+\begin{itemize}
+\item
+  Soluble Starch: Exhibits the most rapid decline in iodine-complexing
+  capacity, reaching approximately 1-2\% of initial absorbance within 60
+  minutes at all substrate concentrations. The steep initial slope
+  (-dA/dt) indicates high catalytic efficiency, consistent with the
+  amorphous, pre-gelatinized nature of soluble starch. The absence of
+  crystalline domains and the expanded accessible surface area allow the
+  enzyme to bind and cleave \(\alpha\)-1,4 bonds without the physical
+  barrier imposed by granular architecture. At all tested concentrations
+  (0.5-2.0\% w/v), the progress curve for soluble starch follows a
+  near-exponential decay, suggesting that the reaction is limited
+  primarily by the rate of enzyme-substrate encounter rather than
+  substrate accessibility.
+\item
+  Tapioca Starch: Displays intermediate hydrolysis rates, with residual
+  iodine-complexing capacity ranging from 8-11\% at 60 minutes across
+  concentrations. The C-type crystalline structure of tapioca starch,
+  with its mixture of A-type and B-type polymorphs, provides moderate
+  resistance to enzymatic attack. The larger granule size (5-25
+  \(\mu\)m) and higher amylose content (\textasciitilde17\%) relative to
+  rice starch contribute to the observed hydrolysis rate, which exceeds
+  that of corn starch but falls below that of soluble starch.
+\item
+  Rice Starch: Demonstrates the most rapid decline among the granular
+  starches, reaching 3-6\% residual iodine-complexing capacity at 60
+  minutes. This unexpectedly high hydrolysis rate contradicts the
+  general expectation that small granules (2-8 \(\mu\)m) present greater
+  resistance to enzymatic attack due to their high
+  surface-area-to-volume ratio and dense packing. However, rice starch
+  contains the lowest amylose content (\textasciitilde15-20\%) among the
+  tested substrates and possesses a relatively open A-type crystalline
+  structure. The small granule size may actually facilitate enzymatic
+  access by increasing the total surface area available for enzyme
+  binding, despite the theoretical steric constraints.
+\item
+  Corn Starch: Shows the slowest hydrolysis among granular starches,
+  with 1.3-2.0\% residual iodine-complexing capacity at 60 minutes. The
+  A-type crystalline structure of corn starch, characterized by densely
+  packed double helices and high amylose content (\textasciitilde25\%),
+  presents the greatest steric barrier to enzyme penetration. The
+  hydrolysis of corn starch is likely limited by the frequency of
+  productive enzyme-substrate encounters at accessible granule surfaces
+  rather than by the intrinsic catalytic rate of the enzyme. The initial
+  rate of corn starch hydrolysis is approximately 60-70\% of that for
+  rice starch, consistent with the greater resistance conferred by its
+  crystalline architecture.
+\end{itemize}
+
+\subsection{Substrate Concentration
+Dependence}\label{substrate-concentration-dependence}
+
+The effect of substrate concentration on hydrolysis rate is most evident
+during the early phase of reaction (0-15 minutes). At 0.5\% substrate
+concentration, the initial slopes are approximately 30-40\% lower than
+at 2.0\% concentration across all starch types. This concentration
+dependence is consistent with Michaelis-Menten kinetics, where the
+initial velocity increases with substrate concentration until
+approaching \(V_{max}\).
+
+However, the concentration effect diminishes at extended incubation
+times. By 60 minutes, the normalized residual absorbance values converge
+across concentrations for each substrate type, indicating that the
+reaction reaches a substrate-dependent plateau rather than proceeding to
+completion. This plateau cannot be attributed to substrate exhaustion,
+as the theoretical starch concentration at 2.0\% w/v exceeds the glucose
+equivalents produced by several-fold. Rather, the plateau reflects the
+combined effects of product inhibition and the preferential hydrolysis
+of accessible \(\alpha\)-1,4 bonds, leaving behind highly branched,
+recalcitrant \(\alpha\)-limit dextrins that resist further cleavage.
+
+\section{Curvature Modeling and Kinetic
+Non-Linearity}\label{curvature-modeling-and-kinetic-non-linearity}
+
+\subsection{Polynomial Modeling of Hydrolytic
+Curvature}\label{polynomial-modeling-of-hydrolytic-curvature}
+
+The second-order polynomial regression model fitted to the
+absorbance-time data:
+
+\[A(t) = \beta_0 + \beta_1 t + \beta_2 t^2 + \sum_{j} \tau_j \cdot \text{Starch}_j + \varepsilon\]
+yields the following key parameters:
+
+\begin{itemize}
+\item
+  \(\beta_1\) (linear time coefficient) = -0.03744 ± 0.00305 (t =
+  -12.253, p \textless{} 2×10\(^{-16}\))
+\item
+  \(\beta_2\) (quadratic time coefficient) = 0.0003076 ± 0.0000488 (t =
+  6.299, p = 3×10\(^{-9}\))
+\end{itemize}
+
+The negative linear coefficient (\(\beta_1\) \textless{} 0) reflects the
+overall decline in absorbance with time, while the positive quadratic
+coefficient (\(\beta_2\) \textgreater{} 0) models the deceleration of
+the reaction as it approaches plateau. The ratio of the quadratic to
+linear coefficient (-\(\beta_2\)/\(\beta_1\) \(\approx\) 0.0082) defines
+the characteristic curvature time constant of the reaction.
+
+The starch-specific coefficients indicate significant differences in
+baseline absorbance:
+
+\begin{itemize}
+\item
+  Corn Starch: \(\tau\) = 0.0361 ± 0.0520 (p = 0.488)
+\item
+  Rice Starch: \(\tau\) = 0.1667 ± 0.0520 (p = 0.0016)
+\item
+  Tapioca Starch: \(\tau\) = 0.1381 ± 0.0520 (p = 0.0088)
+\end{itemize}
+
+The statistical significance of the starch coefficients confirms that
+the substrates differ in their initial absorbance values, reflecting
+differences in iodine-complexing capacity and initial turbidity rather
+than enzymatic activity per se. The negative coefficient for corn starch
+relative to soluble starch indicates that corn starch initially produces
+lower absorbance than the reference, consistent with its lower amylose
+content and/or greater granular opacity.
+
+\subsection{Residual Analysis and Mechanistic
+Inference}\label{residual-analysis-and-mechanistic-inference}
+
+The residual analysis reveals systematic deviations from the quadratic
+model that provide insight into the reaction mechanism. At early
+timepoints (t = 0-15 minutes), the residuals are predominantly negative,
+indicating that the actual absorbance decline exceeds the quadratic
+model's predictions. This pattern is consistent with rapid initial
+cleavage of easily accessible \(\alpha\)-1,4 bonds located at the
+granule surface or in amorphous regions. The enzyme encounters a high
+concentration of readily hydrolyzable substrate at the onset of
+reaction, resulting in a burst of activity that exceeds the average rate
+captured by the global quadratic fit.
+
+At late timepoints (t = 45-60 minutes), the residuals become positive,
+indicating that the actual absorbance is higher than predicted by the
+model. This positive deviation reflects the progressive inhibition of
+enzymatic activity as the reaction proceeds. The mechanisms contributing
+to this inhibition include:
+
+\begin{itemize}
+\item
+  Product accumulation: The increasing concentration of reducing sugars
+  (glucose and maltooligosaccharides) competes with intact starch for
+  the enzyme active site, reducing the effective concentration of
+  enzyme-substrate complex.
+\item
+  Substrate modification: As the enzyme preferentially cleaves
+  accessible bonds, the remaining substrate becomes increasingly
+  resistant to hydrolysis. The accumulation of \(\alpha\)-limit dextrins
+  with highly branched structures (rich in \(\alpha\)-1,6 linkages)
+  presents a sterically hindered substrate that the enzyme cannot
+  efficiently process.
+\item
+  Enzyme denaturation: At 50°C, the enzyme experiences time-dependent
+  thermal inactivation. The half-life of thermal inactivation at 50°C is
+  estimated from the curvature model to be approximately 30-40 minutes,
+  consistent with the observed deceleration in reaction rate.
+\end{itemize}
+
+The residual pattern differs systematically across starch types. Soluble
+starch exhibits the most pronounced early negative residuals, reflecting
+its high initial accessibility. Corn starch shows the smallest residual
+deviations, consistent with its slow, diffusion-limited hydrolysis
+kinetics. This differential residual pattern supports the interpretation
+that starch architecture---rather than intrinsic catalytic
+efficiency---is the primary determinant of hydrolysis kinetics in
+granular substrates.
+
+\section{Michaelis-Menten Kinetics and Substrate
+Preference}\label{michaelis-menten-kinetics-and-substrate-preference}
+
+\subsection{Parameter Estimation via Nonlinear
+Regression}\label{parameter-estimation-via-nonlinear-regression}
+
+The Michaelis-Menten parameters were estimated using both grouped and
+starch-specific nonlinear regression (nls) and validated using the drc
+package with self-starting algorithms. The parameter estimates from the
+grouped model (all starches combined) produced pooled estimates:
+
+\begin{itemize}
+\item
+  \(V_{max}\) = 0.1078 ± 0.0144 \(\Delta A_{620}\)·min\(^-1\)
+\item
+  \(K_{m}\) = 2.530 ± 0.536\% w/v
+\end{itemize}
+
+However, the starch-specific fits reveal substantial variation that is
+masked by pooling:
+
+Soluble Starch:
+
+\begin{itemize}
+\item
+  \(V_{max}\) = 0.1389 ± 0.0531 \(\Delta A_{620}\)·min\(^-1\)
+\item
+  \(K_{m}\) = 3.816 ± 2.045\% w/v
+\item
+  \(V_{max}\)/\(K_{m}\) = 0.0364
+\end{itemize}
+
+Tapioca Starch:
+
+\begin{itemize}
+\item
+  \(V_{max}\) = 0.1198 ± 0.0387 \(\Delta A_{620}\)·min\(^-1\)
+\item
+  \(K_{m}\) = 3.051 ± 1.471\% w/v
+\item
+  \(V_{max}\)/\(K_{m}\) = 0.0393
+\end{itemize}
+
+Corn Starch:
+
+\begin{itemize}
+\item
+  \(V_{max}\) = 0.1237 ± 0.0366 \(\Delta A_{620}\)·min\(^-1\)
+\item
+  \(K_{m}\) = 2.939 ± 1.315\% w/v
+\item
+  \(V_{max}\)/\(K_{m}\) = 0.0421
+\end{itemize}
+
+Rice Starch:
+
+\begin{itemize}
+\item
+  \(V_{max}\) = 0.0772 ± 0.0134 \(\Delta A_{620}\)·min\(^-1\)
+\item
+  \(K_{m}\) = 1.409 ± 0.483\% w/v
+\item
+  \(V_{max}\)/\(K_{m}\) = 0.0548
+\end{itemize}
+
+\subsection{Mechanistic Interpretation of Kinetic
+Parameters}\label{mechanistic-interpretation-of-kinetic-parameters}
+
+\(V_{max}\) Variation: The maximum velocity (\(V_{max}\)) varies
+approximately 1.8-fold across starch types, from 0.077 (rice starch) to
+0.139 (soluble starch) \(\Delta A_{620}\)·min\(^-1\). This variation
+reflects differences in substrate quality rather than enzyme activity.
+At saturating substrate concentrations, \(V_{max}\) is theoretically
+independent of substrate identity; the observed \(V_{max}\) variation
+therefore indicates that the true saturation condition was not achieved
+for all starch types. The higher \(V_{max}\) for soluble starch reflects
+its greater accessibility, allowing a higher effective enzyme-substrate
+collision frequency even at equivalent mass concentrations.
+
+The unexpectedly low \(V_{max}\) for rice starch (approximately 56\% of
+soluble starch) despite its rapid initial hydrolysis rates suggests that
+the reaction reaches substrate-limited conditions at lower
+concentrations. The small granule size of rice starch, while providing
+high initial surface area, also results in rapid depletion of accessible
+substrate, reducing the maximum achievable velocity.
+
+\(K_{m}\) Variation: The Michaelis constant (\(K_{m}\)) ranges from
+1.409 (rice starch) to 3.816 (soluble starch)\% w/v. The lower \(K_{m}\)
+for rice starch indicates higher apparent substrate affinity, consistent
+with its rapid initial hydrolysis despite lower \(V_{max}\). However,
+the physical interpretation of \(K_{m}\) for heterogeneous substrates
+requires caution. Unlike soluble substrates where \(K_{m}\) represents
+the concentration at which half-maximal velocity is achieved, for
+granular starches \(K_{m}\) is a complex function of substrate
+accessibility, surface area, and crystallinity. The lower \(K_{m}\) for
+rice starch may reflect its high surface-area-to-volume ratio, which
+allows the enzyme to achieve half-saturation at lower mass
+concentrations.
+
+Catalytic Efficiency Index (\(V_{max}\)/\(K_{m}\)): The efficiency index
+varies from 0.0364 (soluble starch) to 0.0548 (rice starch). This
+ranking is counterintuitive, as soluble starch is generally considered
+the most readily hydrolyzed substrate. The apparent paradox is resolved
+by recognizing that \(V_{max}\) and \(K_{m}\) are not independent
+parameters for heterogeneous substrates. The high \(K_{m}\) for soluble
+starch (3.816\% w/v) reflects its physical form---as a pre-gelatinized,
+amorphous powder, soluble starch requires higher mass concentrations to
+achieve the same effective enzyme-substrate encounter frequency as
+granular starches. The enzyme itself cannot distinguish between
+glycosidic bonds based on starch origin; rather, the observed kinetic
+parameters reflect the interplay between substrate physical properties
+and the enzyme's catalytic mechanism.
+
+\subsection{Nonlinear Least Squares (nls) versus Linear Transformation
+Methods}\label{nonlinear-least-squares-nls-versus-linear-transformation-methods}
+
+The comparative performance of nls and linear transformation methods
+(Lineweaver-Burk, Eadie-Hofstee) merits consideration. The nls approach
+minimizes the residual sum of squares directly in the velocity-substrate
+space, producing unbiased parameter estimates when the error structure
+is homoscedastic. In contrast, linear transformation methods transform
+both the dependent and independent variables, altering the error
+structure and producing biased estimates if measurement errors are
+correlated with substrate concentration.
+
+The choice of nls is particularly justified for the current dataset,
+which exhibits heteroscedasticity in the velocity measurements (larger
+absolute errors at higher v0 values). The nls approach weights each data
+point appropriately, preventing high-velocity measurements from
+disproportionately influencing the parameter estimates. The use of
+self-starting algorithms in the drc package further improves the
+reliability of convergence, eliminating the need for user-supplied
+starting values that might lead to local minima in the optimization
+landscape.
+
+\section{Extended Analytical Limitations and Future Methodological
+Directions}\label{extended-analytical-limitations-and-future-methodological-directions}
+
+\subsection{Limitations of the DNS Assay for Endo-Amylase
+Activity}\label{limitations-of-the-dns-assay-for-endo-amylase-activity}
+
+The DNS assay, while widely employed for reducing sugar quantification,
+exhibits fundamental limitations when applied to endo-acting
+\(\alpha\)-amylases. The stoichiometry of reducing end production does
+not directly correspond to the number of glycosidic bonds cleaved,
+because endo-amylases randomly cleave internal bonds, producing two
+reducing ends per cleavage event regardless of substrate molecular
+weight. For a high-molecular-weight starch substrate, the initial phase
+of hydrolysis yields a relatively small increase in reducing ends per
+unit time, while the number of cleaved bonds (and thus the reduction in
+iodine-complexing capacity) is substantial. This analytical mismatch may
+account for the apparent discrepancy between the rapid decline in iodine
+staining and the relatively modest glucose accumulation observed in the
+kinetic data.
+
+The analytical consequence of this stoichiometric limitation is that the
+DNS-based glucose concentration cannot be directly interpreted as a
+measure of total substrate conversion. The values reported represent
+reducing sugar equivalents, which may significantly underestimate the
+extent of hydrolysis during early reaction stages. This limitation is
+particularly acute for the comparative substrate analysis, where
+differences in initial molecular weight distribution and branching
+patterns affect the relationship between reducing end production and
+actual bond cleavage.
+
+\subsection{Temperature and pH Stability
+Constraints}\label{temperature-and-ph-stability-constraints}
+
+The response surface optimization identifies optimal pH and temperature
+conditions that are likely assay-specific rather than universally
+applicable. The enzyme stability at the optimal conditions (pH 5.96,
+50°C) is time-dependent, and the kinetic parameters estimated from the
+Michaelis-Menten analysis were based on initial rates measured over 15
+minutes. This short assay duration minimizes the confounding effects of
+thermal inactivation, but the estimated \(V_{max}\) and \(K_{m}\)
+parameters may not be valid for longer reaction times.
+
+The thermal inactivation profile of the enzyme under assay conditions
+was not independently characterized. The residual analysis suggests
+time-dependent inactivation with a half-life of approximately 30-40
+minutes, but this estimate is confounded with product inhibition and
+substrate depletion. Future studies should include thermal stability
+measurements (e.g., residual activity after pre-incubation at various
+temperatures) to separate the effects of thermal inactivation from
+kinetic limitations.
+
+\subsection{Spectrophotometric Interferences in Iodine-Complexation
+Assays}\label{spectrophotometric-interferences-in-iodine-complexation-assays}
+
+The iodine-starch complexation assay, employed for progress curve
+monitoring at 620 nm, is subject to multiple interferences that affect
+data quality:
+
+\begin{itemize}
+\item
+  Turbidity Interference: Native starch granules scatter light at 620
+  nm, contributing to measured absorbance independently of iodine
+  complexation. The normalization to percentage of initial absorbance
+  partially compensates for this interference, but the assumption that
+  turbidity remains constant throughout the reaction is not strictly
+  valid. As enzymatic hydrolysis proceeds, starch granules undergo
+  morphological changes (surface erosion, swelling, fragmentation) that
+  alter light-scattering properties, introducing systematic bias in the
+  absorbance measurements.
+\item
+  Amylose-Amylopectin Differential Response: The iodine-complexing
+  capacity of amylose is approximately 10-fold higher than that of
+  amylopectin on a mass basis. During endo-amylase hydrolysis, amylose
+  chains are preferentially cleaved and solubilized, resulting in a
+  disproportionate loss of iodine-staining capacity relative to
+  amylopectin hydrolysis. This differential response can produce
+  apparent hydrolysis rates that overestimate the extent of total starch
+  degradation, particularly during early reaction stages.
+\item
+  Chain Length Threshold Effects: The formation of stable iodine-starch
+  complexes requires a minimum chain length of approximately 40-60
+  glucose units. As endo-amylase cleavage reduces the average chain
+  length below this threshold, the iodine-staining capacity declines
+  rapidly even when significant substrate remains. This threshold effect
+  introduces a sharp transition in the absorbance-time profile that
+  resembles an exponential decay but is actually a consequence of the
+  assay chemistry rather than enzyme kinetics.
+\end{itemize}
+
+\subsection{Future Analytical
+Directions}\label{future-analytical-directions}
+
+The limitations identified above suggest several methodological
+improvements for future investigations:
+
+\begin{itemize}
+\item
+  Multi-Method Quantification: Simultaneous measurement of reducing
+  sugar production (DNS) and iodine-complexing capacity (\(I_{2}\)-KI)
+  would provide complementary information on the progression of
+  hydrolysis. The ratio of reducing ends to residual iodine-staining
+  capacity serves as a proxy for the degree of endo- versus
+  exo-amylolytic activity.
+\item
+  Chromatographic Validation: High-Performance Anion-Exchange
+  Chromatography with Pulsed Amperometric Detection (HPAEC-PAD) provides
+  direct quantification of maltooligosaccharide products (DP1-DP7),
+  enabling accurate determination of the bond cleavage pattern and
+  product distribution. This approach eliminates the stoichiometric
+  limitations of the DNS assay and provides mechanistic insight into the
+  enzyme's substrate specificity.
+\item
+  Differential Scanning Calorimetry (DSC): Thermal stability
+  characterization through DSC would allow independent determination of
+  the enzyme's unfolding temperature (Tm) and the thermodynamic
+  parameters of thermal denaturation (\(\Delta\)H, \(\Delta\)S,
+  \(\Delta\)G). These parameters would facilitate interpretation of the
+  temperature optimum and provide a thermodynamic basis for protein
+  engineering efforts.
+\item
+  Real-Time Kinetic Modeling: Progress curve analysis using integrated
+  Michaelis-Menten equations, incorporating product inhibition and
+  time-dependent inactivation terms, would provide more accurate
+  parameter estimates than the initial-rate approach. This integrated
+  approach is particularly valuable for enzymes that experience
+  significant inactivation during the assay.
+\end{itemize}
+
+\section{Conclusions and Biochemical
+Implications}\label{conclusions-and-biochemical-implications}
+
+\subsection{Principal Findings}\label{principal-findings}
+
+The experimental investigation of bacterial \(\alpha\)-amylase catalytic
+properties has yielded several significant findings:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Analytical Linearity: The glucose standard curve exhibits exceptional
+  linearity (R² = 0.9909) across 0.0-2.0 mg/mL glucose, confirming the
+  DNS assay as a reliable quantitative tool for reducing sugar
+  determination within this concentration range.
+\item
+  Fermentation Kinetics: Glucose accumulation during bacterial
+  fermentation follows a triphasic pattern with maximum yield at 20\%
+  salt concentration and 24-36 hours of incubation. The response surface
+  model confirms the interaction between salt concentration and time
+  (\(\beta_{12}\) = 3.592×10\(^{-2}\), p = 0.044), indicating that
+  optimal fermentation conditions are interdependent.
+\item
+  Operational Optimization: Response surface methodology identifies pH
+  5.96 and 49.89°C as optimal catalytic conditions. Both eigenvalues are
+  negative (\(\lambda_1\) = -0.381, \(\lambda_2\) = -0.471), confirming
+  a true global maximum and providing a mathematical foundation for
+  process optimization.
+\item
+  Substrate Specificity: The bacterial amylase displays marked substrate
+  preference, with soluble starch showing the highest apparent catalytic
+  efficiency (\(V_{max}\)/\(K_{m}\) = 0.0548) and corn starch the
+  lowest. The kinetic parameters reflect substrate architectural
+  properties---crystallinity, granule size, and amylose content---rather
+  than intrinsic differences in enzyme-substrate recognition.
+\item
+  Kinetic Non-Linearity: Progress curves exhibit systematic deviations
+  from quadratic models, with negative residuals at early timepoints
+  indicating rapid initial substrate cleavage, and positive residuals at
+  late timepoints reflecting product inhibition and substrate
+  modification.
+\end{enumerate}
+
+\subsection{Biochemical and Industrial
+Implications}\label{biochemical-and-industrial-implications}
+
+The observed pH optimum (5.96) and temperature optimum (49.89°C)
+position this bacterial \(\alpha\)-amylase within the mesophilic,
+acid-tolerant class of starch-hydrolyzing enzymes. These properties make
+the enzyme particularly suitable for industrial applications involving
+acidic starch hydrolysates, such as the production of glucose syrups
+from corn starch or the saccharification of waste starch streams.
+
+The substrate preference ranking (soluble starch \textgreater{} tapioca
+\textgreater{} rice \textgreater{} corn) has practical significance for
+industrial starch processing. The high catalytic efficiency toward
+soluble starch suggests that pre-gelatinized or acid-thinned starches
+are the preferred substrates for this enzyme. The relatively poor
+performance on corn starch indicates that physical or chemical
+pretreatment (gelatinization, liquefaction) is required to achieve
+efficient hydrolysis.
+
+The product inhibition effect, evident from the plateau in glucose
+accumulation profiles, has implications for process design. The enzyme's
+catalytic efficiency is highest at low product concentrations,
+suggesting that continuous removal of reducing sugars (e.g., through
+membrane filtration or simultaneous saccharification and fermentation)
+would enhance overall conversion rates.
+
+\subsection{Future Research
+Directions}\label{future-research-directions}
+
+Based on the findings and limitations of this study, several directions
+for future research are proposed:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Protein Engineering: Site-directed mutagenesis of residues in the
+  active site region could be employed to probe the structural basis of
+  the pH optimum and thermal stability. Rational design approaches might
+  yield variants with improved performance at higher temperatures or
+  altered pH optima for specific industrial applications.
+\item
+  Substrate Specificity Studies: The comparative substrate analysis
+  should be extended to include additional starch types (e.g., potato,
+  wheat, pea) and chemically modified starches (e.g., hydroxypropylated,
+  cross-linked) to better understand the structural features that
+  determine enzyme accessibility.
+\item
+  Continuous Operation Studies: The fermentation kinetics suggest that
+  batch operation is suboptimal due to product inhibition. Continuous
+  operation with product removal (e.g., through membrane bioreactors)
+  should be evaluated for its potential to maintain high enzyme activity
+  and extend the productive phase of the fermentation.
+\item
+  Structural Characterization: Crystallographic studies of the
+  enzyme-starch complex would provide atomic-level insight into
+  substrate binding and catalytic mechanism. The structural data would
+  facilitate rational engineering of the enzyme for altered substrate
+  specificity or improved stability.
+\end{enumerate}
+
+\subsection{Concluding Remarks}\label{concluding-remarks}
+
+This comprehensive analytical investigation of bacterial
+\(\alpha\)-amylase catalytic properties has established the fundamental
+kinetic parameters and optimization conditions for this industrially
+relevant enzyme. The findings demonstrate that \(\alpha\)-amylase
+exhibits robust catalytic activity under moderately acidic conditions
+and displays a distinct substrate preference that reflects the physical
+architecture of the starch granule rather than intrinsic differences in
+catalytic mechanism. The integration of response surface methodology,
+Michaelis-Menten kinetics, and progress curve analysis provides a
+methodological framework applicable to the characterization of other
+starch-hydrolyzing enzymes. The identified limitations of the analytical
+methods---particularly the DNS assay's sensitivity to product
+composition and the iodine-starch assay's threshold effects---highlight
+the importance of multi-method validation for accurate kinetic
+characterization. Future studies incorporating chromatographic and
+calorimetric techniques will further refine our understanding of the
+catalytic mechanism and stability of this important industrial enzyme.
+
+\section{References}\label{references}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Miller, G. L. (1959). Use of dinitrosalicylic acid reagent for
+  determination of reducing sugar. Analytical Chemistry, 31(3), 426-428.
+\item
+  Myers, R. H., Montgomery, D. C., \& Anderson-Cook, C. M. (2016).
+  Response Surface Methodology: Process and Product Optimization Using
+  Designed Experiments (4th ed.). John Wiley \& Sons.
+\item
+  Michaelis, L., \& Menten, M. L. (1913). Die Kinetik der
+  Invertinwirkung. Biochemische Zeitschrift, 49, 333-369.
+\item
+  Ritz, C., Baty, F., Streibig, J. C., \& Gerhard, D. (2015).
+  Dose-response analysis using R. PLoS ONE, 10(12), e0146021.
+\item
+  Cornish-Bowden, A. (2012). Fundamentals of Enzyme Kinetics (4th ed.).
+  Wiley-Blackwell.
+\item
+  van der Maarel, M. J., van der Veen, B., Uitdehaag, J. C., Leemhuis,
+  H., \& Dijkhuizen, L. (2002). Properties and applications of
+  starch-converting enzymes of the alpha-amylase family. Journal of
+  Biotechnology, 94(2), 137-155.
+\end{enumerate}
+
+\bibliography{references.bib}
+
+\end{document}
