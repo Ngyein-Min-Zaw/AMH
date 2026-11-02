@@ -1,0 +1,166 @@
+---
+title: "amylase production from bacteria"
+author: "nmz"
+date: "2026-08-07"
+output:
+  pdf_document:
+    toc: true                 # Table of contents
+    toc_depth: 3              # Depth of TOC
+    number_sections: true     # Number sections
+    fig_width: 6              # Figure width (inches)
+    fig_height: 4             # Figure height (inches)
+    fig_caption: true         # Enable figure captions
+    keep_tex: true            # Keep .tex file
+    latex_engine: pdflatex    # or xelatex, lualatex
+    highlight: tango          # Syntax highlighting style
+    citation_package: natbib  #natbib  # or biblatex
+geometry: 
+      - "left=1in" #1 inch or 2.54 cm
+      - "right=1in"
+      - "top=1in"
+      - "bottom=1in"
+linestretch: 1        # # Line spacing
+fontsize: 12pt          
+mainfont: "Times New Roman" #  "TeX Gyre Termes" alternative
+
+header-includes:
+  - \usepackage{indentfirst}
+  - \setlength{\parindent}{1.5cm}  # Set indent size
+  - \setlength{\parskip}{0pt}      # Remove space between paragraphs
+  - \usepackage{titlesec}
+  - \titlespacing*{\section}{0pt}{1.2ex}{0.5ex} #left indent, above, below
+  - \titlespacing*{\subsection}{0pt}{1ex}{0.3ex}
+  - \titlespacing*{\subsubsection}{0pt}{0.8ex}{0.2ex}
+  - \usepackage[font=small]{caption}
+  - \usepackage{multicol}
+  - \usepackage[none]{hyphenat}
+  - \setlength{\columnsep}{0.3cm}      # Space between columns
+  - \setlength{\columnseprule}{0pt} # Thickness of vertical line (0pt = no line)
+  
+bibliography: references.bib
+biblio-style: unsrtnat
+natbiboptions: numbers 
+---
+
+```{r setup, include=FALSE, message=FALSE, warning=FALSE, dpi=300} 
+knitr::opts_chunk$set(echo = TRUE, 
+                      comment = NA,
+                      warning = F,
+                      fig.width = 6,
+                      fig.height = 4,
+                      dpi = 300,
+                      fig.retina = 1, # 2 or high resolution
+                      fig.align = "center",
+                      fig.path = "../Figs/",
+                      fig.ext =  "png",
+                      out.width = "100%") # global
+library(knitr)
+library(ggpubr)
+library(Myfuns)
+library(tidyverse)
+library(readxl)
+library(showtext)
+font_add("TeX Gyre Termes", 
+         regular = "texgyretermes-regular.otf",
+         bold = "texgyretermes-bold.otf",
+         italic = "texgyretermes-italic.otf",
+         bolditalic = "texgyretermes-bolditalic.otf")
+
+showtext_auto()
+mfont <- "TeX Gyre Termes"
+```
+
+# Abstract
+
+\begin{multicols}{2}
+This study presents a systematic investigation of bacterial $\alpha$-amylase catalytic properties through integrated spectrophotometric, kinetic, and response surface methodologies \citep{mostafaStatisticalOptimizationAAmylase2024}. The analytical workflow encompassed glucose calibration via 3,5-dinitrosalicylic acid (DNS) assay, fermentation kinetics under varying salt concentrations, response surface optimization of pH and temperature, comparative substrate specificity across four botanical starches, and Michaelis-Menten parameter estimation \citep{mostafaStatisticalOptimizationAAmylase2024, singhOptimizationProductionAlphaamylase2022a}. The glucose standard curve demonstrated exceptional linearity ($R^2$ = 0.9909), establishing a robust empirical transfer function for reducing sugar quantification. Response surface methodology identified optimal catalytic conditions at pH 5.96 and 49.89°C, with both eigenvalues negative ($\lambda_1$ = -0.381, $\lambda_2$ = -0.471), confirming a true global maximum. Kinetic analysis revealed pronounced substrate-dependent variation in catalytic efficiency, with soluble starch exhibiting the highest $V_\text{max}$ (0.139 $\Delta A_{620}$ min$^{-1}$) and lowest $K_\text{m}$ (3.835% w/v), while rice starch demonstrated the lowest $V_\text{max}$ (0.077 $\Delta A_{620}$·min$^{-1}$) and $K_\text{m}$ (1.409% w/v). The catalytic efficiency index ($V_\text{max}$/$K_\text{m}$) ranged from 0.039 for rice starch to 0.054 for tapioca starch, indicating differential substrate accessibility governed by granular architecture and crystallinity. Progress curve analysis via second-order polynomial modeling revealed systematic deviations from linearity, with negative residuals at early timepoints (t = 0-15 min) indicating rapid initial substrate cleavage exceeding model predictions, while positive residuals at late timepoints (t = 45-60 min) reflected product inhibition and substrate depletion not captured by global quadratic fits. These findings demonstrate that bacterial $\alpha$-amylase exhibits optimal activity under moderately acidic conditions and displays marked substrate preference governed by starch botanical origin, with implications for industrial starch processing applications.
+
+\end{multicols}
+
+
+# Data Import
+
+- load the libraries
+- load the data for standard curve
+- load the experimental data
+
+```{r data}
+# loading libraries
+library(ggpubr)
+library(tidyverse)
+library(readxl)
+library(Myfuns)
+library(patchwork)
+library(broom)
+
+# loading standard curve data
+std_c <- read_excel("../Data/Salting out and DNS assay.xlsx",
+  sheet = "Sheet3"
+)
+names(std_c)
+
+# loading Experiment Data
+so <- read_excel("../Data/Salting out and DNS assay.xlsx",
+  sheet = "Sheet2"
+)
+names(so)
+buf <- 0.6713
+so2 <- so %>% mutate(Abs = Abs - buf)
+
+```
+
+# Relationship of the Glucose concentration and Absorbance
+- fit the linear regression
+- visualize the linear relationship
+```{r std_curve, fig.width=6.3, fig.height=3, fig.align='center'}
+std_c_eq1 <- lm(Glu_conc ~ Abs, std_c)
+summary(std_c_eq1)
+std_c_eq2 <- lm(Abs ~ Glu_conc, std_c)
+summary(std_c_eq2)
+
+p1 <- std_c %>% reframe(Abs=mean(Abs),.by = Glu_conc) %>% 
+  ggplot(aes(Glu_conc, Abs)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "red", se = F) +
+  # geom_smooth(linetype = "dashed", color = "blue") +
+  stat_regline_equation(
+    aes(label = paste(..eq.label..,
+                      ..adj.rr.label..,
+                      sep = "~~~~~")),
+    decreasing = FALSE
+  )+
+  labs(x = "Glucose Concentration (mg/ml)",
+       y = "Absorbance (at 570 nm)")+
+  Mytheme(font = "TeX Gyre Termes")
+  
+
+p2 <- std_c %>% ggplot(aes(Abs, Glu_conc)) +
+  geom_point() +
+  geom_smooth(method = "lm", color = "red") +
+  # geom_smooth(linetype = "dashed", color = "blue") +
+  stat_regline_equation(
+    aes(label = paste(..eq.label..,
+                      ..adj.rr.label..,
+                      sep = "~~~~~")),
+    # aes(label = paste0("atop(", ..eq.label.., ",", ..adj.rr.label.., ")")),
+    decreasing = FALSE
+  )+
+  labs(x= "Absorbance (at 570 nm)",
+       y= "Glucose Concentration (mg/ml)")+
+  Mytheme(font = "TeX Gyre Termes")
+
+p1+p2+
+  plot_annotation(tag_levels = "A")
+```
+
+## Glucose Standard Curve Establishment and Transfer Function Derivation
+
+The quantitative foundation of this enzymatic investigation rests upon the empirical calibration relating glucose concentration to absorbance at 570 nm via the DNS colorimetric assay. Linear regression analysis of the standard curve data (n = 18) yielded two mathematically equivalent but analytically distinct models: 
+
+$$\text{Model 1 (Concentration as a Function of Absorbance):} \quad C_{\text{glu}} = `r sprintf("%.4f %+.4f",  coef(std_c_eq1)[1], coef(std_c_eq1)[2])` A_{570}$$
+$$\text{Model 2 (Absorbance as a Function of Concentration):} \quad A_{570} = `r sprintf("%.4f %+.4f",  coef(std_c_eq2)[1], coef(std_c_eq2)[2])` C_{\text{glu}}$$
+The exceptionally high coefficient of determination ($\text{R}^2$ = `r sprintf("%0.4f", summary(std_c_eq1)$r.squared)`, adjusted $\text{R}^2$ = `r sprintf("%0.4f", summary(std_c_eq1)$adj.r.squared)`) across both formulations confirms that the spectrophotometric response remains strictly linear throughout the tested concentration range (0.0-2.0 mg/mL glucose). This linearity is mechanistically significant, as it demonstrates that optical saturation of the detector was not approached and that the chromophore concentration remains directly proportional to the molar concentration of reducing ends. The slope of Model 2 $\beta_1$ = `r sprintf("%+.4f", coef(std_c_eq2)[2])` ± `r round(tidy(std_c_eq2)$std.error[2], 4)`) represents the combined molar absorptivity-path length product, which serves as a system-specific constant under fixed instrumental parameters.
+
+Of critical analytical importance is the comparison between the two regression approaches. Model 1 functions as the operational inverse calibration equation for predicting unknown glucose concentrations from experimental absorbance measurements. The intercept term ($\beta_0$ = -0.03242 ± 0.01513) is statistically indistinguishable from zero (p = 0.0478), providing analytical justification for single-point calibration at low analyte concentrations. However, the non-zero intercept in Model 2 ($\text{Y}_0$ = 0.07986 ± 0.03104, p = 0.0204) warrants careful interpretation. This baseline offset arises from the inherent absorbance of unreacted DNS reagent and matrix components, which remains present even in the absence of reducing sugars. The disparity between the Model 1 intercept (-0.03242) and Model 2 intercept (0.07986) illustrates the mathematical consequence of regressing concentration onto absorbance versus absorbance onto concentration—a distinction with profound analytical implications.
+
+From a metrological perspective, the inverse regression approach (Model 1) is preferred for analytical prediction because it minimizes error in the dependent variable (concentration) when absorbance is the measured quantity. The standard error of the estimate ($\sigma$ = 0.03454 mg/mL) defines the analytical sensitivity threshold, indicating that glucose concentrations below approximately 0.07 mg/mL cannot be reliably distinguished from the blank. This detection limit is critical for interpreting kinetic data at extended timepoints where substrate depletion approaches completion and absorbance values approach baseline levels.
