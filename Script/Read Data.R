@@ -22,7 +22,12 @@ library(readxl)
 UV <- read_excel("./Data/downloaded_file.xlsx")
 
 RSM <- read_excel("./Data/(26.06.2026) absorbance data.xlsx")
-RSM2 <- RSM %>% mutate(Temperature = str_remove(Temp, "°C") %>% as.numeric())
+RSM2 <- RSM %>% mutate(
+     Temperature = str_remove(Temp, "°C") %>% as.numeric(),
+     Temperature = if_else(
+          Temperature == 35, 36, Temperature
+     )
+)
 
 mfont <- "Times New Roman"
 
@@ -44,7 +49,7 @@ for_rsm_vis |> ggplot(aes(x1, x2)) +
      geom_point() +
      geom_text(
           aes(x1, x2 + 0.25,
-               label = paste0("(", Temp, ", ", pH, ")")
+               label = paste0("(", Temperature, "°C, ", pH, ")")
           ),
           family = "Times New Roman",
           size = 4
@@ -69,7 +74,7 @@ for_rsm_vis |> ggplot(aes(x1, x2)) +
                size = 12
           )
      )
-ggsave("./Figs/ccd_design.png", width = 4.3, height = 4, dpi = 300)
+ggsave("./Figs/ccd_design.png", width = 4, height = 4, dpi = 300)
 
 ### RSM 3D plot ###
 png(
@@ -197,7 +202,7 @@ f_starch <- UV2 %>%
 print(f_starch)
 ggsave("./Figs/4flour_vs_.png", f_starch,
      width = 5, height = 4,
-     dpi = 130
+     dpi = 300
 )
 #######
 ## Michaelis-Menten ###
