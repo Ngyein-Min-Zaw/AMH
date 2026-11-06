@@ -10,7 +10,7 @@ output:
     fig_width: 6              # Figure width (inches)
     fig_height: 4             # Figure height (inches)
     fig_caption: true         # Enable figure captions
-    keep_tex: true            # Keep .tex file
+    # keep_tex: true            # Keep .tex file
     latex_engine: pdflatex    # or xelatex, lualatex
     highlight: tango          # Syntax highlighting style
     citation_package: natbib  #natbib  # or biblatex
