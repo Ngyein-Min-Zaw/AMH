@@ -369,3 +369,42 @@ ggsave("./Figs/km_vmax.png",
      dpi = 300
 )
 #
+
+## apparent catalytic efficiency
+mm_results |>
+     dplyr::select(Starch, term, estimate) |>
+     pivot_wider(
+          names_from = term,
+          values_from = estimate
+     ) |>
+     mutate(cat_eff = Vmax / Km) |>
+     ggplot(aes(Starch, cat_eff)) +
+     geom_bar(stat = "identity", aes(fill = Starch), color = "black", width = .7) +
+     labs(
+          x = NULL,
+          y = "<i>V<sub>max</sub>/K<sub>m</sub>(min<sup>-1</sup>)</i>"
+     ) +
+     theme_bw() +
+     theme(
+          legend.position = "none",
+          axis.title.y = element_markdown(
+               family = mfont,
+               size = 12
+          ),
+          axis.text.x = element_text(
+               angle = 50,
+               hjust = 1,
+               family = mfont,
+               size = 12,
+               color = "black"
+          ),
+          axis.text.y = element_text(
+               family = mfont,
+               size = 12,
+               color = "black"
+          )
+     )
+ggsave("./Figs/cat_eff.png",
+     width = 4, height = 3.5,
+     dpi = 300
+)
