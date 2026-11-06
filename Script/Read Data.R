@@ -98,6 +98,11 @@ dev.off()
 ###################
 ## Enzyme Activity with Four Starch at varying concentration at different duration##
 
+# url <- "https://github.com/Ngyein-Min-Zaw/AMH/raw/refs/heads/main/Data/UV (04.08.2006) - completed.xlsx"
+# download.file(url,
+#               destfile = "./Data/UV (04.08.2006) - completed.xlsx",
+#               mode = "wb"
+# )
 
 UV_04_08_2006_ <- read_excel("./Data/UV (04.08.2006) - completed.xlsx",
      sheet = "Sheet1"
